@@ -79,30 +79,60 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         root.style.setProperty('--primary', '0 65% 55%');
         root.style.setProperty('--secondary', '45 90% 50%');
         root.style.setProperty('--accent', '140 60% 40%');
+        root.style.setProperty('--background', '240 10% 3.9%');
+        root.style.setProperty('--foreground', '0 0% 98%');
+        root.style.setProperty('--card', '240 10% 3.9%');
+        root.style.setProperty('--card-foreground', '0 0% 98%');
+        root.style.setProperty('--muted', '240 3.7% 15.9%');
+        root.style.setProperty('--muted-foreground', '240 5% 64.9%');
         root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(0 65% 55%), hsl(45 90% 50%), hsl(140 60% 40%))');
         break;
       case 'ocean':
         root.style.setProperty('--primary', '200 80% 50%');
         root.style.setProperty('--secondary', '180 70% 45%');
         root.style.setProperty('--accent', '220 60% 40%');
+        root.style.setProperty('--background', '240 10% 3.9%');
+        root.style.setProperty('--foreground', '0 0% 98%');
+        root.style.setProperty('--card', '240 10% 3.9%');
+        root.style.setProperty('--card-foreground', '0 0% 98%');
+        root.style.setProperty('--muted', '240 3.7% 15.9%');
+        root.style.setProperty('--muted-foreground', '240 5% 64.9%');
         root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(200 80% 50%), hsl(180 70% 45%), hsl(220 60% 40%))');
         break;
       case 'sunset':
         root.style.setProperty('--primary', '15 85% 55%');
         root.style.setProperty('--secondary', '35 90% 50%');
         root.style.setProperty('--accent', '320 70% 45%');
+        root.style.setProperty('--background', '240 10% 3.9%');
+        root.style.setProperty('--foreground', '0 0% 98%');
+        root.style.setProperty('--card', '240 10% 3.9%');
+        root.style.setProperty('--card-foreground', '0 0% 98%');
+        root.style.setProperty('--muted', '240 3.7% 15.9%');
+        root.style.setProperty('--muted-foreground', '240 5% 64.9%');
         root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(15 85% 55%), hsl(35 90% 50%), hsl(320 70% 45%))');
         break;
       case 'nature':
         root.style.setProperty('--primary', '120 50% 40%');
         root.style.setProperty('--secondary', '85 60% 45%');
         root.style.setProperty('--accent', '30 40% 35%');
+        root.style.setProperty('--background', '240 10% 3.9%');
+        root.style.setProperty('--foreground', '0 0% 98%');
+        root.style.setProperty('--card', '240 10% 3.9%');
+        root.style.setProperty('--card-foreground', '0 0% 98%');
+        root.style.setProperty('--muted', '240 3.7% 15.9%');
+        root.style.setProperty('--muted-foreground', '240 5% 64.9%');
         root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(120 50% 40%), hsl(85 60% 45%), hsl(30 40% 35%))');
         break;
       case 'electric':
         root.style.setProperty('--primary', '270 80% 55%');
         root.style.setProperty('--secondary', '300 70% 50%');
         root.style.setProperty('--accent', '190 90% 50%');
+        root.style.setProperty('--background', '240 10% 3.9%');
+        root.style.setProperty('--foreground', '0 0% 98%');
+        root.style.setProperty('--card', '240 10% 3.9%');
+        root.style.setProperty('--card-foreground', '0 0% 98%');
+        root.style.setProperty('--muted', '240 3.7% 15.9%');
+        root.style.setProperty('--muted-foreground', '240 5% 64.9%');
         root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(270 80% 55%), hsl(300 70% 50%), hsl(190 90% 50%))');
         break;
       case 'pastel':
