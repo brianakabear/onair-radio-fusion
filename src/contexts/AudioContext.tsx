@@ -88,6 +88,21 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Auto-play the main station when the app loads
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (audioRef.current && !isPlaying) {
+        setIsLoading(true);
+        audioRef.current.play().catch((error) => {
+          console.log("Auto-play prevented by browser:", error);
+          setIsLoading(false);
+        });
+      }
+    }, 1000); // Small delay to ensure audio element is ready
+
+    return () => clearTimeout(timer);
+  }, []); // Only run once on mount
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume[0];
