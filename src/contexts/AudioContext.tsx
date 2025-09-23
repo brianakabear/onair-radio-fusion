@@ -56,6 +56,14 @@ const defaultStreams: RadioStream[] = [
     genre: 'Dancehall',
     description: 'Latest dancehall bangers and underground hits',
     bitrate: '256 kbps'
+  },
+  {
+    id: '4',
+    name: 'BrianAkaBear Radio',
+    url: 'https://cast1.my-control-panel.com/proxy/bandoradio/stream',
+    genre: 'Beats & Music',
+    description: 'Beats and Music By Brian',
+    bitrate: '128 kbps'
   }
 ];
 
