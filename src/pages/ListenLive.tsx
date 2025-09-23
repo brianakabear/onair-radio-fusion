@@ -70,6 +70,14 @@ const ListenLive = () => {
       audioRef.current.pause();
       audioRef.current.src = stream.url;
       audioRef.current.load();
+      
+      // Auto-play the selected stream
+      audioRef.current.addEventListener('canplay', () => {
+        audioRef.current?.play().catch((error) => {
+          console.error("Error auto-playing stream:", error);
+          setIsLoading(false);
+        });
+      }, { once: true });
     }
   };
 
