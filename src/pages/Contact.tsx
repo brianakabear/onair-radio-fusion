@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, Instagram, Facebook, Youtube, Linkedin } from "lucide-react";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -204,6 +204,69 @@ const Contact = () => {
                         Broadcasting Worldwide
                       </p>
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl">Follow Us</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Stay connected with Link Up Radio on social media for the latest updates, music, and events.
+                  </p>
+                  <div className="flex items-center space-x-3">
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="https://instagram.com/linkupradio"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram"
+                        className="flex items-center space-x-2"
+                      >
+                        <Instagram className="h-4 w-4" />
+                        <span>Instagram</span>
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="https://facebook.com/linkupradio"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Facebook"
+                        className="flex items-center space-x-2"
+                      >
+                        <Facebook className="h-4 w-4" />
+                        <span>Facebook</span>
+                      </a>
+                    </Button>
+                  </div>
+                  <div className="flex items-center space-x-3 mt-3">
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="https://www.linkedin.com/company/linkup-media-group-of-companies/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                        className="flex items-center space-x-2"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                        <span>LinkedIn</span>
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="sm" asChild>
+                      <a
+                        href="https://www.youtube.com/@linkupradio7152"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="YouTube"
+                        className="flex items-center space-x-2"
+                      >
+                        <Youtube className="h-4 w-4" />
+                        <span>YouTube</span>
+                      </a>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
