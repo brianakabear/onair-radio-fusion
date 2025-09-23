@@ -7,47 +7,14 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { BlogManager } from "@/components/BlogManager";
 import { musicNewsTemplates, generateMusicNewsContent } from "@/data/musicNewsContent";
+import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const Blog = () => {
   const [showManager, setShowManager] = useState(false);
-  const [blogPosts, setBlogPosts] = useState([
-    {
-      id: "1",
-      title: "The Evolution of Caribbean Music: From Calypso to Modern Dancehall",
-      excerpt: "Explore the rich history of Caribbean music and how it has shaped global culture, from the traditional calypso of Trinidad to the modern dancehall sounds dominating today's charts.",
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
-      category: "Music History",
-      date: "December 15, 2024",
-      readTime: "8 min read",
-      featured: true,
-      author: "Link Up Radio Team",
-      content: "Caribbean music has a rich and diverse history that spans centuries..."
-    },
-    {
-      id: "2",
-      title: "Top 10 Reggae Artists You Need to Know in 2024",
-      excerpt: "Discover the rising stars and established legends keeping reggae music alive and thriving in the modern era.",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
-      category: "Artist Spotlight",
-      date: "December 12, 2024",
-      readTime: "6 min read",
-      featured: false,
-      author: "Link Up Radio Team",
-      content: "The reggae scene in 2024 is vibrant with amazing talent..."
-    },
-    {
-      id: "3",
-      title: "Carnival Season 2024: The Best Soca Releases",
-      excerpt: "Get ready for carnival season with our curated list of the hottest soca tracks that will dominate the festivities.",
-      image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800",
-      category: "Seasonal",
-      date: "December 10, 2024",
-      readTime: "5 min read",
-      featured: false,
-      author: "Link Up Radio Team",
-      content: "Carnival season brings the hottest soca tracks of the year..."
-    }
-  ]);
+  const [blogPosts, setBlogPosts] = useState(generateInitialBlogPosts());
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 20;
 
   // Load saved posts from localStorage on mount
   useEffect(() => {
@@ -57,11 +24,21 @@ const Blog = () => {
     }
   }, []);
 
-  // Auto-generate content periodically (demo - in production this would be a scheduled job)
+  // Auto-generate content every hour
   useEffect(() => {
     const generateContent = () => {
       const randomTemplate = musicNewsTemplates[Math.floor(Math.random() * musicNewsTemplates.length)];
       const randomArticle = randomTemplate.templates[Math.floor(Math.random() * randomTemplate.templates.length)];
+      
+      const images = [
+        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800", 
+        "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800",
+        "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800",
+        "https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=800"
+      ];
+      
+      const authors = ["Link Up Radio Team", "Marcus Thompson", "Keisha Williams", "David Rodriguez"];
       
       const newPost = {
         id: Date.now().toString(),
@@ -69,15 +46,15 @@ const Blog = () => {
         excerpt: randomArticle.excerpt,
         content: generateMusicNewsContent(randomArticle),
         category: randomTemplate.category,
-        image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
+        image: images[Math.floor(Math.random() * images.length)],
         date: new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 
           day: 'numeric' 
         }),
-        readTime: "5 min read",
+        readTime: `${Math.floor(Math.random() * 6) + 3} min read`,
         featured: false,
-        author: "Link Up Radio Team"
+        author: authors[Math.floor(Math.random() * authors.length)]
       };
 
       setBlogPosts(prevPosts => {
@@ -87,7 +64,7 @@ const Blog = () => {
       });
     };
 
-    // Generate new content every hour (for demo purposes - in production use proper scheduling)
+    // Generate new content every hour
     const interval = setInterval(generateContent, 3600000); // 1 hour
     
     return () => clearInterval(interval);
@@ -95,7 +72,16 @@ const Blog = () => {
 
   const handlePostsUpdate = (newPosts: any[]) => {
     setBlogPosts(newPosts);
+    setCurrentPage(1); // Reset to first page when posts are updated
   };
+
+  // Calculate pagination
+  const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const currentPosts = blogPosts.slice(startIndex, endIndex);
+  const featuredPosts = currentPosts.filter(post => post.featured);
+  const regularPosts = currentPosts.filter(post => !post.featured);
 
   const categories = [
     { name: "All Posts", count: blogPosts.length, icon: Music },
@@ -189,7 +175,7 @@ const Blog = () => {
             {/* Main Content */}
             <main className="lg:col-span-3">
               {/* Featured Post */}
-              {blogPosts.filter(post => post.featured).map((post) => (
+              {featuredPosts.map((post) => (
                 <Card key={post.id} className="mb-12 overflow-hidden hover:shadow-caribbean transition-all duration-300">
                   <div className="grid md:grid-cols-2">
                     <div className="relative h-64 md:h-auto">
@@ -243,7 +229,7 @@ const Blog = () => {
 
               {/* Regular Posts Grid */}
               <div className="grid md:grid-cols-2 gap-8">
-                {blogPosts.filter(post => !post.featured).map((post) => (
+                {regularPosts.map((post) => (
                   <Card key={post.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300 animate-slide-up">
                     <div className="relative h-48">
                       <img
@@ -288,11 +274,66 @@ const Blog = () => {
                 ))}
               </div>
 
-              {/* Load More */}
-              <div className="text-center mt-12">
-                <Button size="lg" variant="outline" className="px-8">
-                  Load More Posts
-                </Button>
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-12 flex justify-center">
+                  <Pagination>
+                    <PaginationContent>
+                      {currentPage > 1 && (
+                        <PaginationItem>
+                          <PaginationPrevious 
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                            className="cursor-pointer"
+                          />
+                        </PaginationItem>
+                      )}
+                      
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                        if (
+                          page === 1 ||
+                          page === totalPages ||
+                          (page >= currentPage - 1 && page <= currentPage + 1)
+                        ) {
+                          return (
+                            <PaginationItem key={page}>
+                              <PaginationLink
+                                onClick={() => setCurrentPage(page)}
+                                isActive={currentPage === page}
+                                className="cursor-pointer"
+                              >
+                                {page}
+                              </PaginationLink>
+                            </PaginationItem>
+                          );
+                        } else if (
+                          page === currentPage - 2 ||
+                          page === currentPage + 2
+                        ) {
+                          return (
+                            <PaginationItem key={page}>
+                              <PaginationEllipsis />
+                            </PaginationItem>
+                          );
+                        }
+                        return null;
+                      })}
+                      
+                      {currentPage < totalPages && (
+                        <PaginationItem>
+                          <PaginationNext 
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                            className="cursor-pointer"
+                          />
+                        </PaginationItem>
+                      )}
+                    </PaginationContent>
+                  </Pagination>
+                </div>
+              )}
+              
+              {/* Posts Stats */}
+              <div className="mt-8 text-center text-sm text-muted-foreground">
+                Showing {startIndex + 1}-{Math.min(endIndex, blogPosts.length)} of {blogPosts.length} posts
               </div>
             </main>
           </div>
