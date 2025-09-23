@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, Clock, ArrowRight, MapPin, Search, Settings, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, MapPin, Search, Settings, ChevronLeft, ChevronRight, Play, Pause, Volume2, SkipForward } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
@@ -19,6 +19,28 @@ const News = () => {
   const [radius, setRadius] = useState("25");
   const [localNews, setLocalNews] = useState<any[]>([]);
   const [isLoadingLocal, setIsLoadingLocal] = useState(false);
+  
+  // Video player state
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentVideoStory, setCurrentVideoStory] = useState(0);
+  const [videoStories, setVideoStories] = useState<NewsStory[]>([]);
+
+  // Initialize random video stories
+  useEffect(() => {
+    const shuffled = [...allNewsStories].sort(() => 0.5 - Math.random());
+    setVideoStories(shuffled.slice(0, 10)); // Get 10 random stories for video
+  }, []);
+
+  // Auto-advance video stories
+  useEffect(() => {
+    if (isPlaying && videoStories.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentVideoStory(prev => (prev + 1) % videoStories.length);
+      }, 8000); // Change story every 8 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [isPlaying, videoStories.length]);
 
   const itemsPerPage = 25;
 
@@ -56,6 +78,14 @@ const News = () => {
       case "Sports News": return "bg-destructive text-destructive-foreground";
       default: return "bg-border text-foreground";
     }
+  };
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleNextVideoStory = () => {
+    setCurrentVideoStory(prev => (prev + 1) % videoStories.length);
   };
 
   const handleLocalNewsSearch = async () => {
@@ -116,6 +146,118 @@ const News = () => {
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
               Stay informed with the latest news from Jamaica, the Caribbean, and around the world
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Player Section */}
+      <section className="py-8 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6 text-center">News Video Player</h2>
+            
+            {videoStories.length > 0 && (
+              <Card className="overflow-hidden bg-black">
+                <div className="relative aspect-video">
+                  {/* Video Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20">
+                    <FallbackBlogImage 
+                      title={videoStories[currentVideoStory]?.title || ""}
+                      category={videoStories[currentVideoStory]?.category || ""}
+                      className="w-full h-full opacity-40"
+                    />
+                  </div>
+                  
+                  {/* Video Content Overlay */}
+                  <div className="absolute inset-0 bg-black/60 flex flex-col justify-end p-6">
+                    <div className="text-white">
+                      <Badge className="mb-3 bg-primary/80 text-primary-foreground">
+                        {videoStories[currentVideoStory]?.category.replace(" News", "")}
+                      </Badge>
+                      <h3 className="text-2xl font-bold mb-2 line-clamp-2">
+                        {videoStories[currentVideoStory]?.title}
+                      </h3>
+                      <p className="text-white/90 mb-4 line-clamp-2">
+                        {videoStories[currentVideoStory]?.excerpt}
+                      </p>
+                      <div className="flex items-center text-sm text-white/80">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        <span className="mr-4">{videoStories[currentVideoStory]?.date}</span>
+                        <span className="mr-4">•</span>
+                        <span>{videoStories[currentVideoStory]?.source}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Play/Pause Button Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      onClick={handlePlayPause}
+                      className="bg-black/50 hover:bg-black/70 text-white border-white/20 w-16 h-16 rounded-full"
+                    >
+                      {isPlaying ? (
+                        <Pause className="h-8 w-8" />
+                      ) : (
+                        <Play className="h-8 w-8 ml-1" />
+                      )}
+                    </Button>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  {isPlaying && (
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+                      <div 
+                        className="h-full bg-primary transition-all duration-100 ease-linear"
+                        style={{
+                          width: `${((Date.now() / 8000) % 1) * 100}%`
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+                
+                {/* Video Controls */}
+                <CardContent className="bg-black/90 text-white p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handlePlayPause}
+                        className="text-white hover:bg-white/10"
+                      >
+                        {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleNextVideoStory}
+                        className="text-white hover:bg-white/10"
+                      >
+                        <SkipForward className="h-4 w-4" />
+                      </Button>
+                      <Volume2 className="h-4 w-4 text-white/60" />
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 text-sm text-white/80">
+                      <span>{currentVideoStory + 1} / {videoStories.length}</span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                        className="border-white/20 text-white hover:bg-white/10"
+                      >
+                        <Link to={`/blog/${videoStories[currentVideoStory]?.id}`}>
+                          Read Full Story
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </section>
