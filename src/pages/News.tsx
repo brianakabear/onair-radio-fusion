@@ -528,10 +528,10 @@ const News = () => {
                     </Card>
                   ) : (
                     <>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {currentStories.map((story) => (
                           <Card key={story.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300">
-                            <div className="relative h-48">
+                            <div className="relative aspect-[16/10]">
                               {story.image && story.image.trim() !== '' ? (
                                 <img
                                   src={story.image}
@@ -549,7 +549,12 @@ const News = () => {
                                 className={`${story.image && story.image.trim() !== '' ? 'hidden' : 'flex'} w-full h-full items-center justify-center`}
                                 style={{ display: story.image && story.image.trim() !== '' ? 'none' : 'flex' }}
                               >
-                                <FallbackBlogImage category={story.category} title={story.title} id={story.id} />
+                                <FallbackBlogImage 
+                                  category={story.category} 
+                                  title={story.title} 
+                                  id={story.id}
+                                  excerpt={story.excerpt}
+                                />
                               </div>
                               <Badge 
                                 className={`absolute top-3 right-3 text-xs ${getCategoryColor(story.category)}`}
@@ -700,7 +705,7 @@ const News = () => {
                     {/* Video Thumbnails Navigation */}
                     <div>
                       <h4 className="text-lg font-semibold mb-4">More Videos ({videoNews.length} total)</h4>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {videoNews.map((video) => (
                           <Card 
                             key={video.id} 
@@ -832,7 +837,7 @@ const News = () => {
                       </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                       {localNews.map((story) => (
                         <Card key={story.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
                           <div className="relative h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
