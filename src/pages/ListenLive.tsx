@@ -44,8 +44,8 @@ const ListenLive = () => {
     },
     {
       id: "dancehall",
-      name: "Dancehall Channel",
-      url: "https://example.com/dancehall-stream", // Replace with actual stream
+      name: "The Traffic Jam",
+      url: "https://c17.radioboss.fm:8576/stream",
       genre: "Dancehall",
       description: "The hottest dancehall tracks and riddims",
       bitrate: "128kbps"
