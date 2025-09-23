@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Instagram, Twitter, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import davidSqueezeImage from "@/assets/david-squeeze-annakie.jpg";
 
 const Team = () => {
   const teamMembers = [
@@ -11,7 +12,7 @@ const Team = () => {
       role: "Morning Show Host & Media Personality",
       bio: "Veteran broadcaster and media personality bringing authentic Caribbean culture and music to Link Up Radio. Known for his engaging personality and deep connection to the community.",
       specialties: ["Caribbean Culture", "Morning Radio", "Community Connection", "Media Production"],
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+      image: davidSqueezeImage,
       social: {
         instagram: "#",
         twitter: "#"
