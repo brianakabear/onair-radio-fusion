@@ -23,12 +23,81 @@ const News = () => {
   // Video player state
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentVideoStory, setCurrentVideoStory] = useState(0);
-  const [videoStories, setVideoStories] = useState<NewsStory[]>([]);
+  const [videoStories, setVideoStories] = useState<(NewsStory & { videoUrl: string })[]>([]);
+  const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
 
-  // Initialize random video stories
+  // Initialize random video stories with video URLs
   useEffect(() => {
-    const shuffled = [...allNewsStories].sort(() => 0.5 - Math.random());
-    setVideoStories(shuffled.slice(0, 10)); // Get 10 random stories for video
+    const videoNewsStories = [
+      {
+        id: "video-1",
+        title: "Breaking: Major Hurricane Approaches Caribbean Islands",
+        excerpt: "Emergency services prepare as Category 4 hurricane threatens multiple Caribbean nations with dangerous winds and flooding.",
+        category: "Caribbean News",
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        readTime: "2 min read",
+        source: "Caribbean Weather Center",
+        dateTimestamp: Date.now(),
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      },
+      {
+        id: "video-2", 
+        title: "Jamaica's Prime Minister Announces Economic Recovery Plan",
+        excerpt: "Comprehensive strategy unveiled to boost tourism, agriculture, and technology sectors following recent challenges.",
+        category: "Jamaica News",
+        date: new Date(Date.now() - 86400000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        readTime: "5 min read",
+        source: "Jamaica Information Service",
+        dateTimestamp: Date.now() - 86400000,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        id: "video-3",
+        title: "Bob Marley Museum Unveils New Interactive Experience",
+        excerpt: "State-of-the-art technology brings reggae legend's story to life with immersive exhibits and rare archival footage.",
+        category: "Entertainment News", 
+        date: new Date(Date.now() - 172800000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        readTime: "3 min read",
+        source: "Culture Jamaica",
+        dateTimestamp: Date.now() - 172800000,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+      },
+      {
+        id: "video-4",
+        title: "Caribbean Athletes Dominate World Championships",
+        excerpt: "Track and field stars from across the region secure multiple gold medals in international competition.",
+        category: "Sports News",
+        date: new Date(Date.now() - 259200000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        readTime: "4 min read", 
+        source: "Sports Caribbean",
+        dateTimestamp: Date.now() - 259200000,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+      },
+      {
+        id: "video-5",
+        title: "Climate Summit: Small Island States Unite for Action",
+        excerpt: "Caribbean nations lead global initiative demanding urgent climate action and support for vulnerable communities.",
+        category: "International News",
+        date: new Date(Date.now() - 345600000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        readTime: "6 min read",
+        source: "International Climate News",
+        dateTimestamp: Date.now() - 345600000,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+      },
+      {
+        id: "video-6",
+        title: "Jamaican Dancehall Artist Breaks Streaming Records",
+        excerpt: "Local musician's latest release becomes most-streamed Caribbean song globally within 24 hours.",
+        category: "Entertainment News",
+        date: new Date(Date.now() - 432000000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        readTime: "3 min read",
+        source: "Music World",
+        dateTimestamp: Date.now() - 432000000,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+      }
+    ];
+    
+    setVideoStories(videoNewsStories);
   }, []);
 
   // Auto-advance video stories
@@ -36,11 +105,23 @@ const News = () => {
     if (isPlaying && videoStories.length > 0) {
       const interval = setInterval(() => {
         setCurrentVideoStory(prev => (prev + 1) % videoStories.length);
-      }, 8000); // Change story every 8 seconds
+      }, 30000); // Change story every 30 seconds for videos
       
       return () => clearInterval(interval);
     }
   }, [isPlaying, videoStories.length]);
+
+  // Handle video ended
+  useEffect(() => {
+    if (videoRef) {
+      const handleVideoEnd = () => {
+        setCurrentVideoStory(prev => (prev + 1) % videoStories.length);
+      };
+      
+      videoRef.addEventListener('ended', handleVideoEnd);
+      return () => videoRef.removeEventListener('ended', handleVideoEnd);
+    }
+  }, [videoRef, videoStories.length]);
 
   const itemsPerPage = 25;
 
@@ -82,6 +163,13 @@ const News = () => {
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
+    if (videoRef) {
+      if (isPlaying) {
+        videoRef.pause();
+      } else {
+        videoRef.play();
+      }
+    }
   };
 
   const handleNextVideoStory = () => {
@@ -159,19 +247,26 @@ const News = () => {
             {videoStories.length > 0 && (
               <Card className="overflow-hidden bg-black">
                 <div className="relative aspect-video">
-                  {/* Video Background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20">
-                    <FallbackBlogImage 
-                      title={videoStories[currentVideoStory]?.title || ""}
-                      category={videoStories[currentVideoStory]?.category || ""}
-                      className="w-full h-full opacity-40"
-                    />
-                  </div>
+                  {/* Video Element */}
+                  <video
+                    ref={setVideoRef}
+                    src={videoStories[currentVideoStory]?.videoUrl}
+                    className="w-full h-full object-cover"
+                    muted
+                    playsInline
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                    onLoadedData={() => {
+                      if (videoRef && isPlaying) {
+                        videoRef.play();
+                      }
+                    }}
+                  />
                   
                   {/* Video Content Overlay */}
-                  <div className="absolute inset-0 bg-black/60 flex flex-col justify-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 pointer-events-none">
                     <div className="text-white">
-                      <Badge className="mb-3 bg-primary/80 text-primary-foreground">
+                      <Badge className="mb-3 bg-primary/90 text-primary-foreground pointer-events-auto">
                         {videoStories[currentVideoStory]?.category.replace(" News", "")}
                       </Badge>
                       <h3 className="text-2xl font-bold mb-2 line-clamp-2">
@@ -190,7 +285,7 @@ const News = () => {
                   </div>
                   
                   {/* Play/Pause Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                     <Button
                       variant="ghost"
                       size="lg"
@@ -204,18 +299,6 @@ const News = () => {
                       )}
                     </Button>
                   </div>
-                  
-                  {/* Progress Bar */}
-                  {isPlaying && (
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
-                      <div 
-                        className="h-full bg-primary transition-all duration-100 ease-linear"
-                        style={{
-                          width: `${((Date.now() / 8000) % 1) * 100}%`
-                        }}
-                      />
-                    </div>
-                  )}
                 </div>
                 
                 {/* Video Controls */}
