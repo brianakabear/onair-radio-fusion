@@ -41,56 +41,56 @@ const Schedule = () => {
     {
       day: "Monday",
       shows: [
-        { time: "6:00 AM - 10:00 AM", show: "Morning Vibes", host: "DJ Sunshine", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
-        { time: "10:00 AM - 2:00 PM", show: "Caribbean Mix", host: "MC Island", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("2:00 PM") },
-        { time: "2:00 PM - 6:00 PM", show: "Afternoon Soul", host: "DJ Smooth", type: "rnb", startTime: timeToMinutes("2:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 10:00 PM", show: "Evening Rhythms", host: "DJ Spice", type: "soca", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("10:00 PM") },
-        { time: "10:00 PM - 2:00 AM", show: "Night Grooves", host: "DJ Midnight", type: "hiphop", startTime: timeToMinutes("10:00 PM"), endTime: timeToMinutes("2:00 AM") + 24 * 60 },
-        { time: "2:00 AM - 6:00 AM", show: "Late Night Vibes", host: "Auto DJ", type: "mix", startTime: timeToMinutes("2:00 AM") + 24 * 60, endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 AM - 10:00 AM", show: "Bro Gary Radio Sponsored By Bio Life", host: "Bro Gary", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
+        { time: "10:00 AM - 11:00 AM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("11:00 AM") },
+        { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
+        { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
+        { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
+        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
       day: "Tuesday", 
       shows: [
-        { time: "6:00 AM - 10:00 AM", show: "Rise & Shine", host: "DJ Dawn", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
-        { time: "10:00 AM - 2:00 PM", show: "Island Breeze", host: "DJ Coconut", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("2:00 PM") },
-        { time: "2:00 PM - 6:00 PM", show: "Soul Power", host: "DJ Revolution", type: "rnb", startTime: timeToMinutes("2:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 10:00 PM", show: "Carnival Time", host: "DJ Mas", type: "soca", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("10:00 PM") },
-        { time: "10:00 PM - 2:00 AM", show: "Urban Heat", host: "DJ Fire", type: "hiphop", startTime: timeToMinutes("10:00 PM"), endTime: timeToMinutes("2:00 AM") + 24 * 60 },
-        { time: "2:00 AM - 6:00 AM", show: "Night Shift", host: "Auto DJ", type: "mix", startTime: timeToMinutes("2:00 AM") + 24 * 60, endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 AM - 10:00 AM", show: "Bro Gary Radio Sponsored By Bio Life", host: "Bro Gary", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
+        { time: "10:00 AM - 11:00 AM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("11:00 AM") },
+        { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
+        { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
+        { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
+        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
       day: "Wednesday",
       shows: [
-        { time: "6:00 AM - 10:00 AM", show: "Midweek Energy", host: "DJ Storm", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
-        { time: "10:00 AM - 2:00 PM", show: "Caribbean Heat", host: "DJ Blaze", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("2:00 PM") },
-        { time: "2:00 PM - 6:00 PM", show: "Classic Soul", host: "DJ Vintage", type: "rnb", startTime: timeToMinutes("2:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 10:00 PM", show: "Soca Madness", host: "DJ Carnival", type: "soca", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("10:00 PM") },
-        { time: "10:00 PM - 2:00 AM", show: "Hip Hop Nation", host: "DJ Beats", type: "hiphop", startTime: timeToMinutes("10:00 PM"), endTime: timeToMinutes("2:00 AM") + 24 * 60 },
-        { time: "2:00 AM - 6:00 AM", show: "Overnight Mix", host: "Auto DJ", type: "mix", startTime: timeToMinutes("2:00 AM") + 24 * 60, endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 AM - 10:00 AM", show: "Bro Gary Radio Sponsored By Bio Life", host: "Bro Gary", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
+        { time: "10:00 AM - 11:00 AM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("11:00 AM") },
+        { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
+        { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
+        { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
+        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
       day: "Thursday",
       shows: [
-        { time: "6:00 AM - 10:00 AM", show: "Thursday Vibes", host: "DJ Thunder", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
-        { time: "10:00 AM - 2:00 PM", show: "Dancehall Fever", host: "DJ Wicked", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("2:00 PM") },
-        { time: "2:00 PM - 6:00 PM", show: "Smooth Operator", host: "DJ Silk", type: "rnb", startTime: timeToMinutes("2:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 10:00 PM", show: "Trini Vibes", host: "DJ Calypso", type: "soca", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("10:00 PM") },
-        { time: "10:00 PM - 2:00 AM", show: "Rap City", host: "DJ Lyrical", type: "hiphop", startTime: timeToMinutes("10:00 PM"), endTime: timeToMinutes("2:00 AM") + 24 * 60 },
-        { time: "2:00 AM - 6:00 AM", show: "Night Owl", host: "Auto DJ", type: "mix", startTime: timeToMinutes("2:00 AM") + 24 * 60, endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 AM - 10:00 AM", show: "Bro Gary Radio Sponsored By Bio Life", host: "Bro Gary", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
+        { time: "10:00 AM - 11:00 AM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("11:00 AM") },
+        { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
+        { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
+        { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
+        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
       day: "Friday",
       shows: [
-        { time: "6:00 AM - 10:00 AM", show: "TGIF Morning", host: "DJ Weekend", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
-        { time: "10:00 AM - 2:00 PM", show: "Friday Flex", host: "DJ Massive", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("2:00 PM") },
-        { time: "2:00 PM - 6:00 PM", show: "Feel Good Friday", host: "DJ Happy", type: "rnb", startTime: timeToMinutes("2:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 10:00 PM", show: "Friday Night Live", host: "DJ Party", type: "soca", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("10:00 PM") },
-        { time: "10:00 PM - 2:00 AM", show: "Weekend Warmup", host: "DJ Hype", type: "hiphop", startTime: timeToMinutes("10:00 PM"), endTime: timeToMinutes("2:00 AM") + 24 * 60 },
-        { time: "2:00 AM - 6:00 AM", show: "Late Night Party", host: "Auto DJ", type: "mix", startTime: timeToMinutes("2:00 AM") + 24 * 60, endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 AM - 10:00 AM", show: "Bro Gary Radio Sponsored By Bio Life", host: "Bro Gary", type: "reggae", startTime: timeToMinutes("6:00 AM"), endTime: timeToMinutes("10:00 AM") },
+        { time: "10:00 AM - 11:00 AM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("10:00 AM"), endTime: timeToMinutes("11:00 AM") },
+        { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
+        { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
+        { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
+        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
