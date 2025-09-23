@@ -9,7 +9,9 @@ interface FallbackBlogImageProps {
 export const FallbackBlogImage = ({ title, category, className = "" }: FallbackBlogImageProps) => {
   // Generate different reggae-themed background variations based on category and title
   const getBackgroundVariation = (category: string, title: string) => {
-    const hash = title.length + category.length;
+    const safeTitle = title || '';
+    const safeCategory = category || '';
+    const hash = safeTitle.length + safeCategory.length;
     const variations = [
       // Rasta colors combinations
       "bg-gradient-to-br from-red-600 via-yellow-500 to-green-600",
