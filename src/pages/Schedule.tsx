@@ -249,8 +249,12 @@ const Schedule = () => {
                     
                     <div className="text-center space-y-4">
                       <div className="relative">
-                        <div className="w-32 h-32 mx-auto bg-gradient-caribbean rounded-full flex items-center justify-center shadow-lg">
-                          <Radio className="h-12 w-12 text-white animate-pulse" />
+                        <div className="w-32 h-32 mx-auto bg-gradient-caribbean rounded-full flex items-center justify-center shadow-lg overflow-hidden">
+                          <img 
+                            src="/src/assets/logo.png" 
+                            alt="Link Up Radio" 
+                            className="w-20 h-20 object-contain"
+                          />
                         </div>
                         {isPlaying && (
                           <div className="absolute inset-0 rounded-full border-4 border-primary/30 animate-ping"></div>
