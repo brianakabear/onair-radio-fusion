@@ -256,11 +256,6 @@ const Blog = () => {
                           className="w-full h-full"
                         />
                       </div>
-                      <Badge 
-                        className={`absolute top-4 left-4 ${getCategoryColor(post.category)}`}
-                      >
-                        Featured
-                      </Badge>
                     </div>
                     <CardContent className="p-8 flex flex-col justify-center">
                       <Badge 
@@ -336,11 +331,6 @@ const Blog = () => {
                           className="w-full h-full"
                         />
                       </div>
-                      <Badge 
-                        className={`absolute top-2 left-2 text-xs ${getCategoryColor(post.category)}`}
-                      >
-                        {post.category}
-                      </Badge>
                     </div>
                     <CardContent className="p-3">
                       <h3 className="text-sm font-bold mb-2 hover:text-primary transition-colors line-clamp-2">

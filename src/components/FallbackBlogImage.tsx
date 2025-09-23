@@ -40,27 +40,43 @@ export const FallbackBlogImage = ({ title, category, className = "" }: FallbackB
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
-      <div className={`w-full h-full ${backgroundClass} flex items-center justify-center p-8`}>
+      <div className={`w-full h-full ${backgroundClass} flex flex-col items-center justify-center p-8 relative`}>
         {/* Subtle pattern overlay */}
         <div className="absolute inset-0 opacity-10">
           <div className="w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]"></div>
         </div>
         
+        {/* Category Title - Always visible at top */}
+        <div className="absolute top-4 left-4 right-4 z-20">
+          <div className="bg-black/60 backdrop-blur-sm rounded-lg px-3 py-2">
+            <h3 className="text-white text-sm font-bold text-center uppercase tracking-wide">
+              {category}
+            </h3>
+          </div>
+        </div>
+        
         {/* Logo */}
-        <div className="relative z-10 flex items-center justify-center">
+        <div className="relative z-10 flex items-center justify-center mt-8">
           <img
             src={linkupLogo}
             alt="Link Up Radio"
-            className="w-32 h-32 md:w-40 md:h-40 drop-shadow-2xl"
+            className="w-24 h-24 md:w-32 md:h-32 drop-shadow-2xl"
             style={{
               filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))"
             }}
           />
         </div>
 
+        {/* Link Up Radio Text */}
+        <div className="relative z-10 mt-4">
+          <h2 className="text-white text-lg md:text-xl font-bold text-center drop-shadow-lg">
+            LINK UP RADIO
+          </h2>
+        </div>
+
         {/* Decorative elements */}
-        <div className="absolute top-4 left-4 w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
-        <div className="absolute top-8 right-6 w-1 h-1 bg-white/40 rounded-full animate-pulse delay-300"></div>
+        <div className="absolute top-12 left-8 w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
+        <div className="absolute top-16 right-6 w-1 h-1 bg-white/40 rounded-full animate-pulse delay-300"></div>
         <div className="absolute bottom-6 left-8 w-3 h-3 bg-white/20 rounded-full animate-pulse delay-700"></div>
         <div className="absolute bottom-4 right-4 w-1.5 h-1.5 bg-white/35 rounded-full animate-pulse delay-500"></div>
       </div>
