@@ -12,6 +12,7 @@ interface Video {
   description: string;
   thumbnail: string;
   videoId: string;
+  viewCount: string;
 }
 
 const Videos = () => {
@@ -39,13 +40,33 @@ const Videos = () => {
       }
 
       const data = await response.json();
-      const videoList: Video[] = data.items.map((item: any) => ({
-        id: item.id,
-        title: item.snippet.title,
-        description: item.snippet.description,
-        thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.default.url,
-        videoId: item.snippet.resourceId.videoId,
-      }));
+      
+      // Get video IDs to fetch statistics
+      const videoIds = data.items.map((item: any) => item.snippet.resourceId.videoId).join(',');
+      
+      // Fetch video statistics for view counts
+      const statsResponse = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${API_KEY}`
+      );
+      const statsData = await statsResponse.json();
+      
+      // Create a map of video statistics
+      const statsMap = new Map();
+      statsData.items?.forEach((item: any) => {
+        statsMap.set(item.id, item.statistics);
+      });
+
+      const videoList: Video[] = data.items.map((item: any) => {
+        const stats = statsMap.get(item.snippet.resourceId.videoId);
+        return {
+          id: item.id,
+          title: item.snippet.title,
+          description: item.snippet.description,
+          thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.default.url,
+          videoId: item.snippet.resourceId.videoId,
+          viewCount: stats?.viewCount || '0',
+        };
+      });
 
       // Randomize video order
       const shuffledVideos = [...videoList].sort(() => Math.random() - 0.5);
@@ -106,7 +127,6 @@ const Videos = () => {
             {/* Featured Video - Takes up 75% of page width */}
             {featuredVideo && (
               <div className="space-y-4">
-                <h2 className="text-2xl font-semibold">Featured Video</h2>
                 <div className="aspect-video bg-card rounded-lg overflow-hidden shadow-caribbean">
                   <iframe
                     src={`https://www.youtube.com/embed/${featuredVideo.videoId}?autoplay=0&rel=0`}
@@ -120,6 +140,9 @@ const Videos = () => {
                   <h3 className="text-xl font-semibold text-foreground">
                     {featuredVideo.title}
                   </h3>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>{parseInt(featuredVideo.viewCount).toLocaleString()} views</span>
+                  </div>
                   <p className="text-muted-foreground text-sm line-clamp-3">
                     {featuredVideo.description}
                   </p>
@@ -166,6 +189,11 @@ const Videos = () => {
                       <h3 className="font-semibold text-sm line-clamp-2 mb-2">
                         {video.title}
                       </h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs text-muted-foreground">
+                          {parseInt(video.viewCount).toLocaleString()} views
+                        </span>
+                      </div>
                       <p className="text-xs text-muted-foreground line-clamp-2">
                         {video.description}
                       </p>
