@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Schedule from "./pages/Schedule";
 import Team from "./pages/Team";
+import News from "./pages/News";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
@@ -48,6 +49,7 @@ const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/schedule" element={<Schedule />} />
               <Route path="/team" element={<Team />} />
+              <Route path="/news" element={<News />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="/videos" element={<Videos />} />
