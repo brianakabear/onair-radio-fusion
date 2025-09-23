@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.png";
+import ThemeSelector from "@/components/ThemeSelector";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,6 +56,9 @@ const Header = () => {
 
         {/* Right Section - Social & Listen Live */}
         <div className="flex items-center space-x-4">
+          {/* Theme Selector */}
+          <ThemeSelector />
+          
           {/* Social Links */}
           <div className="hidden sm:flex items-center space-x-2">
             <Button variant="ghost" size="sm" asChild>
