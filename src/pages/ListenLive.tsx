@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Radio, Music, Headphones, Play } from "lucide-react";
+import { Radio, Music, Headphones, Play, AudioLines } from "lucide-react";
 import Header from "@/components/Header";
 import { useAudio } from "@/contexts/AudioContext";
 import linkUpLogo from "@/assets/linkup-logo.png";
@@ -16,7 +16,7 @@ interface RadioStream {
 }
 
 const ListenLive = () => {
-  const { currentStream, selectStream, isPlaying } = useAudio();
+  const { currentStream, selectStream, isPlaying, getStreamMetadata, currentTrack } = useAudio();
 
   const streams: RadioStream[] = [
     {
@@ -160,6 +160,25 @@ const ListenLive = () => {
                 <CardDescription className="text-lg max-w-2xl mx-auto">
                   {featuredStream.description}
                 </CardDescription>
+                
+                {/* Current Track Info for Featured Stream */}
+                {currentStream?.id === featuredStream.id && currentTrack && (
+                  <div className="bg-muted/30 rounded-lg p-4 border border-primary/20">
+                    <div className="flex items-center justify-center space-x-2 mb-2">
+                      <AudioLines className="h-4 w-4 text-primary animate-pulse" />
+                      <span className="text-sm font-medium text-primary">Now Playing</span>
+                    </div>
+                    <h4 className="font-semibold text-foreground">
+                      {currentTrack.title || 'Unknown Track'}
+                    </h4>
+                    {currentTrack.artist && (
+                      <p className="text-sm text-muted-foreground mt-1">
+                        by {currentTrack.artist}
+                      </p>
+                    )}
+                  </div>
+                )}
+                
                 <Button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -217,6 +236,25 @@ const ListenLive = () => {
                   <CardDescription className="text-sm mb-4">
                     {stream.description}
                   </CardDescription>
+                  
+                  {/* Current Track Info for Stream */}
+                  {currentStream?.id === stream.id && currentTrack && (
+                    <div className="bg-muted/20 rounded-md p-3 mb-4 border border-primary/10">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <AudioLines className="h-3 w-3 text-primary animate-pulse" />
+                        <span className="text-xs font-medium text-primary">Now Playing</span>
+                      </div>
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {currentTrack.title || 'Unknown Track'}
+                      </p>
+                      {currentTrack.artist && (
+                        <p className="text-xs text-muted-foreground truncate">
+                          by {currentTrack.artist}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();

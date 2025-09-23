@@ -24,10 +24,12 @@ interface AudioContextType {
   currentTrack: TrackMetadata | null;
   isLoading: boolean;
   audioRef: React.RefObject<HTMLAudioElement>;
+  streams: RadioStream[];
   selectStream: (stream: RadioStream) => void;
   togglePlay: () => void;
   toggleMute: () => void;
   handleVolumeChange: (newVolume: number[]) => void;
+  getStreamMetadata: (streamId: string) => TrackMetadata | null;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -82,6 +84,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [currentStream, setCurrentStream] = useState<RadioStream>(defaultStreams[0]);
   const [currentTrack, setCurrentTrack] = useState<TrackMetadata | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [streamMetadata, setStreamMetadata] = useState<Record<string, TrackMetadata>>({});
   
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -111,15 +114,26 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           const title = event.target.title;
           // Parse common formats like "Artist - Title"
           const parts = title.split(' - ');
+          let trackData: TrackMetadata;
+          
           if (parts.length >= 2) {
-            setCurrentTrack({
+            trackData = {
               artist: parts[0].trim(),
               title: parts.slice(1).join(' - ').trim()
-            });
+            };
           } else {
-            setCurrentTrack({
+            trackData = {
               title: title.trim()
-            });
+            };
+          }
+          
+          setCurrentTrack(trackData);
+          // Store metadata for the current stream
+          if (currentStream) {
+            setStreamMetadata(prev => ({
+              ...prev,
+              [currentStream.id]: trackData
+            }));
           }
         }
       };
@@ -209,6 +223,10 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const getStreamMetadata = (streamId: string): TrackMetadata | null => {
+    return streamMetadata[streamId] || null;
+  };
+
   return (
     <AudioContext.Provider
       value={{
@@ -219,10 +237,12 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         currentTrack,
         isLoading,
         audioRef,
+        streams: defaultStreams,
         selectStream,
         togglePlay,
         toggleMute,
         handleVolumeChange,
+        getStreamMetadata,
       }}
     >
       {children}
