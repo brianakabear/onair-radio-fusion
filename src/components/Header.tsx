@@ -11,6 +11,7 @@ const Header = () => {
 
   const navigation = [
     { name: "Home", href: "/" },
+    { name: "Listen Live", href: "/listen-live" },
     { name: "Schedule", href: "/schedule" },
     { name: "About", href: "/about" },
     { name: "Team", href: "/team" },
@@ -92,16 +93,14 @@ const Header = () => {
             asChild
             className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-caribbean animate-pulse-glow"
           >
-            <a
-              href="https://c30.radioboss.fm/u/946"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/listen-live"
               className="flex items-center space-x-2"
             >
               <Play className="h-4 w-4" />
               <span className="hidden sm:inline">Listen Live</span>
               <Radio className="h-4 w-4 animate-pulse" />
-            </a>
+            </Link>
           </Button>
 
           {/* Mobile Menu */}

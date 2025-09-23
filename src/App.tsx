@@ -9,6 +9,7 @@ import Schedule from "./pages/Schedule";
 import Team from "./pages/Team";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import ListenLive from "./pages/ListenLive";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/team" element={<Team />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/listen-live" element={<ListenLive />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
