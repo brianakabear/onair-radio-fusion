@@ -19,19 +19,14 @@ const Videos = () => {
   const [featuredVideo, setFeaturedVideo] = useState<Video | null>(null);
   const [loading, setLoading] = useState(false);
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
-  const [apiKey, setApiKey] = useState("");
+  const [apiKey, setApiKey] = useState("AIzaSyC9Vk3-0cETsI1rQ4bzjPCW7CVdttNr7UY");
   const { toast } = useToast();
 
   const PLAYLIST_ID = "PLIEahQKVNC2wTVti1enD_km8IDGkyupPw";
 
   useEffect(() => {
-    const storedApiKey = localStorage.getItem("youtube_api_key");
-    if (storedApiKey) {
-      setApiKey(storedApiKey);
-      fetchPlaylistVideos(storedApiKey);
-    } else {
-      setShowApiKeyInput(true);
-    }
+    // Use the default API key and fetch videos immediately
+    fetchPlaylistVideos("AIzaSyC9Vk3-0cETsI1rQ4bzjPCW7CVdttNr7UY");
   }, []);
 
   const fetchPlaylistVideos = async (key: string) => {
@@ -180,7 +175,7 @@ const Videos = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-semibold">All Music Videos</h2>
                 <Button
-                  onClick={() => fetchPlaylistVideos(apiKey)}
+                  onClick={() => fetchPlaylistVideos("AIzaSyC9Vk3-0cETsI1rQ4bzjPCW7CVdttNr7UY")}
                   variant="outline"
                   size="sm"
                 >
