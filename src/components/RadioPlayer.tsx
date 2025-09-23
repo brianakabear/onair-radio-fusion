@@ -14,7 +14,7 @@ const RadioPlayer = () => {
   });
   
   const audioRef = useRef<HTMLAudioElement>(null);
-  const streamUrl = "https://c30.radioboss.fm/u/946";
+  const streamUrl = "https://c2.radioboss.fm:8967/stream";
 
   useEffect(() => {
     if (audioRef.current) {

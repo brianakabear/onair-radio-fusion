@@ -34,15 +34,13 @@ const Index = () => {
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-caribbean animate-pulse-glow px-8 py-4 text-lg"
               >
-                <a
-                  href="https://c30.radioboss.fm/u/946"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/listen-live"
                   className="flex items-center space-x-3"
                 >
                   <Play className="h-6 w-6" />
                   <span>LISTEN NOW</span>
-                </a>
+                </Link>
               </Button>
               
               <Button 
