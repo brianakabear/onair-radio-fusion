@@ -12,7 +12,15 @@ export const generateInitialBlogPosts = () => {
     "https://images.unsplash.com/photo-1567606384843-c13b1c7b329c?w=800",
     "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800",
     "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
-    "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800"
+    "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800",
+    "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800",
+    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
+    "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800",
+    "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800",
+    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
+    // Use fallback for remaining images by setting to null
+    null, null, null, null, null, null, null, null, null, null, 
+    null, null, null, null, null
   ];
 
   const authors = [
@@ -41,7 +49,7 @@ export const generateInitialBlogPosts = () => {
       excerpt: randomArticle.excerpt,
       content: generateMusicNewsContent(randomArticle),
       category: randomTemplate.category,
-      image: images[i % images.length],
+      image: images[i % images.length] || null, // null will trigger fallback image
       date: postDate.toLocaleDateString('en-US', { 
         year: 'numeric', 
         month: 'long', 

@@ -9,6 +9,7 @@ import { BlogManager } from "@/components/BlogManager";
 import { musicNewsTemplates, generateMusicNewsContent } from "@/data/musicNewsContent";
 import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { FallbackBlogImage } from "@/components/FallbackBlogImage";
 
 const Blog = () => {
   const [showManager, setShowManager] = useState(false);
@@ -46,7 +47,7 @@ const Blog = () => {
         excerpt: randomArticle.excerpt,
         content: generateMusicNewsContent(randomArticle),
         category: randomTemplate.category,
-        image: images[Math.floor(Math.random() * images.length)],
+        image: Math.random() > 0.6 ? images[Math.floor(Math.random() * images.length)] : null, // 40% chance of fallback image
         date: new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 
@@ -179,11 +180,19 @@ const Blog = () => {
                 <Card key={post.id} className="mb-12 overflow-hidden hover:shadow-caribbean transition-all duration-300">
                   <div className="grid md:grid-cols-2">
                     <div className="relative h-64 md:h-auto">
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover"
-                      />
+                      {post.image ? (
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <FallbackBlogImage 
+                          title={post.title}
+                          category={post.category}
+                          className="w-full h-full"
+                        />
+                      )}
                       <Badge 
                         className={`absolute top-4 left-4 ${getCategoryColor(post.category)}`}
                       >
@@ -232,11 +241,19 @@ const Blog = () => {
                 {regularPosts.map((post) => (
                   <Card key={post.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300 animate-slide-up">
                     <div className="relative h-48">
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover"
-                      />
+                      {post.image ? (
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <FallbackBlogImage 
+                          title={post.title}
+                          category={post.category}
+                          className="w-full h-full"
+                        />
+                      )}
                       <Badge 
                         className={`absolute top-4 left-4 ${getCategoryColor(post.category)}`}
                       >
