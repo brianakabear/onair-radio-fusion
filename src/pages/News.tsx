@@ -24,6 +24,7 @@ const News = () => {
   const [videoNews, setVideoNews] = useState<any[]>([]);
   const [isLoadingVideo, setIsLoadingVideo] = useState(false);
   const [lastVideoUpdate, setLastVideoUpdate] = useState<number>(0);
+  const [currentVideo, setCurrentVideo] = useState<any | null>(null);
 
   // Fetch videos from YouTube playlist
   const fetchVideoNews = async () => {
@@ -62,6 +63,276 @@ const News = () => {
           channel: "Reuters",
           publishedAt: new Date(Date.now() - 7200000).toISOString(),
           verified: true
+        },
+        {
+          id: "cnn-2",
+          title: "Tech Innovation Summit Unveils AI Breakthrough",
+          description: "Revolutionary artificial intelligence system promises to transform healthcare",
+          thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg",
+          youtubeId: "9bZkp7q19f0",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 10800000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-2",
+          title: "Space Exploration Milestone: Mars Colony Plans Announced",
+          description: "International space agency reveals ambitious timeline for human settlement",
+          thumbnail: "https://img.youtube.com/vi/W7QZnwKqopo/maxresdefault.jpg",
+          youtubeId: "W7QZnwKqopo",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 14400000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-2",
+          title: "Global Trade Agreement Boosts Economic Cooperation",
+          description: "New international partnership aims to strengthen supply chains worldwide",
+          thumbnail: "https://img.youtube.com/vi/pVn_WaFCvJY/maxresdefault.jpg",
+          youtubeId: "pVn_WaFCvJY",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 18000000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-3",
+          title: "Medical Breakthrough: Gene Therapy Shows Promise",
+          description: "Clinical trials demonstrate significant progress in treating rare diseases",
+          thumbnail: "https://img.youtube.com/vi/kJQP7kiw5Fk/maxresdefault.jpg",
+          youtubeId: "kJQP7kiw5Fk",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 21600000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-3",
+          title: "Renewable Energy Reaches New Global Record",
+          description: "Solar and wind power generation exceeds fossil fuels for first time",
+          thumbnail: "https://img.youtube.com/vi/LO1mTELoj6o/maxresdefault.jpg",
+          youtubeId: "LO1mTELoj6o",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 25200000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-3",
+          title: "Ocean Conservation Initiative Launches Worldwide",
+          description: "International effort aims to protect marine ecosystems and reduce plastic waste",
+          thumbnail: "https://img.youtube.com/vi/bFtcLJVN8rY/maxresdefault.jpg",
+          youtubeId: "bFtcLJVN8rY",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 28800000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-4",
+          title: "Education Reform Initiative Shows Positive Results",
+          description: "New teaching methods improve student performance across diverse communities",
+          thumbnail: "https://img.youtube.com/vi/QH2-TGUlwu4/maxresdefault.jpg",
+          youtubeId: "QH2-TGUlwu4",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 32400000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-4",
+          title: "Digital Currency Regulation Framework Approved",
+          description: "New guidelines provide clarity for cryptocurrency adoption and security",
+          thumbnail: "https://img.youtube.com/vi/nfWlot6h_JM/maxresdefault.jpg",
+          youtubeId: "nfWlot6h_JM",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 36000000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-4",
+          title: "Sustainable Agriculture Practices Gain Momentum",
+          description: "Farmers worldwide adopt innovative techniques to combat climate change",
+          thumbnail: "https://img.youtube.com/vi/4NRXx6U8ABQ/maxresdefault.jpg",
+          youtubeId: "4NRXx6U8ABQ",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 39600000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-5",
+          title: "Mental Health Awareness Campaign Reaches Millions",
+          description: "Global initiative promotes understanding and support for mental wellness",
+          thumbnail: "https://img.youtube.com/vi/Hzgzim5m7oU/maxresdefault.jpg",
+          youtubeId: "Hzgzim5m7oU",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 43200000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-5",
+          title: "Archaeological Discovery Rewrites Ancient History",
+          description: "New findings challenge established theories about early civilizations",
+          thumbnail: "https://img.youtube.com/vi/P9WVE2X0ngs/maxresdefault.jpg",
+          youtubeId: "P9WVE2X0ngs",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 46800000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-5",
+          title: "Urban Planning Revolution: Smart Cities Take Shape",
+          description: "Technology integration transforms metropolitan areas worldwide",
+          thumbnail: "https://img.youtube.com/vi/g6iDZspbRMg/maxresdefault.jpg",
+          youtubeId: "g6iDZspbRMg",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 50400000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-6",
+          title: "Wildlife Conservation Efforts Show Remarkable Success",
+          description: "Endangered species populations recover thanks to international cooperation",
+          thumbnail: "https://img.youtube.com/vi/hFZFjoX2cGg/maxresdefault.jpg",
+          youtubeId: "hFZFjoX2cGg",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 54000000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-6",
+          title: "Quantum Computing Breakthrough Opens New Possibilities",
+          description: "Revolutionary processor design accelerates scientific research capabilities",
+          thumbnail: "https://img.youtube.com/vi/zNzzGgr2mhk/maxresdefault.jpg",
+          youtubeId: "zNzzGgr2mhk",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 57600000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-6",
+          title: "Clean Water Initiative Reaches Remote Communities",
+          description: "Innovative filtration technology provides access to safe drinking water",
+          thumbnail: "https://img.youtube.com/vi/aJOTlE1K90k/maxresdefault.jpg",
+          youtubeId: "aJOTlE1K90k",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 61200000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-7",
+          title: "Disaster Response Technology Saves Lives",
+          description: "AI-powered early warning systems prevent casualties in natural disasters",
+          thumbnail: "https://img.youtube.com/vi/8SbUC-UaAxE/maxresdefault.jpg",
+          youtubeId: "8SbUC-UaAxE",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 64800000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-7",
+          title: "International Sports Championship Breaks Records",
+          description: "Athletes achieve unprecedented performances in global competition",
+          thumbnail: "https://img.youtube.com/vi/nBHkIWAJitg/maxresdefault.jpg",
+          youtubeId: "nBHkIWAJitg",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 68400000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-7",
+          title: "Cultural Heritage Preservation Goes Digital",
+          description: "Advanced technology helps protect and share world cultural treasures",
+          thumbnail: "https://img.youtube.com/vi/dBvlnyvgOnw/maxresdefault.jpg",
+          youtubeId: "dBvlnyvgOnw",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 72000000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-8",
+          title: "Transportation Revolution: Hyperloop Testing Success",
+          description: "High-speed ground transportation system passes major milestone",
+          thumbnail: "https://img.youtube.com/vi/TudxlQ7_P0Y/maxresdefault.jpg",
+          youtubeId: "TudxlQ7_P0Y",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 75600000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-8",
+          title: "Antarctic Research Reveals Climate Insights",
+          description: "Scientific expedition uncovers critical data about global warming patterns",
+          thumbnail: "https://img.youtube.com/vi/jsg_cuL7Ga8/maxresdefault.jpg",
+          youtubeId: "jsg_cuL7Ga8",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 79200000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-8",
+          title: "Food Security Innovation Feeds Growing Population",
+          description: "Vertical farming and lab-grown proteins address global hunger challenges",
+          thumbnail: "https://img.youtube.com/vi/xe_3hLt-DJI/maxresdefault.jpg",
+          youtubeId: "xe_3hLt-DJI",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 82800000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-9",
+          title: "Cybersecurity Alliance Strengthens Digital Defense",
+          description: "International cooperation enhances protection against online threats",
+          thumbnail: "https://img.youtube.com/vi/INL-RFKDH0w/maxresdefault.jpg",
+          youtubeId: "INL-RFKDH0w",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 86400000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-9",
+          title: "Renewable Energy Storage Breakthrough Announced",
+          description: "New battery technology solves intermittency challenges for clean power",
+          thumbnail: "https://img.youtube.com/vi/bK7I79hcm08/maxresdefault.jpg",
+          youtubeId: "bK7I79hcm08",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 90000000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-9",
+          title: "Global Health Initiative Eradicates Tropical Disease",
+          description: "Coordinated vaccination campaign eliminates centuries-old health threat",
+          thumbnail: "https://img.youtube.com/vi/RGLv7heP3-E/maxresdefault.jpg",
+          youtubeId: "RGLv7heP3-E",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 93600000).toISOString(),
+          verified: true
+        },
+        {
+          id: "cnn-10",
+          title: "Artificial Intelligence Ethics Guidelines Established",
+          description: "Global framework ensures responsible development of AI technologies",
+          thumbnail: "https://img.youtube.com/vi/JMLsJJuOwb4/maxresdefault.jpg",
+          youtubeId: "JMLsJJuOwb4",
+          channel: "CNN",
+          publishedAt: new Date(Date.now() - 97200000).toISOString(),
+          verified: true
+        },
+        {
+          id: "bbc-10",
+          title: "Deep Ocean Exploration Reveals New Species",
+          description: "Marine biologists discover unprecedented biodiversity in ocean depths",
+          thumbnail: "https://img.youtube.com/vi/xX96xng7sAE/maxresdefault.jpg",
+          youtubeId: "xX96xng7sAE",
+          channel: "BBC News",
+          publishedAt: new Date(Date.now() - 100800000).toISOString(),
+          verified: true
+        },
+        {
+          id: "reuters-10",
+          title: "Democratic Innovations Strengthen Global Governance",
+          description: "New participatory systems increase citizen engagement in decision-making",
+          thumbnail: "https://img.youtube.com/vi/gCfemmxqaRg/maxresdefault.jpg",
+          youtubeId: "gCfemmxqaRg",
+          channel: "Reuters",
+          publishedAt: new Date(Date.now() - 104400000).toISOString(),
+          verified: true
         }
       ];
       
@@ -72,6 +343,7 @@ const News = () => {
       // Simulate API delay
       setTimeout(() => {
         setVideoNews(mockVerifiedNewsVideos);
+        setCurrentVideo(mockVerifiedNewsVideos[0]); // Set first video as default
         setLastVideoUpdate(Date.now());
         setIsLoadingVideo(false);
       }, 1000);
@@ -362,48 +634,109 @@ const News = () => {
                 </div>
 
                 {isLoadingVideo ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-                    {[1, 2, 3].map((i) => (
-                      <Card key={i} className="animate-pulse">
-                        <div className="aspect-video bg-muted"></div>
-                        <CardContent className="p-4">
-                          <div className="h-4 bg-muted rounded mb-2"></div>
-                          <div className="h-3 bg-muted rounded w-2/3"></div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                  <div className="space-y-6">
+                    {/* Main Player Loading */}
+                    <Card className="overflow-hidden animate-pulse">
+                      <div className="aspect-video bg-muted"></div>
+                      <CardContent className="p-4">
+                        <div className="h-6 bg-muted rounded mb-2"></div>
+                        <div className="h-4 bg-muted rounded w-3/4"></div>
+                      </CardContent>
+                    </Card>
+                    
+                    {/* Thumbnails Loading */}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <Card key={i} className="animate-pulse">
+                          <div className="aspect-video bg-muted"></div>
+                          <div className="p-2">
+                            <div className="h-3 bg-muted rounded"></div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
                   </div>
                 ) : videoNews.length > 0 ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-                    {videoNews.map((video) => (
-                      <Card key={video.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
-                        <div className="relative">
-                          <div className="aspect-video bg-black">
-                            <iframe
-                              src={`https://www.youtube.com/embed/${video.youtubeId}?controls=1&modestbranding=1&rel=0`}
-                              className="w-full h-full"
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={video.title}
-                            />
-                          </div>
-                          <div className="absolute top-2 left-2">
-                            <Badge className="bg-red-600 text-white text-xs">
-                              {video.channel} ✓
+                  <div className="space-y-6">
+                    {/* Main Video Player */}
+                    {currentVideo && (
+                      <Card className="overflow-hidden">
+                        <div className="aspect-video bg-black">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${currentVideo.youtubeId}?controls=1&modestbranding=1&rel=0&autoplay=1`}
+                            className="w-full h-full"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title={currentVideo.title}
+                          />
+                        </div>
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold mb-2 line-clamp-2">
+                                {currentVideo.title}
+                              </h3>
+                              <p className="text-muted-foreground text-sm mb-3">
+                                {currentVideo.description}
+                              </p>
+                            </div>
+                            <Badge className="bg-red-600 text-white text-sm ml-4">
+                              {currentVideo.channel} ✓
                             </Badge>
                           </div>
-                        </div>
-                        <div className="p-2">
-                          <h3 className="font-semibold text-xs line-clamp-2 mb-2">
-                            {video.title}
-                          </h3>
-                          <Button variant="outline" size="sm" className="w-full text-xs">
-                            Watch Now
-                          </Button>
-                        </div>
+                          <div className="flex items-center text-sm text-muted-foreground">
+                            <Calendar className="h-4 w-4 mr-1" />
+                            {new Date(currentVideo.publishedAt).toLocaleDateString()}
+                          </div>
+                        </CardContent>
                       </Card>
-                    ))}
+                    )}
+                    
+                    {/* Video Thumbnails Navigation */}
+                    <div>
+                      <h4 className="text-lg font-semibold mb-4">More Videos ({videoNews.length} total)</h4>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                        {videoNews.map((video) => (
+                          <Card 
+                            key={video.id} 
+                            className={`overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer ${
+                              currentVideo?.id === video.id ? 'ring-2 ring-primary' : ''
+                            }`}
+                            onClick={() => setCurrentVideo(video)}
+                          >
+                            <div className="relative">
+                              <img
+                                src={video.thumbnail}
+                                alt={video.title}
+                                className="w-full aspect-video object-cover"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                                }}
+                              />
+                              <div className="absolute top-2 left-2">
+                                <Badge className="bg-red-600 text-white text-xs">
+                                  {video.channel} ✓
+                                </Badge>
+                              </div>
+                              {currentVideo?.id === video.id && (
+                                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                    <div className="w-0 h-0 border-l-[6px] border-l-white border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent ml-0.5"></div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            <div className="p-2">
+                              <h3 className="font-semibold text-xs line-clamp-2">
+                                {video.title}
+                              </h3>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <Card className="p-8 text-center">
