@@ -180,6 +180,16 @@ const Index = () => {
                   >
                     {post.category}
                   </Badge>
+                  
+                  {/* Read Button Overlay */}
+                  <div className="absolute bottom-3 right-3">
+                    <Button variant="default" size="sm" asChild>
+                      <Link to={`/blog/${post.id}`} className="flex items-center space-x-1">
+                        <span>Read</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-3 hover:text-primary transition-colors line-clamp-2">
@@ -189,12 +199,6 @@ const Index = () => {
                   </h3>
                   <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
                     {post.excerpt}
-                    <Button variant="default" size="sm" asChild className="ml-2 inline-flex">
-                      <Link to={`/blog/${post.id}`} className="flex items-center space-x-1">
-                        <span>Read</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
                   </p>
                 </CardContent>
               </Card>
