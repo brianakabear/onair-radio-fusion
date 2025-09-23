@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Instagram, Twitter, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import davidSqueezeImage from "@/assets/david-squeeze-annakie.jpg";
+import brianEngineerImage from "@/assets/brian-engineer.jpg";
 
 const Team = () => {
   const teamMembers = [
@@ -19,11 +20,11 @@ const Team = () => {
       }
     },
     {
-      name: "MC Island",
-      role: "Caribbean Mix Host",
-      bio: "Your guide through the hottest Caribbean sounds and island culture.",
-      specialties: ["Dancehall", "Caribbean Culture", "Island Vibes"],
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
+      name: "Brian 'The Engineer'",
+      role: "Tech & Caribbean Mix Host",
+      bio: "MIT-educated engineer and tech innovator bringing cutting-edge sound engineering to Caribbean radio. With a background in Quantum Physics and IT leadership, Brian blends technical expertise with authentic island culture.",
+      specialties: ["Sound Engineering", "Caribbean Culture", "Technology Innovation", "MIT Education"],
+      image: brianEngineerImage,
       social: {
         instagram: "#",
         twitter: "#"
