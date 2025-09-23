@@ -281,17 +281,7 @@ const Blog = () => {
                           Based on reporting by {post.source}
                         </p>
                       )}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="h-4 w-4" />
-                            <span>{post.date}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Clock className="h-4 w-4" />
-                            <span>{post.readTime}</span>
-                          </div>
-                        </div>
+                      <div className="flex justify-end">
                         <Button variant="outline" size="sm" asChild>
                           <Link to={`/blog/${post.id}`} className="flex items-center space-x-1">
                             <span>Read More</span>
@@ -356,17 +346,7 @@ const Blog = () => {
                           Source: {post.source}
                         </p>
                       )}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="h-2.5 w-2.5" />
-                            <span className="truncate">{post.date}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Clock className="h-2.5 w-2.5" />
-                            <span>{post.readTime}</span>
-                          </div>
-                        </div>
+                      <div className="flex justify-end">
                         <Button variant="ghost" size="sm" asChild className="h-6 w-6 p-0">
                           <Link to={`/blog/${post.id}`}>
                             <ArrowRight className="h-3 w-3" />
