@@ -36,8 +36,8 @@ const ListenLive = () => {
     },
     {
       id: "reggae",
-      name: "Reggae Channel",
-      url: "https://example.com/reggae-stream", // Replace with actual stream
+      name: "WAVS Stream",
+      url: "https://c30.radioboss.fm:8946/stream",
       genre: "Reggae",
       description: "Classic and modern reggae music 24/7",
       bitrate: "128kbps"
