@@ -23,10 +23,9 @@ const News = () => {
   // Video player state
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentVideoStory, setCurrentVideoStory] = useState(0);
-  const [videoStories, setVideoStories] = useState<(NewsStory & { videoUrl: string })[]>([]);
-  const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
+  const [videoStories, setVideoStories] = useState<(NewsStory & { youtubeId: string })[]>([]);
 
-  // Initialize random video stories with video URLs
+  // Initialize video news stories with YouTube video IDs
   useEffect(() => {
     const videoNewsStories = [
       {
@@ -38,7 +37,7 @@ const News = () => {
         readTime: "2 min read",
         source: "Caribbean Weather Center",
         dateTimestamp: Date.now(),
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        youtubeId: "jNQXAC9IVRw" // Sample nature/weather video
       },
       {
         id: "video-2", 
@@ -49,7 +48,7 @@ const News = () => {
         readTime: "5 min read",
         source: "Jamaica Information Service",
         dateTimestamp: Date.now() - 86400000,
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        youtubeId: "dQw4w9WgXcQ" // Sample news-style video
       },
       {
         id: "video-3",
@@ -60,7 +59,7 @@ const News = () => {
         readTime: "3 min read",
         source: "Culture Jamaica",
         dateTimestamp: Date.now() - 172800000,
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+        youtubeId: "YQHsXMglC9A" // Sample music/culture video
       },
       {
         id: "video-4",
@@ -71,7 +70,7 @@ const News = () => {
         readTime: "4 min read", 
         source: "Sports Caribbean",
         dateTimestamp: Date.now() - 259200000,
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+        youtubeId: "kffacxfA7G4" // Sample sports video
       },
       {
         id: "video-5",
@@ -82,7 +81,7 @@ const News = () => {
         readTime: "6 min read",
         source: "International Climate News",
         dateTimestamp: Date.now() - 345600000,
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+        youtubeId: "oHg5SJYRHA0" // Sample documentary/news video
       },
       {
         id: "video-6",
@@ -93,35 +92,23 @@ const News = () => {
         readTime: "3 min read",
         source: "Music World",
         dateTimestamp: Date.now() - 432000000,
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+        youtubeId: "L_jWHffIx5E" // Sample music video
       }
     ];
     
     setVideoStories(videoNewsStories);
   }, []);
 
-  // Auto-advance video stories
+  // Auto-advance video stories (longer duration for YouTube videos)
   useEffect(() => {
     if (isPlaying && videoStories.length > 0) {
       const interval = setInterval(() => {
         setCurrentVideoStory(prev => (prev + 1) % videoStories.length);
-      }, 30000); // Change story every 30 seconds for videos
+      }, 45000); // Change story every 45 seconds
       
       return () => clearInterval(interval);
     }
   }, [isPlaying, videoStories.length]);
-
-  // Handle video ended
-  useEffect(() => {
-    if (videoRef) {
-      const handleVideoEnd = () => {
-        setCurrentVideoStory(prev => (prev + 1) % videoStories.length);
-      };
-      
-      videoRef.addEventListener('ended', handleVideoEnd);
-      return () => videoRef.removeEventListener('ended', handleVideoEnd);
-    }
-  }, [videoRef, videoStories.length]);
 
   const itemsPerPage = 25;
 
@@ -163,13 +150,6 @@ const News = () => {
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
-    if (videoRef) {
-      if (isPlaying) {
-        videoRef.pause();
-      } else {
-        videoRef.play();
-      }
-    }
   };
 
   const handleNextVideoStory = () => {
@@ -247,20 +227,14 @@ const News = () => {
             {videoStories.length > 0 && (
               <Card className="overflow-hidden bg-black">
                 <div className="relative aspect-video">
-                  {/* Video Element */}
-                  <video
-                    ref={setVideoRef}
-                    src={videoStories[currentVideoStory]?.videoUrl}
-                    className="w-full h-full object-cover"
-                    muted
-                    playsInline
-                    onPlay={() => setIsPlaying(true)}
-                    onPause={() => setIsPlaying(false)}
-                    onLoadedData={() => {
-                      if (videoRef && isPlaying) {
-                        videoRef.play();
-                      }
-                    }}
+                  {/* YouTube Video Embed */}
+                  <iframe
+                    key={videoStories[currentVideoStory]?.youtubeId}
+                    src={`https://www.youtube.com/embed/${videoStories[currentVideoStory]?.youtubeId}?autoplay=${isPlaying ? 1 : 0}&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
                   />
                   
                   {/* Video Content Overlay */}
@@ -285,7 +259,7 @@ const News = () => {
                   </div>
                   
                   {/* Play/Pause Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-auto">
                     <Button
                       variant="ghost"
                       size="lg"
@@ -298,6 +272,13 @@ const News = () => {
                         <Play className="h-8 w-8 ml-1" />
                       )}
                     </Button>
+                  </div>
+                  
+                  {/* YouTube Attribution */}
+                  <div className="absolute top-3 right-3 pointer-events-none">
+                    <Badge variant="outline" className="bg-red-600 text-white border-red-600 text-xs">
+                      YouTube
+                    </Badge>
                   </div>
                 </div>
                 
