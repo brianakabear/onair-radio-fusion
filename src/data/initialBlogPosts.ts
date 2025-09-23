@@ -18,10 +18,7 @@ export const generateInitialBlogPosts = () => {
     "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
     "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800",
     "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800",
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
-    // Use fallback for remaining images by setting to null
-    null, null, null, null, null, null, null, null, null, null, 
-    null, null, null, null, null
+    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800"
   ];
 
   const authors = [
@@ -67,7 +64,7 @@ export const generateInitialBlogPosts = () => {
       excerpt: article.excerpt,
       content: generateMusicNewsContent(article),
       category: article.category,
-      image: images[i % images.length] || null, // null will trigger fallback image
+      image: i < 15 ? images[i] : null, // First 15 get real images, rest get fallbacks
       date: postDate.toLocaleDateString('en-US', { 
         year: 'numeric', 
         month: 'long', 

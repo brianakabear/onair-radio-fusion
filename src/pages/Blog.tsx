@@ -193,19 +193,33 @@ const Blog = () => {
                 <Card key={post.id} className="mb-12 overflow-hidden hover:shadow-caribbean transition-all duration-300">
                   <div className="grid md:grid-cols-2">
                     <div className="relative h-64 md:h-auto">
-                      {post.image ? (
+                      {post.image && post.image.trim() !== '' ? (
                         <img
                           src={post.image}
                           alt={post.title}
                           className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Hide the broken image and show fallback instead
+                            e.currentTarget.style.display = 'none';
+                            const fallbackDiv = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (fallbackDiv) {
+                              fallbackDiv.style.display = 'block';
+                            }
+                          }}
                         />
-                      ) : (
+                      ) : null}
+                      
+                      {/* Fallback image - always present but hidden if real image loads */}
+                      <div 
+                        style={{ display: (post.image && post.image.trim() !== '') ? 'none' : 'block' }}
+                        className="absolute inset-0"
+                      >
                         <FallbackBlogImage 
                           title={post.title}
                           category={post.category}
                           className="w-full h-full"
                         />
-                      )}
+                      </div>
                       <Badge 
                         className={`absolute top-4 left-4 ${getCategoryColor(post.category)}`}
                       >
@@ -254,19 +268,33 @@ const Blog = () => {
                 {regularPosts.map((post) => (
                   <Card key={post.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300 animate-slide-up">
                     <div className="relative h-32">
-                      {post.image ? (
+                      {post.image && post.image.trim() !== '' ? (
                         <img
                           src={post.image}
                           alt={post.title}
                           className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Hide the broken image and show fallback instead
+                            e.currentTarget.style.display = 'none';
+                            const fallbackDiv = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (fallbackDiv) {
+                              fallbackDiv.style.display = 'block';
+                            }
+                          }}
                         />
-                      ) : (
+                      ) : null}
+                      
+                      {/* Fallback image - always present but hidden if real image loads */}
+                      <div 
+                        style={{ display: (post.image && post.image.trim() !== '') ? 'none' : 'block' }}
+                        className="absolute inset-0"
+                      >
                         <FallbackBlogImage 
                           title={post.title}
                           category={post.category}
                           className="w-full h-full"
                         />
-                      )}
+                      </div>
                       <Badge 
                         className={`absolute top-2 left-2 text-xs ${getCategoryColor(post.category)}`}
                       >
