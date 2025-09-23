@@ -273,9 +273,15 @@ const Blog = () => {
                           {post.title}
                         </Link>
                       </h2>
-                      <p className="text-muted-foreground mb-6 leading-relaxed">
+                      <p className="text-muted-foreground mb-4 leading-relaxed">
                         {post.excerpt}
                       </p>
+                      <div className="flex items-center text-sm text-muted-foreground mb-4">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        <span>{post.date}</span>
+                        <Clock className="h-4 w-4 ml-4 mr-2" />
+                        <span>{post.readTime}</span>
+                      </div>
                       {post.source && (
                         <p className="text-sm text-muted-foreground mb-4 italic">
                           Based on reporting by {post.source}
@@ -338,9 +344,13 @@ const Blog = () => {
                           {post.title}
                         </Link>
                       </h3>
-                      <p className="text-muted-foreground mb-3 text-xs leading-relaxed line-clamp-2">
+                      <p className="text-muted-foreground mb-2 text-xs leading-relaxed line-clamp-2">
                         {post.excerpt}
                       </p>
+                      <div className="flex items-center text-xs text-muted-foreground mb-2">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        <span>{post.date}</span>
+                      </div>
                       {post.source && (
                         <p className="text-xs text-muted-foreground mb-2 italic">
                           Source: {post.source}
