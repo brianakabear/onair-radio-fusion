@@ -1,14 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Play, Music, Users, Calendar, MessageCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Play, Music, Users, Calendar, MessageCircle, Clock, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import RadioPlayer from "@/components/RadioPlayer";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
+import { FallbackBlogImage } from "@/components/FallbackBlogImage";
 import heroBg from "@/assets/hero-bg.jpg";
 import reggaeImage from "@/assets/reggae-section.jpg";
 import hiphopImage from "@/assets/hiphop-section.jpg";
 
 const Index = () => {
+  const [recentPosts, setRecentPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const savedPosts = localStorage.getItem("linkup-blog-posts");
+    if (savedPosts) {
+      const parsedPosts = JSON.parse(savedPosts);
+      setRecentPosts(parsedPosts.slice(0, 3)); // Get 3 most recent posts
+    } else {
+      const initialPosts = generateInitialBlogPosts();
+      setRecentPosts(initialPosts.slice(0, 3));
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -114,6 +130,96 @@ const Index = () => {
                 </div>
               </div>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Section */}
+      <section className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-foreground">Latest from Our Blog</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Stay updated with the latest Caribbean music news, artist spotlights, and industry insights
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {recentPosts.map((post) => (
+              <Card key={post.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300 animate-slide-up">
+                <div className="relative h-48">
+                  {post.image && post.image.trim() !== "" ? (
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Hide the broken image and show fallback instead
+                        e.currentTarget.style.display = "none";
+                        const fallbackDiv = e.currentTarget.nextElementSibling as HTMLElement;
+                        if (fallbackDiv) {
+                          fallbackDiv.style.display = "block";
+                        }
+                      }}
+                    />
+                  ) : null}
+                  
+                  {/* Fallback image - always present but hidden if real image loads */}
+                  <div 
+                    style={{ display: (post.image && post.image.trim() !== "") ? "none" : "block" }}
+                    className="absolute inset-0"
+                  >
+                    <FallbackBlogImage 
+                      title={post.title}
+                      category={post.category}
+                      className="w-full h-full"
+                    />
+                  </div>
+                  <Badge 
+                    className="absolute top-3 left-3 bg-primary text-primary-foreground"
+                  >
+                    {post.category}
+                  </Badge>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-3 hover:text-primary transition-colors line-clamp-2">
+                    <Link to={`/blog/${post.id}`}>
+                      {post.title}
+                    </Link>
+                  </h3>
+                  <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                      <div className="flex items-center space-x-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{post.date}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Clock className="h-4 w-4" />
+                        <span>{post.readTime}</span>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link to={`/blog/${post.id}`} className="flex items-center space-x-1">
+                        <span>Read</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              <Link to="/blog" className="flex items-center space-x-2">
+                <span>View All Blog Posts</span>
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
