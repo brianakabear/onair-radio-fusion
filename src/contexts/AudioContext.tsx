@@ -87,16 +87,37 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setIsLoading(true);
       
       audioRef.current.pause();
-      audioRef.current.src = stream.url;
-      setCurrentStream(stream);
       
-      // Autoplay when stream is selected
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing new stream:", error);
-        setIsPlaying(false);
-      }).finally(() => {
+      // Set up event listeners for the new stream
+      const handleCanPlay = () => {
+        if (audioRef.current) {
+          audioRef.current.play().catch((error) => {
+            console.error("Error playing new stream:", error);
+            setIsPlaying(false);
+          }).finally(() => {
+            setIsLoading(false);
+          });
+          // Remove the event listener after use
+          audioRef.current.removeEventListener('canplay', handleCanPlay);
+        }
+      };
+      
+      const handleLoadError = () => {
+        console.error("Error loading stream");
         setIsLoading(false);
-      });
+        if (audioRef.current) {
+          audioRef.current.removeEventListener('error', handleLoadError);
+        }
+      };
+      
+      // Add event listeners
+      audioRef.current.addEventListener('canplay', handleCanPlay);
+      audioRef.current.addEventListener('error', handleLoadError);
+      
+      // Set new source and load
+      audioRef.current.src = stream.url;
+      audioRef.current.load(); // Explicitly load the new source
+      setCurrentStream(stream);
     }
   };
 
