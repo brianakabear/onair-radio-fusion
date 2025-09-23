@@ -549,7 +549,7 @@ const News = () => {
                                 className={`${story.image && story.image.trim() !== '' ? 'hidden' : 'flex'} w-full h-full items-center justify-center`}
                                 style={{ display: story.image && story.image.trim() !== '' ? 'none' : 'flex' }}
                               >
-                                <FallbackBlogImage category={story.category} title={story.title} />
+                                <FallbackBlogImage category={story.category} title={story.title} id={story.id} />
                               </div>
                               <Badge 
                                 className={`absolute top-3 right-3 text-xs ${getCategoryColor(story.category)}`}
@@ -558,9 +558,13 @@ const News = () => {
                               </Badge>
                              </div>
                              <div className="p-2">
-                               <h3 className="font-semibold text-xs line-clamp-2 mb-2">
-                                 {story.title}
-                               </h3>
+                              <h3 className="font-semibold text-xs line-clamp-2 mb-1">
+                                {story.title}
+                              </h3>
+                              <div className="flex items-center text-xs text-muted-foreground mb-2">
+                                <Calendar className="h-3 w-3 mr-1" />
+                                {story.date}
+                              </div>
                                <Button variant="outline" size="sm" className="w-full text-xs" asChild>
                                  <Link to={`/blog/${story.id}`}>
                                    Read Now
@@ -729,9 +733,13 @@ const News = () => {
                               )}
                             </div>
                             <div className="p-2">
-                              <h3 className="font-semibold text-xs line-clamp-2">
-                                {video.title}
-                              </h3>
+                            <h3 className="font-semibold text-xs line-clamp-2 mb-1">
+                              {video.title}
+                            </h3>
+                            <div className="flex items-center text-xs text-muted-foreground mb-2">
+                              <Calendar className="h-3 w-3 mr-1" />
+                              {new Date(video.publishedAt).toLocaleDateString()}
+                            </div>
                             </div>
                           </Card>
                         ))}
@@ -836,9 +844,13 @@ const News = () => {
                             </div>
                           </div>
                           <div className="p-2">
-                            <h3 className="font-semibold text-xs line-clamp-2 mb-2">
+                            <h3 className="font-semibold text-xs line-clamp-2 mb-1">
                               {story.title}
                             </h3>
+                            <div className="flex items-center text-xs text-muted-foreground mb-2">
+                              <Calendar className="h-3 w-3 mr-1" />
+                              {new Date().toLocaleDateString()}
+                            </div>
                             <Button variant="outline" size="sm" className="w-full text-xs" asChild>
                               <Link to={`/blog/${story.id}`}>
                                 Read Now
