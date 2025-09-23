@@ -29,7 +29,7 @@ const ListenLive = () => {
     {
       id: "main",
       name: "Link Up Radio - Main Stream",
-      url: "https://c30.radioboss.fm/u/946",
+      url: "https://c2.radioboss.fm:8967/stream",
       genre: "Caribbean Mix",
       description: "Our main Caribbean radio stream featuring reggae, dancehall, soca, and more",
       bitrate: "128kbps"
