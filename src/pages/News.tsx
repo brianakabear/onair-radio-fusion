@@ -284,12 +284,17 @@ const News = () => {
                               >
                                 {story.category.replace(" News", "")}
                               </Badge>
-                            </div>
-                            <CardContent className="p-2">
-                              <h3 className="font-semibold text-xs line-clamp-2 text-center">
-                                {story.title}
-                              </h3>
-                            </CardContent>
+                             </div>
+                             <div className="p-2">
+                               <h3 className="font-semibold text-xs line-clamp-2 mb-2">
+                                 {story.title}
+                               </h3>
+                               <Button variant="outline" size="sm" className="w-full text-xs" asChild>
+                                 <Link to={`/blog/${story.id}`}>
+                                   Read Now
+                                 </Link>
+                               </Button>
+                             </div>
                           </Card>
                         ))}
                       </div>
@@ -389,11 +394,14 @@ const News = () => {
                             </Badge>
                           </div>
                         </div>
-                        <CardContent className="p-2">
-                          <h3 className="font-semibold text-xs line-clamp-2 text-center">
+                        <div className="p-2">
+                          <h3 className="font-semibold text-xs line-clamp-2 mb-2">
                             {video.title}
                           </h3>
-                        </CardContent>
+                          <Button variant="outline" size="sm" className="w-full text-xs">
+                            Watch Now
+                          </Button>
+                        </div>
                       </Card>
                     ))}
                   </div>
@@ -494,11 +502,16 @@ const News = () => {
                               </Badge>
                             </div>
                           </div>
-                          <CardContent className="p-2">
-                            <h3 className="font-semibold text-xs line-clamp-2 text-center">
+                          <div className="p-2">
+                            <h3 className="font-semibold text-xs line-clamp-2 mb-2">
                               {story.title}
                             </h3>
-                          </CardContent>
+                            <Button variant="outline" size="sm" className="w-full text-xs" asChild>
+                              <Link to={`/blog/${story.id}`}>
+                                Read Now
+                              </Link>
+                            </Button>
+                          </div>
                         </Card>
                       ))}
                     </div>
