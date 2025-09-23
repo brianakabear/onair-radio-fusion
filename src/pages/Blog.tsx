@@ -16,7 +16,7 @@ const Blog = () => {
   const [showManager, setShowManager] = useState(false);
   const [blogPosts, setBlogPosts] = useState(generateInitialBlogPosts());
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 20;
+  const postsPerPage = 25;
 
   // Load saved posts from localStorage on mount
   useEffect(() => {
@@ -250,10 +250,10 @@ const Blog = () => {
               ))}
 
               {/* Regular Posts Grid */}
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {regularPosts.map((post) => (
                   <Card key={post.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300 animate-slide-up">
-                    <div className="relative h-48">
+                    <div className="relative h-32">
                       {post.image ? (
                         <img
                           src={post.image}
@@ -268,34 +268,34 @@ const Blog = () => {
                         />
                       )}
                       <Badge 
-                        className={`absolute top-4 left-4 ${getCategoryColor(post.category)}`}
+                        className={`absolute top-2 left-2 text-xs ${getCategoryColor(post.category)}`}
                       >
                         {post.category}
                       </Badge>
                     </div>
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-bold mb-3 hover:text-primary transition-colors">
+                    <CardContent className="p-3">
+                      <h3 className="text-sm font-bold mb-2 hover:text-primary transition-colors line-clamp-2">
                         <Link to={`/blog/${post.id}`}>
                           {post.title}
                         </Link>
                       </h3>
-                      <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                      <p className="text-muted-foreground mb-3 text-xs leading-relaxed line-clamp-2">
                         {post.excerpt}
                       </p>
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3 text-xs text-muted-foreground">
+                        <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                           <div className="flex items-center space-x-1">
-                            <Calendar className="h-3 w-3" />
-                            <span>{post.date}</span>
+                            <Calendar className="h-2.5 w-2.5" />
+                            <span className="truncate">{post.date}</span>
                           </div>
                           <div className="flex items-center space-x-1">
-                            <Clock className="h-3 w-3" />
+                            <Clock className="h-2.5 w-2.5" />
                             <span>{post.readTime}</span>
                           </div>
                         </div>
-                        <Button variant="ghost" size="sm" asChild>
-                          <Link to={`/blog/${post.id}`} className="flex items-center space-x-1">
-                            <ArrowRight className="h-4 w-4" />
+                        <Button variant="ghost" size="sm" asChild className="h-6 w-6 p-0">
+                          <Link to={`/blog/${post.id}`}>
+                            <ArrowRight className="h-3 w-3" />
                           </Link>
                         </Button>
                       </div>
