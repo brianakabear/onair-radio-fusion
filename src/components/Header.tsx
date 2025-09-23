@@ -12,7 +12,7 @@ const Header = () => {
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Listen Live", href: "/listen-live" },
+    { name: "On Air", href: "/listen-live" },
     { name: "Schedule", href: "/schedule" },
     { name: "About", href: "/about" },
     { name: "Team", href: "/team" },
@@ -113,7 +113,7 @@ const Header = () => {
               className="flex items-center space-x-2"
             >
               <Play className="h-4 w-4" />
-              <span className="hidden sm:inline">Listen Live</span>
+              <span className="hidden sm:inline">On Air</span>
               <Radio className="h-4 w-4 animate-pulse" />
             </Link>
           </Button>
