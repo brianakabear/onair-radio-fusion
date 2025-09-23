@@ -77,22 +77,18 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const selectStream = (stream: RadioStream) => {
     if (audioRef.current && stream.id !== currentStream?.id) {
       setIsLoading(true);
-      const wasPlaying = isPlaying;
       
       audioRef.current.pause();
       audioRef.current.src = stream.url;
       setCurrentStream(stream);
       
-      if (wasPlaying) {
-        audioRef.current.play().catch((error) => {
-          console.error("Error playing new stream:", error);
-          setIsPlaying(false);
-        }).finally(() => {
-          setIsLoading(false);
-        });
-      } else {
+      // Autoplay when stream is selected
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing new stream:", error);
+        setIsPlaying(false);
+      }).finally(() => {
         setIsLoading(false);
-      }
+      });
     }
   };
 
