@@ -531,83 +531,123 @@ const generateAdditionalStories = (): NewsStory[] => {
   const sources = ["Jamaica Observer", "Jamaica Gleaner", "Caribbean Today", "World News", "Sports Weekly", "Entertainment Daily"];
   const additionalStories: NewsStory[] = [];
   
-  for (let i = 51; i <= 200; i++) {
+  // Get existing titles to avoid duplicates
+  const existingTitles = new Set(newsStories.map(story => story.title.toLowerCase()));
+  
+  const titleTemplates = {
+    "Jamaica News": [
+      "New Development Project Announced in Kingston Area",
+      "Agricultural Innovation Boosts Local Farming Productivity", 
+      "Education Ministry Launches Advanced Digital Learning Initiative",
+      "Healthcare System Receives Comprehensive Major Upgrade",
+      "Transportation Infrastructure Improvements Begin Across Island",
+      "Small Business Support Program Successfully Launches",
+      "Environmental Conservation Project Significantly Expands",
+      "Historic Cultural Heritage Site Completely Restored",
+      "Advanced Technology Hub Opens in Spanish Town",
+      "Community Development Program Shows Remarkable Success",
+      "Youth Employment Initiative Creates New Opportunities",
+      "Sustainable Tourism Project Gains International Recognition",
+      "Local Manufacturing Sector Experiences Growth",
+      "Digital Infrastructure Expansion Reaches Rural Areas",
+      "Public Safety Initiative Shows Positive Results"
+    ],
+    "Caribbean News": [
+      "Regional Trade Agreement Significantly Strengthens Economy",
+      "Comprehensive Climate Adaptation Strategy Successfully Implemented",
+      "Extensive Cultural Exchange Program Continues Expansion",
+      "Enhanced Maritime Security Initiative Shows Results", 
+      "Strategic Tourism Recovery Program Proves Successful",
+      "Educational Collaboration Initiative Continues to Increase",
+      "Major Renewable Energy Project Successfully Completed",
+      "Comprehensive Disaster Preparedness Training Program Conducted",
+      "Important Agricultural Cooperation Agreement Successfully Signed",
+      "Innovative Digital Innovation Hub Successfully Established",
+      "Regional Banking Initiative Modernizes Financial Services",
+      "Inter-island Transportation Links Improve Connectivity",
+      "Cultural Heritage Preservation Project Gains Momentum",
+      "Regional Health Cooperation Agreement Strengthens Services",
+      "Marine Conservation Efforts Show Promising Results"
+    ],
+    "International News": [
+      "Strategic Global Partnership Significantly Benefits Small Islands",
+      "Comprehensive International Aid Program Successfully Launched",
+      "Major Climate Fund Actively Supports Regional Projects",
+      "Enhanced Trade Relations Strengthen with Emerging New Markets",
+      "Important Diplomatic Ties Enhanced Through Cultural Exchange",
+      "Significant International Investment Flows Continue to Increase",
+      "Comprehensive Global Health Initiative Successfully Includes Caribbean",
+      "Extensive Educational Exchange Program Continues Expansion",
+      "Important Technology Transfer Agreement Successfully Signed",
+      "Sustainable Development Goals Show Measurable Progress",
+      "International Scientific Collaboration Advances Research",
+      "Global Maritime Security Partnership Enhances Protection",
+      "World Bank Funding Supports Infrastructure Development",
+      "International Cultural Festival Celebrates Caribbean Heritage",
+      "Global Climate Research Initiative Includes Regional Studies"
+    ],
+    "Entertainment News": [
+      "Annual Music Festival Successfully Celebrates Caribbean Culture",
+      "Local Film Industry Receives Well-Deserved International Recognition",
+      "Talented Local Artist Successfully Achieves Global Success",
+      "Popular Cultural Festival Attracts International Visitors",
+      "Acclaimed Theater Production Tours Successfully Globally",
+      "Innovative Fashion Designer Showcases at International Event",
+      "Prestigious Literary Festival Features Prominent Caribbean Authors",
+      "Contemporary Art Exhibition Opens to Critical Acclaim",
+      "Professional Dance Company Performs Successfully Internationally",
+      "Local Media Production Company Strategically Expands Operations",
+      "International Film Festival Highlights Caribbean Cinema",
+      "Music Streaming Platform Features Caribbean Artists",
+      "Cultural Documentary Wins International Awards",
+      "Art Gallery Opens Featuring Local Contemporary Artists",
+      "Literary Prize Recognizes Caribbean Writing Excellence"
+    ],
+    "Sports News": [
+      "Comprehensive Athletic Training Program Successfully Produces Champions",
+      "State-of-the-Art Regional Sports Complex Successfully Opens",
+      "Youth Development Program Shows Outstanding Results",
+      "Professional Athlete Successfully Signs International Contract",
+      "Strategic Sports Tourism Initiative Successfully Launched",
+      "Professional Coaching Certification Program Proves Successful",
+      "Advanced Sports Medicine Center Successfully Established",
+      "Important Athletic Scholarship Program Successfully Expanded",
+      "International Competition Hosted Successfully with Excellence",
+      "Community Sports Program Continues Significant Growth",
+      "National Team Qualifies for International Championships",
+      "Sports Academy Produces Professional Athletes",
+      "Athletic Training Facility Receives Modern Equipment",
+      "Regional Competition Showcases Emerging Talent",
+      "Sports Development Program Expands to Rural Areas"
+    ]
+  };
+  
+  let storyCounter = newsStories.length + 1;
+  
+  for (let i = storyCounter; i <= 200; i++) {
     const category = categories[Math.floor(Math.random() * categories.length)];
     const source = sources[Math.floor(Math.random() * sources.length)];
-    const daysAgo = Math.floor(Math.random() * 365) + 1; // Random date within last year
+    const daysAgo = Math.floor(Math.random() * 365) + 1;
     const date = new Date();
     date.setDate(date.getDate() - daysAgo);
     
-    const titles = {
-      "Jamaica News": [
-        "New Development Project Announced in Kingston",
-        "Agricultural Innovation Boosts Farming Productivity", 
-        "Education Ministry Launches Digital Learning Initiative",
-        "Healthcare System Receives Major Upgrade",
-        "Transportation Infrastructure Improvements Begin",
-        "Small Business Support Program Launches",
-        "Environmental Conservation Project Expands",
-        "Cultural Heritage Site Restored",
-        "Technology Hub Opens in Spanish Town",
-        "Community Development Program Shows Success"
-      ],
-      "Caribbean News": [
-        "Regional Trade Agreement Strengthens Economy",
-        "Climate Adaptation Strategy Implemented",
-        "Cultural Exchange Program Expands",
-        "Maritime Security Initiative Enhanced", 
-        "Tourism Recovery Program Successful",
-        "Educational Collaboration Increases",
-        "Renewable Energy Project Completed",
-        "Disaster Preparedness Training Conducted",
-        "Agricultural Cooperation Agreement Signed",
-        "Digital Innovation Hub Established"
-      ],
-      "International News": [
-        "Global Partnership Benefits Small Islands",
-        "International Aid Program Launched",
-        "Climate Fund Supports Regional Projects",
-        "Trade Relations Strengthen with New Markets",
-        "Diplomatic Ties Enhanced Through Cultural Exchange",
-        "International Investment Flows Increase",
-        "Global Health Initiative Includes Caribbean",
-        "Educational Exchange Program Expands",
-        "Technology Transfer Agreement Signed",
-        "Sustainable Development Goals Progress"
-      ],
-      "Entertainment News": [
-        "Music Festival Celebrates Caribbean Culture",
-        "Film Industry Receives International Recognition",
-        "Local Artist Achieves Global Success",
-        "Cultural Festival Attracts International Visitors",
-        "Theater Production Tours Globally",
-        "Fashion Designer Showcases at International Event",
-        "Literary Festival Features Caribbean Authors",
-        "Art Exhibition Opens to Critical Acclaim",
-        "Dance Company Performs Internationally",
-        "Media Production Company Expands Operations"
-      ],
-      "Sports News": [
-        "Athletic Training Program Produces Champions",
-        "Regional Sports Complex Opens",
-        "Youth Development Program Shows Results",
-        "Professional Athlete Signs International Contract",
-        "Sports Tourism Initiative Launched",
-        "Coaching Certification Program Successful",
-        "Sports Medicine Center Established",
-        "Athletic Scholarship Program Expanded",
-        "International Competition Hosted Successfully",
-        "Community Sports Program Grows"
-      ]
-    };
+    const categoryTitles = titleTemplates[category as keyof typeof titleTemplates];
+    let title = categoryTitles[Math.floor(Math.random() * categoryTitles.length)];
     
-    const categoryTitles = titles[category as keyof typeof titles];
-    const title = categoryTitles[Math.floor(Math.random() * categoryTitles.length)];
+    // Ensure unique title
+    let counter = 1;
+    const baseTitle = title;
+    while (existingTitles.has(title.toLowerCase())) {
+      title = `${baseTitle} - Part ${counter}`;
+      counter++;
+    }
+    
+    existingTitles.add(title.toLowerCase());
     
     additionalStories.push({
       id: `news-${i}`,
       title: title,
-      excerpt: `This is a news story about ${title.toLowerCase()}. The story covers important developments and their impact on the community and region.`,
+      excerpt: `This is a comprehensive news story about ${title.toLowerCase()}. The story covers important developments and their significant impact on the community and region.`,
       category: category,
       date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       readTime: `${Math.floor(Math.random() * 5) + 2} min read`,
@@ -619,4 +659,14 @@ const generateAdditionalStories = (): NewsStory[] => {
   return additionalStories;
 };
 
-export const allNewsStories = [...newsStories, ...generateAdditionalStories()].sort((a, b) => b.dateTimestamp - a.dateTimestamp);
+// Create unique stories and remove any potential duplicates by ID
+const uniqueStoriesMap = new Map<string, NewsStory>();
+
+// Add all stories to map (this will automatically handle ID duplicates)
+[...newsStories, ...generateAdditionalStories()].forEach(story => {
+  uniqueStoriesMap.set(story.id, story);
+});
+
+// Convert back to array and sort by date
+export const allNewsStories = Array.from(uniqueStoriesMap.values())
+  .sort((a, b) => b.dateTimestamp - a.dateTimestamp);
