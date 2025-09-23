@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Radio, Music, Headphones } from "lucide-react";
+import { Radio, Music, Headphones, Play } from "lucide-react";
 import Header from "@/components/Header";
 import { useAudio } from "@/contexts/AudioContext";
+import linkUpLogo from "@/assets/linkup-logo.png";
 
 interface RadioStream {
   id: string;
@@ -68,6 +69,9 @@ const ListenLive = () => {
     }
   ];
 
+  const featuredStream = streams.find(stream => stream.id === '1')!;
+  const otherStreams = streams.filter(stream => stream.id !== '1');
+
   const handleStreamSelect = (stream: RadioStream) => {
     selectStream(stream);
   };
@@ -104,17 +108,82 @@ const ListenLive = () => {
       {/* Stream Selection */}
       <section className="px-4 pb-16">
         <div className="max-w-6xl mx-auto">
+          {/* Featured Stream */}
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Featured Station
+              </h2>
+              <p className="text-muted-foreground">
+                Our flagship Caribbean music stream
+              </p>
+            </div>
+            
+            <Card 
+              className={`cursor-pointer transition-all duration-300 hover:shadow-caribbean hover:scale-[1.02] max-w-4xl mx-auto ${
+                currentStream?.id === featuredStream.id 
+                  ? 'ring-2 ring-primary shadow-caribbean' 
+                  : ''
+              }`}
+              onClick={() => handleStreamSelect(featuredStream)}
+            >
+              <CardHeader className="pb-6">
+                <div className="flex items-center justify-center mb-6">
+                  <img 
+                    src={linkUpLogo} 
+                    alt="Link Up Radio Logo" 
+                    className="w-24 h-24 object-contain"
+                  />
+                </div>
+                <div className="text-center space-y-4">
+                  <div className="flex items-center justify-center space-x-2">
+                    <Radio className="h-8 w-8 text-primary" />
+                    <Badge variant="secondary" className="text-sm px-3 py-1">
+                      {featuredStream.bitrate}
+                    </Badge>
+                  </div>
+                  <CardTitle className="text-3xl font-bold">{featuredStream.name}</CardTitle>
+                  <Badge variant="outline" className="text-lg px-4 py-2">
+                    {featuredStream.genre}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="text-center space-y-6">
+                <CardDescription className="text-lg max-w-2xl mx-auto">
+                  {featuredStream.description}
+                </CardDescription>
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleStreamSelect(featuredStream);
+                  }}
+                  variant={currentStream?.id === featuredStream.id ? "default" : "outline"}
+                  size="lg"
+                  className="text-lg px-8 py-3"
+                >
+                  <Play className="mr-2 h-5 w-5" />
+                  {currentStream?.id === featuredStream.id ? (
+                    isPlaying ? "Currently Playing" : "Selected"
+                  ) : (
+                    "Listen Now"
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Other Streams */}
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Choose Your Stream
+              More Stations
             </h2>
             <p className="text-muted-foreground">
-              Select from our variety of Caribbean music genres
+              Explore our variety of Caribbean music genres
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {streams.map((stream) => (
+            {otherStreams.map((stream) => (
               <Card 
                 key={stream.id}
                 className={`cursor-pointer transition-all duration-300 hover:shadow-caribbean hover:scale-105 ${
