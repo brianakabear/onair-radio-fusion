@@ -51,7 +51,7 @@ export const FallbackBlogImage = ({ title, category, className = "" }: FallbackB
           <img
             src={linkupLogo}
             alt="Link Up Radio"
-            className="w-32 h-32 md:w-40 md:h-40 drop-shadow-2xl"
+            className="w-13 h-13 md:w-16 md:h-16 drop-shadow-2xl"
             style={{
               filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))"
             }}
