@@ -111,11 +111,19 @@ export const generateInitialBlogPosts = () => {
       }
     }
     
-    // Create dates going back in time
-    const daysBack = i * 2; // One post every 2 days going back
-    const postDate = new Date();
-    postDate.setDate(postDate.getDate() - daysBack);
-    postDate.setHours(postDate.getHours() - (i % 24)); // Spread throughout different hours
+    // Create dates between today and 12 days ago
+    const today = new Date();
+    const twelveAgo = new Date();
+    twelveAgo.setDate(today.getDate() - 12);
+    
+    // Generate random date between today and 12 days ago
+    const timeDiff = today.getTime() - twelveAgo.getTime();
+    const randomTime = Math.random() * timeDiff;
+    const postDate = new Date(twelveAgo.getTime() + randomTime);
+    
+    // Randomize the hour and minute for more realistic timestamps
+    postDate.setHours(Math.floor(Math.random() * 24));
+    postDate.setMinutes(Math.floor(Math.random() * 60));
     
     const post = {
       id: (1000 + i).toString(),
