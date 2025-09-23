@@ -19,10 +19,10 @@ const Index = () => {
     const savedPosts = localStorage.getItem("linkup-blog-posts");
     if (savedPosts) {
       const parsedPosts = JSON.parse(savedPosts);
-      setRecentPosts(parsedPosts.slice(0, 3)); // Get 3 most recent posts
+      setRecentPosts(parsedPosts.slice(0, 9)); // Get 9 most recent posts
     } else {
       const initialPosts = generateInitialBlogPosts();
-      setRecentPosts(initialPosts.slice(0, 3));
+      setRecentPosts(initialPosts.slice(0, 9));
     }
   }, []);
   return (
@@ -190,17 +190,7 @@ const Index = () => {
                   <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
                     {post.excerpt}
                   </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                      <div className="flex items-center space-x-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{post.date}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{post.readTime}</span>
-                      </div>
-                    </div>
+                  <div className="flex items-center justify-end">
                     <Button variant="ghost" size="sm" asChild>
                       <Link to={`/blog/${post.id}`} className="flex items-center space-x-1">
                         <span>Read</span>
