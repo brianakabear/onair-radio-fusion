@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export type ThemeOption = 'caribbean' | 'ocean' | 'sunset' | 'nature' | 'electric';
+export type ThemeOption = 'caribbean' | 'ocean' | 'sunset' | 'nature' | 'electric' | 'pastel' | 'cream' | 'mint' | 'lavender' | 'coral';
 
 interface ThemeContextType {
   theme: ThemeOption;
@@ -37,6 +37,26 @@ export const themes = {
   electric: {
     name: 'Electric',
     colors: ['hsl(270 80% 55%)', 'hsl(300 70% 50%)', 'hsl(190 90% 50%)'], // Purple, Magenta, Cyan
+  },
+  pastel: {
+    name: 'Pastel',
+    colors: ['hsl(220 30% 75%)', 'hsl(300 25% 80%)', 'hsl(160 25% 75%)'], // Soft Blue, Pink, Green
+  },
+  cream: {
+    name: 'Cream',
+    colors: ['hsl(45 35% 80%)', 'hsl(25 40% 75%)', 'hsl(60 30% 85%)'], // Warm Cream, Peach, Light Yellow
+  },
+  mint: {
+    name: 'Mint',
+    colors: ['hsl(150 25% 75%)', 'hsl(180 20% 80%)', 'hsl(120 20% 85%)'], // Soft Mint, Sage, Light Green
+  },
+  lavender: {
+    name: 'Lavender',
+    colors: ['hsl(260 25% 80%)', 'hsl(280 20% 85%)', 'hsl(240 30% 75%)'], // Soft Lavender, Light Purple, Periwinkle
+  },
+  coral: {
+    name: 'Coral',
+    colors: ['hsl(15 35% 75%)', 'hsl(35 30% 80%)', 'hsl(350 25% 80%)'], // Light Coral, Peach, Soft Pink
   },
 };
 
@@ -84,6 +104,36 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         root.style.setProperty('--secondary', '300 70% 50%');
         root.style.setProperty('--accent', '190 90% 50%');
         root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(270 80% 55%), hsl(300 70% 50%), hsl(190 90% 50%))');
+        break;
+      case 'pastel':
+        root.style.setProperty('--primary', '220 30% 75%');
+        root.style.setProperty('--secondary', '300 25% 80%');
+        root.style.setProperty('--accent', '160 25% 75%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(220 30% 75%), hsl(300 25% 80%), hsl(160 25% 75%))');
+        break;
+      case 'cream':
+        root.style.setProperty('--primary', '45 35% 80%');
+        root.style.setProperty('--secondary', '25 40% 75%');
+        root.style.setProperty('--accent', '60 30% 85%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(45 35% 80%), hsl(25 40% 75%), hsl(60 30% 85%))');
+        break;
+      case 'mint':
+        root.style.setProperty('--primary', '150 25% 75%');
+        root.style.setProperty('--secondary', '180 20% 80%');
+        root.style.setProperty('--accent', '120 20% 85%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(150 25% 75%), hsl(180 20% 80%), hsl(120 20% 85%))');
+        break;
+      case 'lavender':
+        root.style.setProperty('--primary', '260 25% 80%');
+        root.style.setProperty('--secondary', '280 20% 85%');
+        root.style.setProperty('--accent', '240 30% 75%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(260 25% 80%), hsl(280 20% 85%), hsl(240 30% 75%))');
+        break;
+      case 'coral':
+        root.style.setProperty('--primary', '15 35% 75%');
+        root.style.setProperty('--secondary', '35 30% 80%');
+        root.style.setProperty('--accent', '350 25% 80%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(15 35% 75%), hsl(35 30% 80%), hsl(350 25% 80%))');
         break;
     }
     
