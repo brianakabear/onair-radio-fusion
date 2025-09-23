@@ -285,29 +285,10 @@ const News = () => {
                                 {story.category.replace(" News", "")}
                               </Badge>
                             </div>
-                            <CardContent className="p-4 flex flex-col h-full">
-                              <h3 className="font-semibold text-lg mb-2 line-clamp-2 flex-grow">
+                            <CardContent className="p-2">
+                              <h3 className="font-semibold text-xs line-clamp-2 text-center">
                                 {story.title}
                               </h3>
-                              <p className="text-muted-foreground text-sm mb-4 line-clamp-3 flex-grow">
-                                {story.excerpt}
-                              </p>
-                              <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                                <div className="flex items-center">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  <span>{story.date}</span>
-                                </div>
-                                <div className="flex items-center">
-                                  <Clock className="h-4 w-4 mr-1" />
-                                  <span>{story.readTime}</span>
-                                </div>
-                              </div>
-                              <Button variant="outline" className="w-full" asChild>
-                                <Link to={`/blog/${story.id}`}>
-                                  Read More
-                                  <ArrowRight className="ml-2 h-4 w-4" />
-                                </Link>
-                              </Button>
                             </CardContent>
                           </Card>
                         ))}
@@ -408,19 +389,10 @@ const News = () => {
                             </Badge>
                           </div>
                         </div>
-                        <CardContent className="p-4">
-                          <h3 className="font-semibold text-sm line-clamp-2 mb-2">
+                        <CardContent className="p-2">
+                          <h3 className="font-semibold text-xs line-clamp-2 text-center">
                             {video.title}
                           </h3>
-                          <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
-                            {video.description}
-                          </p>
-                          <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span>{video.channel}</span>
-                            <span>
-                              {new Date(video.publishedAt).toLocaleDateString()}
-                            </span>
-                          </div>
                         </CardContent>
                       </Card>
                     ))}
@@ -522,42 +494,10 @@ const News = () => {
                               </Badge>
                             </div>
                           </div>
-                          <CardContent className="p-4">
-                            <div className="flex items-center justify-between mb-2">
-                              <Badge className={getCategoryColor(story.category)}>
-                                {story.category}
-                              </Badge>
-                              <span className="text-xs text-muted-foreground">
-                                {story.distance}
-                              </span>
-                            </div>
-                            <h3 className="font-semibold text-lg mb-2 line-clamp-2">
+                          <CardContent className="p-2">
+                            <h3 className="font-semibold text-xs line-clamp-2 text-center">
                               {story.title}
                             </h3>
-                            <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                              {story.excerpt}
-                            </p>
-                            <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                              <div className="flex items-center">
-                                <Calendar className="h-4 w-4 mr-1" />
-                                <span>{story.date}</span>
-                              </div>
-                              <div className="flex items-center">
-                                <Clock className="h-4 w-4 mr-1" />
-                                <span>{story.readTime}</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-xs text-muted-foreground">
-                                {story.source}
-                              </span>
-                              <Button variant="outline" size="sm" asChild>
-                                <Link to={`/blog/${story.id}`}>
-                                  Read More
-                                  <ArrowRight className="ml-2 h-3 w-3" />
-                                </Link>
-                              </Button>
-                            </div>
                           </CardContent>
                         </Card>
                       ))}
