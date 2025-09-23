@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { BlogManager } from "@/components/BlogManager";
 import { musicNewsTemplates, generateMusicNewsContent } from "@/data/musicNewsContent";
+import { expandMusicNewsTemplates } from "@/data/realNewsContent";
 import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
@@ -29,12 +30,15 @@ const Blog = () => {
   // Auto-generate content every hour
   useEffect(() => {
     const generateContent = () => {
+      // Combine original templates with real news stories
+      const allTemplates = [...musicNewsTemplates, ...expandMusicNewsTemplates()];
+      
       // Get current used titles and images
       const usedTitles = getUsedTitles(blogPosts);
       const usedImages = getUsedImages(blogPosts);
       
       // Find an unused article
-      const unusedArticle = findUnusedArticle(musicNewsTemplates, usedTitles);
+      const unusedArticle = findUnusedArticle(allTemplates, usedTitles);
       
       // If no unused article found, don't generate new content
       if (!unusedArticle) {
@@ -70,7 +74,7 @@ const Blog = () => {
         id: Date.now().toString(),
         title: uniqueTitle,
         excerpt: unusedArticle.excerpt,
-        content: generateMusicNewsContent(unusedArticle),
+        content: (unusedArticle as any).isRealNews ? (unusedArticle as any).content : generateMusicNewsContent(unusedArticle),
         category: unusedArticle.category,
         image: uniqueImage, // Will be unique image or null for fallback
         date: new Date().toLocaleDateString('en-US', { 
@@ -80,7 +84,9 @@ const Blog = () => {
         }),
         readTime: `${Math.floor(Math.random() * 6) + 3} min read`,
         featured: false,
-        author: authors[Math.floor(Math.random() * authors.length)]
+        author: (unusedArticle as any).source ? `Based on ${(unusedArticle as any).source} reporting` : authors[Math.floor(Math.random() * authors.length)],
+        source: (unusedArticle as any).source || undefined,
+        sourceUrl: (unusedArticle as any).sourceUrl || undefined
       };
 
       setBlogPosts(prevPosts => {
@@ -252,6 +258,11 @@ const Blog = () => {
                       <p className="text-muted-foreground mb-6 leading-relaxed">
                         {post.excerpt}
                       </p>
+                      {post.source && (
+                        <p className="text-sm text-muted-foreground mb-4 italic">
+                          Based on reporting by {post.source}
+                        </p>
+                      )}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                           <div className="flex items-center space-x-1">
@@ -322,6 +333,11 @@ const Blog = () => {
                       <p className="text-muted-foreground mb-3 text-xs leading-relaxed line-clamp-2">
                         {post.excerpt}
                       </p>
+                      {post.source && (
+                        <p className="text-xs text-muted-foreground mb-2 italic">
+                          Source: {post.source}
+                        </p>
+                      )}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                           <div className="flex items-center space-x-1">

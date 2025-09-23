@@ -1,4 +1,5 @@
 import { musicNewsTemplates, generateMusicNewsContent } from './musicNewsContent';
+import { realNewsStories, expandMusicNewsTemplates } from './realNewsContent';
 
 export const generateInitialBlogPosts = () => {
   const posts = [];
@@ -48,19 +49,28 @@ export const generateInitialBlogPosts = () => {
     "Michael Brown"
   ];
 
-  // Create a pool of all available articles
+  // Combine original templates with real news stories
+  const allTemplates = [...musicNewsTemplates, ...expandMusicNewsTemplates()];
+  
+  // Create a pool of all available articles from both sources
   const availableArticles: any[] = [];
-  musicNewsTemplates.forEach(template => {
-    template.templates.forEach(article => {
-      availableArticles.push({ ...article, category: template.category });
+  allTemplates.forEach(template => {
+    template.templates.forEach((article: any) => {
+      availableArticles.push({ 
+        ...article, 
+        category: template.category,
+        isRealNews: !!(article as any).source,
+        source: (article as any).source || 'Link Up Radio Team',
+        sourceUrl: (article as any).sourceUrl || ''
+      });
     });
   });
 
   // Shuffle the available articles to ensure randomness
   const shuffledArticles = [...availableArticles].sort(() => Math.random() - 0.5);
 
-  // Generate 30 unique posts
-  for (let i = 0; i < 30 && i < shuffledArticles.length; i++) {
+  // Generate 80 unique posts (30 original + 50 more)
+  for (let i = 0; i < 80 && i < shuffledArticles.length; i++) {
     const article = shuffledArticles[i];
     
     // Skip if we've already used this title or a similar one
@@ -111,7 +121,7 @@ export const generateInitialBlogPosts = () => {
       id: (1000 + i).toString(),
       title: titleToUse,
       excerpt: article.excerpt,
-      content: generateMusicNewsContent(article),
+      content: article.isRealNews ? article.content : generateMusicNewsContent(article),
       category: article.category,
       image: imageToUse, // Will be unique image or null for fallback
       date: postDate.toLocaleDateString('en-US', { 
@@ -121,7 +131,9 @@ export const generateInitialBlogPosts = () => {
       }),
       readTime: `${Math.floor(Math.random() * 8) + 3} min read`,
       featured: i === 0, // Only first post is featured
-      author: authors[i % authors.length]
+      author: article.isRealNews ? `Based on ${article.source} reporting` : authors[i % authors.length],
+      source: article.source || undefined,
+      sourceUrl: article.sourceUrl || undefined
     };
     
     posts.push(post);

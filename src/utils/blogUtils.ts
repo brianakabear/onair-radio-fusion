@@ -11,6 +11,8 @@ interface BlogPost {
   readTime: string;
   featured: boolean;
   author: string;
+  source?: string;
+  sourceUrl?: string;
 }
 
 // Get all used titles from existing blog posts
