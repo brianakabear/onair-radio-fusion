@@ -90,18 +90,6 @@ export const FallbackBlogImage = ({ title, category, id, className = "" }: Fallb
         <div className="absolute inset-0 opacity-10">
           <div className="w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]"></div>
         </div>
-        
-        {/* Logo */}
-        <div className="relative z-10 flex items-center justify-center">
-          <img
-            src={linkupLogo}
-            alt="Link Up Radio"
-            className="w-13 h-13 md:w-16 md:h-16 drop-shadow-2xl"
-            style={{
-              filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))"
-            }}
-          />
-        </div>
 
         {/* Unique decorative elements based on id */}
         {decorativePattern.positions.map((pos, index) => (

@@ -558,11 +558,11 @@ const News = () => {
                               </Badge>
                              </div>
                              <div className="p-2">
-                              <h3 className="font-semibold text-xs line-clamp-2 mb-1">
+                              <h3 className="font-semibold text-[10px] line-clamp-2 mb-1">
                                 {story.title}
                               </h3>
-                              <div className="flex items-center text-xs text-muted-foreground mb-2">
-                                <Calendar className="h-3 w-3 mr-1" />
+                              <div className="flex items-center text-[9px] text-muted-foreground mb-2">
+                                <Calendar className="h-2.5 w-2.5 mr-1" />
                                 {story.date}
                               </div>
                                <Button variant="outline" size="sm" className="w-full text-xs" asChild>
@@ -733,11 +733,11 @@ const News = () => {
                               )}
                             </div>
                             <div className="p-2">
-                            <h3 className="font-semibold text-xs line-clamp-2 mb-1">
+                            <h3 className="font-semibold text-[10px] line-clamp-2 mb-1">
                               {video.title}
                             </h3>
-                            <div className="flex items-center text-xs text-muted-foreground mb-2">
-                              <Calendar className="h-3 w-3 mr-1" />
+                            <div className="flex items-center text-[9px] text-muted-foreground mb-2">
+                              <Calendar className="h-2.5 w-2.5 mr-1" />
                               {new Date(video.publishedAt).toLocaleDateString()}
                             </div>
                             </div>
@@ -844,11 +844,11 @@ const News = () => {
                             </div>
                           </div>
                           <div className="p-2">
-                            <h3 className="font-semibold text-xs line-clamp-2 mb-1">
+                            <h3 className="font-semibold text-[10px] line-clamp-2 mb-1">
                               {story.title}
                             </h3>
-                            <div className="flex items-center text-xs text-muted-foreground mb-2">
-                              <Calendar className="h-3 w-3 mr-1" />
+                            <div className="flex items-center text-[9px] text-muted-foreground mb-2">
+                              <Calendar className="h-2.5 w-2.5 mr-1" />
                               {new Date().toLocaleDateString()}
                             </div>
                             <Button variant="outline" size="sm" className="w-full text-xs" asChild>
