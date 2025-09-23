@@ -256,7 +256,7 @@ const News = () => {
                     </Card>
                   ) : (
                     <>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                         {currentStories.map((story) => (
                           <Card key={story.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300">
                             <div className="relative h-48">
@@ -376,7 +376,7 @@ const News = () => {
                 </div>
 
                 {isLoadingVideo ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                     {[1, 2, 3].map((i) => (
                       <Card key={i} className="animate-pulse">
                         <div className="aspect-video bg-muted"></div>
@@ -388,7 +388,7 @@ const News = () => {
                     ))}
                   </div>
                 ) : videoNews.length > 0 ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                     {videoNews.map((video) => (
                       <Card key={video.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
                         <div className="relative">
@@ -511,7 +511,7 @@ const News = () => {
                       </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                       {localNews.map((story) => (
                         <Card key={story.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
                           <div className="relative h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
