@@ -45,6 +45,14 @@ const ListenLive = () => {
     },
     {
       id: '4',
+      name: 'BrianAkaBear Radio',
+      url: 'https://cast1.my-control-panel.com/proxy/bandoradio/stream',
+      genre: 'Beats & Music',
+      description: 'Beats and Music By Brian',
+      bitrate: '128 kbps'
+    },
+    {
+      id: '5',
       name: 'Soca Paradise',
       url: 'https://streams.radio.co/s9a8b7c6d5/listen',
       genre: 'Soca',
@@ -52,7 +60,7 @@ const ListenLive = () => {
       bitrate: '192 kbps'
     },
     {
-      id: '5',
+      id: '6',
       name: 'R&B Smooth',
       url: 'https://streams.radio.co/s1f2e3d4c5/listen',
       genre: 'R&B',
@@ -60,7 +68,7 @@ const ListenLive = () => {
       bitrate: '256 kbps'
     },
     {
-      id: '6',
+      id: '7',
       name: 'Hip Hop Nation',
       url: 'https://streams.radio.co/s6g5f4e3d2/listen',
       genre: 'Hip Hop',
