@@ -10,7 +10,7 @@ import { musicNewsTemplates, generateMusicNewsContent } from "@/data/musicNewsCo
 import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
-import { getUsedTitles, findUnusedArticle, generateUniqueTitle } from "@/utils/blogUtils";
+import { getUsedTitles, findUnusedArticle, generateUniqueTitle, getUsedImages, findUnusedImage, isTitleSimilar } from "@/utils/blogUtils";
 
 const Blog = () => {
   const [showManager, setShowManager] = useState(false);
@@ -29,8 +29,9 @@ const Blog = () => {
   // Auto-generate content every hour
   useEffect(() => {
     const generateContent = () => {
-      // Get current used titles
+      // Get current used titles and images
       const usedTitles = getUsedTitles(blogPosts);
+      const usedImages = getUsedImages(blogPosts);
       
       // Find an unused article
       const unusedArticle = findUnusedArticle(musicNewsTemplates, usedTitles);
@@ -46,13 +47,24 @@ const Blog = () => {
         "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800", 
         "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800",
         "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800",
-        "https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=800"
+        "https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=800",
+        "https://images.unsplash.com/photo-1549834125-82d3c48159ee?w=800",
+        "https://images.unsplash.com/photo-1567606384843-c13b1c7b329c?w=800",
+        "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+        "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800"
       ];
       
       const authors = ["Link Up Radio Team", "Marcus Thompson", "Keisha Williams", "David Rodriguez"];
       
-      // Ensure title is unique
-      const uniqueTitle = generateUniqueTitle(unusedArticle.title, usedTitles);
+      // Ensure title is unique and not similar
+      let uniqueTitle = unusedArticle.title;
+      if (isTitleSimilar(uniqueTitle, usedTitles)) {
+        uniqueTitle = generateUniqueTitle(uniqueTitle, usedTitles);
+      }
+      
+      // Find a unique image
+      const uniqueImage = findUnusedImage(images, usedImages);
       
       const newPost = {
         id: Date.now().toString(),
@@ -60,7 +72,7 @@ const Blog = () => {
         excerpt: unusedArticle.excerpt,
         content: generateMusicNewsContent(unusedArticle),
         category: unusedArticle.category,
-        image: Math.random() > 0.6 ? images[Math.floor(Math.random() * images.length)] : null, // 40% chance of fallback image
+        image: uniqueImage, // Will be unique image or null for fallback
         date: new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 

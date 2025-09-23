@@ -2,7 +2,10 @@ import { musicNewsTemplates, generateMusicNewsContent } from './musicNewsContent
 
 export const generateInitialBlogPosts = () => {
   const posts = [];
-  const usedTitles = new Set();
+  const usedTitles = new Set<string>();
+  const usedImages = new Set<string>();
+  
+  // Expanded image pool with more variety
   const images = [
     "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
     "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800", 
@@ -15,10 +18,25 @@ export const generateInitialBlogPosts = () => {
     "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
     "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800",
     "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800",
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
     "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800",
     "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800",
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800"
+    "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800",
+    "https://images.unsplash.com/photo-1477233534935-f5e6fe7c1159?w=800",
+    "https://images.unsplash.com/photo-1487537708572-566e9436f1a0?w=800",
+    "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=800",
+    "https://images.unsplash.com/photo-1558618047-b0c4c688d4d4?w=800",
+    "https://images.unsplash.com/photo-1586252077859-c0bbf8b8e4a9?w=800",
+    "https://images.unsplash.com/photo-1595020478707-c6748ca6b05a?w=800",
+    "https://images.unsplash.com/photo-1583225214464-9296029427aa?w=800",
+    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1549834125-82d3c48159ee?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1567606384843-c13b1c7b329c?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&fm=jpg&crop=entropy&cs=tinysrgb"
   ];
 
   const authors = [
@@ -31,7 +49,7 @@ export const generateInitialBlogPosts = () => {
   ];
 
   // Create a pool of all available articles
-  const availableArticles = [];
+  const availableArticles: any[] = [];
   musicNewsTemplates.forEach(template => {
     template.templates.forEach(article => {
       availableArticles.push({ ...article, category: template.category });
@@ -45,12 +63,43 @@ export const generateInitialBlogPosts = () => {
   for (let i = 0; i < 30 && i < shuffledArticles.length; i++) {
     const article = shuffledArticles[i];
     
-    // Skip if we've already used this title
-    if (usedTitles.has(article.title)) {
+    // Skip if we've already used this title or a similar one
+    if (usedTitles.has(article.title.toLowerCase().trim())) {
       continue;
     }
     
-    usedTitles.add(article.title);
+    // Check for title similarity
+    let titleToUse = article.title;
+    let titleWords = titleToUse.toLowerCase().split(/\s+/).filter(word => word.length > 3);
+    let isSimilar = false;
+    
+    for (const existingTitle of Array.from(usedTitles)) {
+      const existingWords = existingTitle.split(/\s+/).filter(word => word.length > 3);
+      const commonWords = titleWords.filter(word => existingWords.includes(word));
+      const similarity = commonWords.length / Math.max(titleWords.length, existingWords.length);
+      
+      if (similarity > 0.6) {
+        isSimilar = true;
+        break;
+      }
+    }
+    
+    if (isSimilar) {
+      continue; // Skip similar titles
+    }
+    
+    usedTitles.add(titleToUse.toLowerCase().trim());
+    
+    // Find a unique image or use fallback
+    let imageToUse: string | null = null;
+    if (images.length > 0) {
+      // Find an unused image
+      const availableImages = images.filter(img => !usedImages.has(img));
+      if (availableImages.length > 0) {
+        imageToUse = availableImages[Math.floor(Math.random() * availableImages.length)];
+        usedImages.add(imageToUse);
+      }
+    }
     
     // Create dates going back in time
     const daysBack = i * 2; // One post every 2 days going back
@@ -60,11 +109,11 @@ export const generateInitialBlogPosts = () => {
     
     const post = {
       id: (1000 + i).toString(),
-      title: article.title,
+      title: titleToUse,
       excerpt: article.excerpt,
       content: generateMusicNewsContent(article),
       category: article.category,
-      image: i < 15 ? images[i] : null, // First 15 get real images, rest get fallbacks
+      image: imageToUse, // Will be unique image or null for fallback
       date: postDate.toLocaleDateString('en-US', { 
         year: 'numeric', 
         month: 'long', 
