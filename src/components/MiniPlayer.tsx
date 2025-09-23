@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play, Pause, Volume2, VolumeX, ChevronUp, X } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, ChevronUp, X, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +12,7 @@ const MiniPlayer = () => {
     isMuted,
     volume,
     currentStream,
+    currentTrack,
     isLoading,
     togglePlay,
     toggleMute,
@@ -42,12 +43,26 @@ const MiniPlayer = () => {
                 <span className="text-xs text-primary font-medium">ON AIR</span>
               </div>
               <div className="min-w-0 flex-1">
-                <h4 className="font-medium text-sm text-foreground truncate">
-                  {currentStream.name}
-                </h4>
-                <p className="text-xs text-muted-foreground truncate">
-                  {currentStream.genre} • {currentStream.bitrate}
-                </p>
+                {currentTrack ? (
+                  <>
+                    <h4 className="font-medium text-sm text-foreground truncate">
+                      {currentTrack.title || 'Unknown Track'}
+                    </h4>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {currentTrack.artist && `${currentTrack.artist} • `}
+                      {currentStream?.genre}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h4 className="font-medium text-sm text-foreground truncate">
+                      {currentStream?.name}
+                    </h4>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {currentStream?.genre} • {currentStream?.bitrate}
+                    </p>
+                  </>
+                )}
               </div>
             </div>
 
@@ -120,10 +135,31 @@ const MiniPlayer = () => {
                 </span>
               </div>
 
-              {/* Stream Info */}
-              <div className="text-center">
+              {/* Stream Info & Current Track */}
+              <div className="text-center space-y-2">
+                {currentTrack && (
+                  <div className="bg-muted/50 rounded-lg p-3">
+                    <div className="flex items-center justify-center space-x-2 mb-2">
+                      <Music className="h-4 w-4 text-primary" />
+                      <span className="text-sm font-medium text-primary">Now Playing</span>
+                    </div>
+                    <h5 className="font-semibold text-sm text-foreground">
+                      {currentTrack.title || 'Unknown Track'}
+                    </h5>
+                    {currentTrack.artist && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        by {currentTrack.artist}
+                      </p>
+                    )}
+                    {currentTrack.album && (
+                      <p className="text-xs text-muted-foreground">
+                        from {currentTrack.album}
+                      </p>
+                    )}
+                  </div>
+                )}
                 <p className="text-xs text-muted-foreground">
-                  {currentStream.description}
+                  {currentStream?.description}
                 </p>
               </div>
             </div>

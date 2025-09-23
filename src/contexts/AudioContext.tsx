@@ -9,11 +9,19 @@ interface RadioStream {
   bitrate: string;
 }
 
+interface TrackMetadata {
+  title?: string;
+  artist?: string;
+  album?: string;
+  artwork?: string;
+}
+
 interface AudioContextType {
   isPlaying: boolean;
   isMuted: boolean;
   volume: number[];
   currentStream: RadioStream | null;
+  currentTrack: TrackMetadata | null;
   isLoading: boolean;
   audioRef: React.RefObject<HTMLAudioElement>;
   selectStream: (stream: RadioStream) => void;
@@ -72,6 +80,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState([0.7]);
   const [currentStream, setCurrentStream] = useState<RadioStream>(defaultStreams[0]);
+  const [currentTrack, setCurrentTrack] = useState<TrackMetadata | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -79,12 +88,60 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume[0];
+      
+      // Add metadata event listeners
+      const audio = audioRef.current;
+      
+      const handleMetadata = () => {
+        // Try to extract metadata from the stream
+        if (audio.duration && !isNaN(audio.duration)) {
+          // For live streams, duration is usually Infinity or NaN
+          // We can try to get metadata from other sources
+        }
+      };
+
+      const handleLoadedMetadata = () => {
+        // This fires when metadata is loaded
+        setCurrentTrack(null); // Reset for live streams
+      };
+
+      // Listen for title changes in the stream (if supported)
+      const handleTitleUpdate = (event: any) => {
+        if (event.target && event.target.title) {
+          const title = event.target.title;
+          // Parse common formats like "Artist - Title"
+          const parts = title.split(' - ');
+          if (parts.length >= 2) {
+            setCurrentTrack({
+              artist: parts[0].trim(),
+              title: parts.slice(1).join(' - ').trim()
+            });
+          } else {
+            setCurrentTrack({
+              title: title.trim()
+            });
+          }
+        }
+      };
+
+      audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.addEventListener('metadata', handleMetadata);
+      
+      // Some streams provide metadata through custom events
+      audio.addEventListener('titlechange', handleTitleUpdate);
+      
+      return () => {
+        audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        audio.removeEventListener('metadata', handleMetadata);
+        audio.removeEventListener('titlechange', handleTitleUpdate);
+      };
     }
   }, [volume]);
 
   const selectStream = (stream: RadioStream) => {
     if (audioRef.current && stream.id !== currentStream?.id) {
       setIsLoading(true);
+      setCurrentTrack(null); // Reset metadata when changing streams
       
       audioRef.current.pause();
       
@@ -105,6 +162,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const handleLoadError = () => {
         console.error("Error loading stream");
         setIsLoading(false);
+        setCurrentTrack(null);
         if (audioRef.current) {
           audioRef.current.removeEventListener('error', handleLoadError);
         }
@@ -158,6 +216,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         isMuted,
         volume,
         currentStream,
+        currentTrack,
         isLoading,
         audioRef,
         selectStream,
