@@ -106,34 +106,64 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(270 80% 55%), hsl(300 70% 50%), hsl(190 90% 50%))');
         break;
       case 'pastel':
-        root.style.setProperty('--primary', '220 30% 75%');
-        root.style.setProperty('--secondary', '300 25% 80%');
-        root.style.setProperty('--accent', '160 25% 75%');
-        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(220 30% 75%), hsl(300 25% 80%), hsl(160 25% 75%))');
+        root.style.setProperty('--primary', '220 30% 65%');
+        root.style.setProperty('--secondary', '300 25% 70%');
+        root.style.setProperty('--accent', '160 25% 65%');
+        root.style.setProperty('--background', '0 0% 100%');
+        root.style.setProperty('--foreground', '0 0% 10%');
+        root.style.setProperty('--card', '0 0% 98%');
+        root.style.setProperty('--card-foreground', '0 0% 15%');
+        root.style.setProperty('--muted', '0 0% 96%');
+        root.style.setProperty('--muted-foreground', '0 0% 45%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(220 30% 65%), hsl(300 25% 70%), hsl(160 25% 65%))');
         break;
       case 'cream':
-        root.style.setProperty('--primary', '45 35% 80%');
-        root.style.setProperty('--secondary', '25 40% 75%');
-        root.style.setProperty('--accent', '60 30% 85%');
-        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(45 35% 80%), hsl(25 40% 75%), hsl(60 30% 85%))');
+        root.style.setProperty('--primary', '45 35% 60%');
+        root.style.setProperty('--secondary', '25 40% 65%');
+        root.style.setProperty('--accent', '60 30% 70%');
+        root.style.setProperty('--background', '0 0% 100%');
+        root.style.setProperty('--foreground', '0 0% 10%');
+        root.style.setProperty('--card', '45 20% 98%');
+        root.style.setProperty('--card-foreground', '0 0% 15%');
+        root.style.setProperty('--muted', '45 15% 96%');
+        root.style.setProperty('--muted-foreground', '0 0% 45%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(45 35% 60%), hsl(25 40% 65%), hsl(60 30% 70%))');
         break;
       case 'mint':
-        root.style.setProperty('--primary', '150 25% 75%');
-        root.style.setProperty('--secondary', '180 20% 80%');
-        root.style.setProperty('--accent', '120 20% 85%');
-        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(150 25% 75%), hsl(180 20% 80%), hsl(120 20% 85%))');
+        root.style.setProperty('--primary', '150 25% 65%');
+        root.style.setProperty('--secondary', '180 20% 70%');
+        root.style.setProperty('--accent', '120 20% 75%');
+        root.style.setProperty('--background', '0 0% 100%');
+        root.style.setProperty('--foreground', '0 0% 10%');
+        root.style.setProperty('--card', '150 10% 98%');
+        root.style.setProperty('--card-foreground', '0 0% 15%');
+        root.style.setProperty('--muted', '150 8% 96%');
+        root.style.setProperty('--muted-foreground', '0 0% 45%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(150 25% 65%), hsl(180 20% 70%), hsl(120 20% 75%))');
         break;
       case 'lavender':
-        root.style.setProperty('--primary', '260 25% 80%');
-        root.style.setProperty('--secondary', '280 20% 85%');
-        root.style.setProperty('--accent', '240 30% 75%');
-        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(260 25% 80%), hsl(280 20% 85%), hsl(240 30% 75%))');
+        root.style.setProperty('--primary', '260 25% 65%');
+        root.style.setProperty('--secondary', '280 20% 70%');
+        root.style.setProperty('--accent', '240 30% 65%');
+        root.style.setProperty('--background', '0 0% 100%');
+        root.style.setProperty('--foreground', '0 0% 10%');
+        root.style.setProperty('--card', '260 10% 98%');
+        root.style.setProperty('--card-foreground', '0 0% 15%');
+        root.style.setProperty('--muted', '260 8% 96%');
+        root.style.setProperty('--muted-foreground', '0 0% 45%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(260 25% 65%), hsl(280 20% 70%), hsl(240 30% 65%))');
         break;
       case 'coral':
-        root.style.setProperty('--primary', '15 35% 75%');
-        root.style.setProperty('--secondary', '35 30% 80%');
-        root.style.setProperty('--accent', '350 25% 80%');
-        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(15 35% 75%), hsl(35 30% 80%), hsl(350 25% 80%))');
+        root.style.setProperty('--primary', '15 35% 65%');
+        root.style.setProperty('--secondary', '35 30% 70%');
+        root.style.setProperty('--accent', '350 25% 70%');
+        root.style.setProperty('--background', '0 0% 100%');
+        root.style.setProperty('--foreground', '0 0% 10%');
+        root.style.setProperty('--card', '15 10% 98%');
+        root.style.setProperty('--card-foreground', '0 0% 15%');
+        root.style.setProperty('--muted', '15 8% 96%');
+        root.style.setProperty('--muted-foreground', '0 0% 45%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(15 35% 65%), hsl(35 30% 70%), hsl(350 25% 70%))');
         break;
     }
     
