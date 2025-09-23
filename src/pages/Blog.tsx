@@ -12,6 +12,7 @@ import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
 import { getUsedTitles, findUnusedArticle, generateUniqueTitle, getUsedImages, findUnusedImage, isTitleSimilar } from "@/utils/blogUtils";
+import { ClearCacheButton } from "@/components/ui/button-clear-cache";
 
 const Blog = () => {
   const [showManager, setShowManager] = useState(false);
@@ -23,7 +24,21 @@ const Blog = () => {
   useEffect(() => {
     const savedPosts = localStorage.getItem('linkup-blog-posts');
     if (savedPosts) {
-      setBlogPosts(JSON.parse(savedPosts));
+      const parsedPosts = JSON.parse(savedPosts);
+      // Check if we have enough stories (should be 80 total)
+      if (parsedPosts.length < 80) {
+        console.log(`Only ${parsedPosts.length} stories found, regenerating full set of 80`);
+        const newPosts = generateInitialBlogPosts();
+        setBlogPosts(newPosts);
+        localStorage.setItem('linkup-blog-posts', JSON.stringify(newPosts));
+      } else {
+        setBlogPosts(parsedPosts);
+      }
+    } else {
+      // No saved posts, generate fresh set
+      const newPosts = generateInitialBlogPosts();
+      setBlogPosts(newPosts);
+      localStorage.setItem('linkup-blog-posts', JSON.stringify(newPosts));
     }
   }, []);
 
@@ -149,14 +164,17 @@ const Blog = () => {
                 Stay connected with the latest in Caribbean and urban music culture, artist features, and industry insights
               </p>
             </div>
-            <Button
-              onClick={() => setShowManager(!showManager)}
-              variant="outline"
-              className="ml-4 bg-white/10 border-white/20 text-white hover:bg-white/20"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              {showManager ? 'Hide' : 'Manage'}
-            </Button>
+            <div className="flex flex-col items-end gap-2">
+              <Button
+                onClick={() => setShowManager(!showManager)}
+                variant="outline"
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                {showManager ? 'Hide' : 'Manage'}
+              </Button>
+              <ClearCacheButton />
+            </div>
           </div>
         </div>
       </section>
