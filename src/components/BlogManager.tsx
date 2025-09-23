@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar, Plus, Edit, Trash2, Save, X } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { getUsedTitles, isTitleUsed } from "@/utils/blogUtils";
 
 interface BlogPost {
   id: string;
@@ -73,6 +74,19 @@ export const BlogManager = ({ onPostsUpdate, initialPosts }: BlogManagerProps) =
         variant: "destructive",
       });
       return;
+    }
+
+    // Check for duplicate titles (only for new posts, not edits)
+    if (!editingPost) {
+      const usedTitles = getUsedTitles(posts);
+      if (isTitleUsed(newPost.title!, usedTitles)) {
+        toast({
+          title: "Error",
+          description: "A post with this title already exists. Please choose a different title.",
+          variant: "destructive",
+        });
+        return;
+      }
     }
 
     const postToSave: BlogPost = {

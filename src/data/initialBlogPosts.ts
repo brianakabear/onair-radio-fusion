@@ -2,6 +2,7 @@ import { musicNewsTemplates, generateMusicNewsContent } from './musicNewsContent
 
 export const generateInitialBlogPosts = () => {
   const posts = [];
+  const usedTitles = new Set();
   const images = [
     "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
     "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800", 
@@ -32,10 +33,27 @@ export const generateInitialBlogPosts = () => {
     "Michael Brown"
   ];
 
-  // Generate 30 posts
-  for (let i = 0; i < 30; i++) {
-    const randomTemplate = musicNewsTemplates[Math.floor(Math.random() * musicNewsTemplates.length)];
-    const randomArticle = randomTemplate.templates[Math.floor(Math.random() * randomTemplate.templates.length)];
+  // Create a pool of all available articles
+  const availableArticles = [];
+  musicNewsTemplates.forEach(template => {
+    template.templates.forEach(article => {
+      availableArticles.push({ ...article, category: template.category });
+    });
+  });
+
+  // Shuffle the available articles to ensure randomness
+  const shuffledArticles = [...availableArticles].sort(() => Math.random() - 0.5);
+
+  // Generate 30 unique posts
+  for (let i = 0; i < 30 && i < shuffledArticles.length; i++) {
+    const article = shuffledArticles[i];
+    
+    // Skip if we've already used this title
+    if (usedTitles.has(article.title)) {
+      continue;
+    }
+    
+    usedTitles.add(article.title);
     
     // Create dates going back in time
     const daysBack = i * 2; // One post every 2 days going back
@@ -45,10 +63,10 @@ export const generateInitialBlogPosts = () => {
     
     const post = {
       id: (1000 + i).toString(),
-      title: randomArticle.title,
-      excerpt: randomArticle.excerpt,
-      content: generateMusicNewsContent(randomArticle),
-      category: randomTemplate.category,
+      title: article.title,
+      excerpt: article.excerpt,
+      content: generateMusicNewsContent(article),
+      category: article.category,
       image: images[i % images.length] || null, // null will trigger fallback image
       date: postDate.toLocaleDateString('en-US', { 
         year: 'numeric', 

@@ -10,6 +10,7 @@ import { musicNewsTemplates, generateMusicNewsContent } from "@/data/musicNewsCo
 import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
+import { getUsedTitles, findUnusedArticle, generateUniqueTitle } from "@/utils/blogUtils";
 
 const Blog = () => {
   const [showManager, setShowManager] = useState(false);
@@ -28,8 +29,17 @@ const Blog = () => {
   // Auto-generate content every hour
   useEffect(() => {
     const generateContent = () => {
-      const randomTemplate = musicNewsTemplates[Math.floor(Math.random() * musicNewsTemplates.length)];
-      const randomArticle = randomTemplate.templates[Math.floor(Math.random() * randomTemplate.templates.length)];
+      // Get current used titles
+      const usedTitles = getUsedTitles(blogPosts);
+      
+      // Find an unused article
+      const unusedArticle = findUnusedArticle(musicNewsTemplates, usedTitles);
+      
+      // If no unused article found, don't generate new content
+      if (!unusedArticle) {
+        console.log('No unused articles available for generation');
+        return;
+      }
       
       const images = [
         "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
@@ -41,12 +51,15 @@ const Blog = () => {
       
       const authors = ["Link Up Radio Team", "Marcus Thompson", "Keisha Williams", "David Rodriguez"];
       
+      // Ensure title is unique
+      const uniqueTitle = generateUniqueTitle(unusedArticle.title, usedTitles);
+      
       const newPost = {
         id: Date.now().toString(),
-        title: randomArticle.title,
-        excerpt: randomArticle.excerpt,
-        content: generateMusicNewsContent(randomArticle),
-        category: randomTemplate.category,
+        title: uniqueTitle,
+        excerpt: unusedArticle.excerpt,
+        content: generateMusicNewsContent(unusedArticle),
+        category: unusedArticle.category,
         image: Math.random() > 0.6 ? images[Math.floor(Math.random() * images.length)] : null, // 40% chance of fallback image
         date: new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
@@ -69,7 +82,7 @@ const Blog = () => {
     const interval = setInterval(generateContent, 3600000); // 1 hour
     
     return () => clearInterval(interval);
-  }, []);
+  }, [blogPosts]); // Add blogPosts as dependency to get updated titles
 
   const handlePostsUpdate = (newPosts: any[]) => {
     setBlogPosts(newPosts);
