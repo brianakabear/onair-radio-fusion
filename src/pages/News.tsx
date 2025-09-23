@@ -6,26 +6,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, Clock, ArrowRight, MapPin, Search, Settings } from "lucide-react";
+import { Calendar, Clock, ArrowRight, MapPin, Search, Settings, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
+import { allNewsStories, type NewsStory } from "@/data/newsStories";
 
 const News = () => {
-  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [zipCode, setZipCode] = useState("");
   const [radius, setRadius] = useState("25");
   const [localNews, setLocalNews] = useState<any[]>([]);
   const [isLoadingLocal, setIsLoadingLocal] = useState(false);
 
-  // Load blog posts from localStorage
-  useEffect(() => {
-    const savedPosts = localStorage.getItem('linkup-blog-posts');
-    if (savedPosts) {
-      const parsedPosts = JSON.parse(savedPosts);
-      setBlogPosts(parsedPosts);
-    }
-  }, []);
+  const itemsPerPage = 25;
 
   // Filter news posts by category
   const newsCategories = [
@@ -36,9 +31,21 @@ const News = () => {
     "Sports News"
   ];
 
-  const newsPosts = blogPosts.filter(post => 
-    newsCategories.includes(post.category)
-  );
+  // Filter stories by selected category
+  const filteredStories = selectedCategory 
+    ? allNewsStories.filter(story => story.category === selectedCategory)
+    : allNewsStories;
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredStories.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentStories = filteredStories.slice(startIndex, endIndex);
+
+  // Reset to first page when category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -130,13 +137,24 @@ const News = () => {
                       <h3 className="text-lg font-semibold">News Categories</h3>
                     </CardHeader>
                     <CardContent className="space-y-3">
+                      <Button
+                        variant={selectedCategory === null ? "default" : "ghost"}
+                        className="w-full justify-between hover:bg-primary/10"
+                        onClick={() => setSelectedCategory(null)}
+                      >
+                        <span className="text-sm">All Categories</span>
+                        <Badge variant="secondary" className="text-xs">
+                          {allNewsStories.length}
+                        </Badge>
+                      </Button>
                       {newsCategories.map((category) => {
-                        const count = blogPosts.filter(p => p.category === category).length;
+                        const count = allNewsStories.filter(story => story.category === category).length;
                         return (
                           <Button
                             key={category}
-                            variant="ghost"
+                            variant={selectedCategory === category ? "default" : "ghost"}
                             className="w-full justify-between hover:bg-primary/10"
+                            onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
                           >
                             <span className="text-sm">{category.replace(" News", "")}</span>
                             <Badge variant="secondary" className="text-xs">
@@ -151,78 +169,142 @@ const News = () => {
 
                 {/* Main News Content */}
                 <main className="lg:col-span-3">
-                  {newsPosts.length === 0 ? (
+                  {currentStories.length === 0 ? (
                     <Card className="p-8 text-center">
                       <h3 className="text-lg font-semibold mb-2">No News Available</h3>
-                      <p className="text-muted-foreground">Check back later for the latest news updates.</p>
+                      <p className="text-muted-foreground">
+                        {selectedCategory 
+                          ? `No stories found in ${selectedCategory} category.`
+                          : "Check back later for the latest news updates."
+                        }
+                      </p>
                     </Card>
                   ) : (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {newsPosts.map((post) => (
-                        <Card key={post.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300">
-                          <div className="relative h-48">
-                            {post.image && post.image.trim() !== '' ? (
-                              <img
-                                src={post.image}
-                                alt={post.title}
-                                className="w-full h-full object-cover"
-                                onError={(e) => {
-                                  e.currentTarget.style.display = 'none';
-                                  const fallbackDiv = e.currentTarget.nextElementSibling as HTMLElement;
-                                  if (fallbackDiv) {
-                                    fallbackDiv.style.display = 'block';
-                                  }
-                                }}
-                              />
-                            ) : null}
-                            
-                            <div 
-                              style={{ display: (post.image && post.image.trim() !== '') ? 'none' : 'block' }}
-                              className="absolute inset-0"
-                            >
-                              <FallbackBlogImage 
-                                title={post.title}
-                                category={post.category}
-                                className="w-full h-full"
-                              />
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {currentStories.map((story) => (
+                          <Card key={story.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300">
+                            <div className="relative h-48">
+                              {story.image && story.image.trim() !== '' ? (
+                                <img
+                                  src={story.image}
+                                  alt={story.title}
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                    const fallbackDiv = e.currentTarget.nextElementSibling as HTMLElement;
+                                    if (fallbackDiv) {
+                                      fallbackDiv.style.display = 'block';
+                                    }
+                                  }}
+                                />
+                              ) : null}
+                              
+                              <div 
+                                style={{ display: (story.image && story.image.trim() !== '') ? 'none' : 'block' }}
+                                className="absolute inset-0"
+                              >
+                                <FallbackBlogImage 
+                                  title={story.title}
+                                  category={story.category}
+                                  className="w-full h-full"
+                                />
+                              </div>
+                              <Badge 
+                                className={`absolute top-3 left-3 text-xs ${getCategoryColor(story.category)}`}
+                              >
+                                {story.category.replace(" News", "")}
+                              </Badge>
                             </div>
-                            <Badge 
-                              className={`absolute top-3 left-3 text-xs ${getCategoryColor(post.category)}`}
-                            >
-                              {post.category.replace(" News", "")}
-                            </Badge>
-                          </div>
-                          <CardContent className="p-4">
-                            <h3 className="font-bold mb-2 hover:text-primary transition-colors line-clamp-2">
-                              <Link to={`/blog/${post.id}`}>
-                                {post.title}
-                              </Link>
-                            </h3>
-                            <p className="text-muted-foreground mb-3 text-sm leading-relaxed line-clamp-3">
-                              {post.excerpt}
-                            </p>
-                            <div className="flex items-center text-xs text-muted-foreground mb-3">
-                              <Calendar className="h-3 w-3 mr-1" />
-                              <span>{post.date}</span>
-                              <Clock className="h-3 w-3 ml-3 mr-1" />
-                              <span>{post.readTime}</span>
-                            </div>
-                            {post.source && (
-                              <p className="text-xs text-muted-foreground mb-3 italic">
-                                Source: {post.source}
-                              </p>
-                            )}
-                            <div className="flex justify-end">
-                              <Button variant="ghost" size="sm" asChild className="h-8 w-8 p-0">
-                                <Link to={`/blog/${post.id}`}>
-                                  <ArrowRight className="h-4 w-4" />
+                            <CardContent className="p-4">
+                              <h3 className="font-bold mb-2 hover:text-primary transition-colors line-clamp-2">
+                                <Link to={`/blog/${story.id}`}>
+                                  {story.title}
                                 </Link>
-                              </Button>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                              </h3>
+                              <p className="text-muted-foreground mb-3 text-sm leading-relaxed line-clamp-3">
+                                {story.excerpt}
+                              </p>
+                              <div className="flex items-center text-xs text-muted-foreground mb-3">
+                                <Calendar className="h-3 w-3 mr-1" />
+                                <span>{story.date}</span>
+                                <Clock className="h-3 w-3 ml-3 mr-1" />
+                                <span>{story.readTime}</span>
+                              </div>
+                              {story.source && (
+                                <p className="text-xs text-muted-foreground mb-3 italic">
+                                  Source: {story.source}
+                                </p>
+                              )}
+                              <div className="flex justify-end">
+                                <Button variant="ghost" size="sm" asChild className="h-8 w-8 p-0">
+                                  <Link to={`/blog/${story.id}`}>
+                                    <ArrowRight className="h-4 w-4" />
+                                  </Link>
+                                </Button>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                      
+                      {/* Pagination */}
+                      {totalPages > 1 && (
+                        <div className="flex justify-center items-center space-x-4 mt-8">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="h-4 w-4 mr-1" />
+                            Previous
+                          </Button>
+                          
+                          <div className="flex items-center space-x-2">
+                            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                              let pageNum;
+                              if (totalPages <= 5) {
+                                pageNum = i + 1;
+                              } else if (currentPage <= 3) {
+                                pageNum = i + 1;
+                              } else if (currentPage >= totalPages - 2) {
+                                pageNum = totalPages - 4 + i;
+                              } else {
+                                pageNum = currentPage - 2 + i;
+                              }
+                              
+                              return (
+                                <Button
+                                  key={pageNum}
+                                  variant={currentPage === pageNum ? "default" : "outline"}
+                                  size="sm"
+                                  className="w-8 h-8 p-0"
+                                  onClick={() => setCurrentPage(pageNum)}
+                                >
+                                  {pageNum}
+                                </Button>
+                              );
+                            })}
+                          </div>
+                          
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="h-4 w-4 ml-1" />
+                          </Button>
+                        </div>
+                      )}
+                      
+                      <div className="text-center text-sm text-muted-foreground mt-4">
+                        Showing {startIndex + 1}-{Math.min(endIndex, filteredStories.length)} of {filteredStories.length} stories
+                        {selectedCategory && ` in ${selectedCategory}`}
+                      </div>
+                    </>
                   )}
                 </main>
               </div>
