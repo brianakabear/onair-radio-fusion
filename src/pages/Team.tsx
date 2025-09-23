@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 const Team = () => {
   const teamMembers = [
     {
-      name: "DJ Sunshine",
-      role: "Morning Show Host",
-      bio: "Bringing positive vibes to start your day with the best reggae and conscious music.",
-      specialties: ["Reggae", "Conscious Music", "Morning Vibes"],
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
+      name: "David 'Squeeze' Annakie",
+      role: "Morning Show Host & Media Personality",
+      bio: "Veteran broadcaster and media personality bringing authentic Caribbean culture and music to Link Up Radio. Known for his engaging personality and deep connection to the community.",
+      specialties: ["Caribbean Culture", "Morning Radio", "Community Connection", "Media Production"],
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
       social: {
         instagram: "#",
         twitter: "#"
