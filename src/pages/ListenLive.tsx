@@ -61,6 +61,7 @@ const ListenLive = () => {
   const selectStream = (stream: RadioStream) => {
     if (currentStream?.id === stream.id) return;
     
+    console.log("Selecting stream:", stream.name, stream.url);
     setIsLoading(true);
     setIsPlaying(false);
     setCurrentStream(stream);
@@ -119,10 +120,15 @@ const ListenLive = () => {
     setIsPlaying(false);
   };
 
-  const handleError = () => {
+  const handleError = (e?: any) => {
     setIsPlaying(false);
     setIsLoading(false);
-    console.error("Audio stream error");
+    console.error("Audio stream error:", e);
+    
+    // Try opening in new window as fallback for CORS issues
+    if (currentStream && e?.target?.error?.code === 4) {
+      console.log("CORS error detected, offering direct stream link");
+    }
   };
 
   return (
@@ -161,10 +167,12 @@ const ListenLive = () => {
               <CardContent className="space-y-6">
                 <audio
                   ref={audioRef}
+                  crossOrigin="anonymous"
                   onCanPlay={handleCanPlay}
                   onPlay={handlePlay}
                   onPause={handlePause}
                   onError={handleError}
+                  onLoadStart={() => setIsLoading(true)}
                   preload="none"
                 />
 
@@ -221,12 +229,28 @@ const ListenLive = () => {
                   </span>
                 </div>
 
-                {/* Stream Info */}
+                {/* Stream Info & Fallback */}
                 {currentStream && (
-                  <div className="text-center pt-4 border-t border-border">
+                  <div className="text-center pt-4 border-t border-border space-y-2">
                     <p className="text-xs text-muted-foreground">
                       Quality: {currentStream.bitrate} • Format: MP3
                     </p>
+                    <div className="flex justify-center">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                        className="text-xs"
+                      >
+                        <a
+                          href={currentStream.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Open Direct Stream
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 )}
               </CardContent>
