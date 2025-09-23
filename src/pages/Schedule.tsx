@@ -281,13 +281,6 @@ const Schedule = () => {
                 </CardContent>
               </Card>
               
-              {nextShow && (
-                <div className="mt-6 text-center">
-                  <p className="text-muted-foreground">
-                    <span className="font-medium">Up Next:</span> {nextShow.show} with {nextShow.host} at {nextShow.time.split(' - ')[0]}
-                  </p>
-                </div>
-              )}
             </div>
           ) : (
             <div className="text-center text-muted-foreground">
@@ -296,6 +289,56 @@ const Schedule = () => {
           )}
         </div>
       </section>
+
+      {/* Coming Up Next Section */}
+      {nextShow && (
+        <section className="py-12 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center space-x-2 mb-4">
+                <Clock className="h-4 w-4 text-primary" />
+                <span className="text-sm font-bold text-primary uppercase tracking-wider">Coming Up Next</span>
+              </div>
+              <h2 className="text-2xl font-bold">Next Show</h2>
+            </div>
+            
+            <div className="max-w-3xl mx-auto">
+              <Card className="bg-card/30 backdrop-blur-sm border-muted-foreground/20">
+                <CardContent className="p-6">
+                  <div className="grid md:grid-cols-3 gap-6 items-center">
+                    <div className="md:col-span-2 space-y-3">
+                      <Badge 
+                        variant="outline" 
+                        className={`text-xs px-3 py-1 ${getGenreColor(nextShow.type)}`}
+                      >
+                        {nextShow.type.toUpperCase()}
+                      </Badge>
+                      <h3 className="text-xl font-bold text-foreground">{nextShow.show}</h3>
+                      <div className="space-y-1">
+                        <div className="flex items-center space-x-2 text-muted-foreground text-sm">
+                          <User className="h-3 w-3" />
+                          <span>with {nextShow.host}</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-muted-foreground text-sm">
+                          <Clock className="h-3 w-3" />
+                          <span>Starts at {nextShow.time.split(' - ')[0]}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="text-center">
+                      <div className="w-20 h-20 mx-auto bg-gradient-to-br from-muted to-muted-foreground/20 rounded-full flex items-center justify-center shadow-md">
+                        <Radio className="h-8 w-8 text-muted-foreground" />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-2">Up Next</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Weekly Schedule */}
       <section className="py-20">
