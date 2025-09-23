@@ -18,22 +18,20 @@ const Videos = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [featuredVideo, setFeaturedVideo] = useState<Video | null>(null);
   const [loading, setLoading] = useState(false);
-  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
-  const [apiKey, setApiKey] = useState("AIzaSyC9Vk3-0cETsI1rQ4bzjPCW7CVdttNr7UY");
   const { toast } = useToast();
 
   const PLAYLIST_ID = "PLIEahQKVNC2wTVti1enD_km8IDGkyupPw";
+  const API_KEY = "AIzaSyC9Vk3-0cETsI1rQ4bzjPCW7CVdttNr7UY";
 
   useEffect(() => {
-    // Use the default API key and fetch videos immediately
-    fetchPlaylistVideos("AIzaSyC9Vk3-0cETsI1rQ4bzjPCW7CVdttNr7UY");
+    fetchPlaylistVideos();
   }, []);
 
-  const fetchPlaylistVideos = async (key: string) => {
+  const fetchPlaylistVideos = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${PLAYLIST_ID}&key=${key}`
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${PLAYLIST_ID}&key=${API_KEY}`
       );
 
       if (!response.ok) {
@@ -62,7 +60,7 @@ const Videos = () => {
       console.error("Error fetching videos:", error);
       toast({
         title: "Error",
-        description: "Failed to load videos. Please check your API key.",
+        description: "Failed to load videos from YouTube",
         variant: "destructive",
       });
     } finally {
@@ -70,49 +68,9 @@ const Videos = () => {
     }
   };
 
-  const handleApiKeySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (apiKey.trim()) {
-      localStorage.setItem("youtube_api_key", apiKey.trim());
-      setShowApiKeyInput(false);
-      fetchPlaylistVideos(apiKey.trim());
-    }
-  };
-
   const playVideo = (video: Video) => {
     setFeaturedVideo(video);
   };
-
-  if (showApiKeyInput) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-md mx-auto">
-            <Card className="p-6">
-              <h2 className="text-2xl font-bold mb-4 text-center">YouTube API Setup</h2>
-              <p className="text-muted-foreground mb-4 text-sm">
-                To display YouTube videos, please enter your YouTube Data API v3 key. 
-                You can get one from the Google Cloud Console.
-              </p>
-              <form onSubmit={handleApiKeySubmit} className="space-y-4">
-                <Input
-                  type="password"
-                  placeholder="Enter YouTube API Key"
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  required
-                />
-                <Button type="submit" className="w-full">
-                  Save API Key
-                </Button>
-              </form>
-            </Card>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,10 +90,9 @@ const Videos = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setShowApiKeyInput(true)}
+            onClick={() => fetchPlaylistVideos()}
           >
-            <Settings className="h-4 w-4 mr-2" />
-            Settings
+            Refresh
           </Button>
         </div>
 
@@ -175,7 +132,7 @@ const Videos = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-semibold">All Music Videos</h2>
                 <Button
-                  onClick={() => fetchPlaylistVideos("AIzaSyC9Vk3-0cETsI1rQ4bzjPCW7CVdttNr7UY")}
+                  onClick={() => fetchPlaylistVideos()}
                   variant="outline"
                   size="sm"
                 >
