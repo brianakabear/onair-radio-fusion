@@ -2,75 +2,108 @@ import Header from "@/components/Header";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, ArrowRight, Music, Users, Mic } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Music, Users, Mic, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BlogManager } from "@/components/BlogManager";
+import { musicNewsTemplates, generateMusicNewsContent } from "@/data/musicNewsContent";
 
 const Blog = () => {
-  const blogPosts = [
+  const [showManager, setShowManager] = useState(false);
+  const [blogPosts, setBlogPosts] = useState([
     {
-      id: 1,
+      id: "1",
       title: "The Evolution of Caribbean Music: From Calypso to Modern Dancehall",
       excerpt: "Explore the rich history of Caribbean music and how it has shaped global culture, from the traditional calypso of Trinidad to the modern dancehall sounds dominating today's charts.",
       image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
       category: "Music History",
       date: "December 15, 2024",
       readTime: "8 min read",
-      featured: true
+      featured: true,
+      author: "Link Up Radio Team",
+      content: "Caribbean music has a rich and diverse history that spans centuries..."
     },
     {
-      id: 2,
+      id: "2",
       title: "Top 10 Reggae Artists You Need to Know in 2024",
       excerpt: "Discover the rising stars and established legends keeping reggae music alive and thriving in the modern era.",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
       category: "Artist Spotlight",
       date: "December 12, 2024",
-      readTime: "6 min read"
+      readTime: "6 min read",
+      featured: false,
+      author: "Link Up Radio Team",
+      content: "The reggae scene in 2024 is vibrant with amazing talent..."
     },
     {
-      id: 3,
+      id: "3",
       title: "Carnival Season 2024: The Best Soca Releases",
       excerpt: "Get ready for carnival season with our curated list of the hottest soca tracks that will dominate the festivities.",
       image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800",
       category: "Seasonal",
       date: "December 10, 2024",
-      readTime: "5 min read"
-    },
-    {
-      id: 4,
-      title: "The Influence of Hip Hop on Caribbean Music",
-      excerpt: "How hip hop culture has influenced and been influenced by Caribbean music, creating new fusion genres and collaborations.",
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
-      category: "Culture",
-      date: "December 8, 2024",
-      readTime: "7 min read"
-    },
-    {
-      id: 5,
-      title: "Behind the Scenes: Life at Link Up Radio",
-      excerpt: "Take a peek behind the curtain and see what goes on during a typical day at Link Up Radio studios.",
-      image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800",
-      category: "Behind the Scenes",
-      date: "December 5, 2024",
-      readTime: "4 min read"
-    },
-    {
-      id: 6,
-      title: "Neo-Soul Revival: The New Generation of R&B Artists",
-      excerpt: "Examining the resurgence of neo-soul and how young artists are reimagining classic R&B for modern audiences.",
-      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
-      category: "Music Trends",
-      date: "December 3, 2024",
-      readTime: "6 min read"
+      readTime: "5 min read",
+      featured: false,
+      author: "Link Up Radio Team",
+      content: "Carnival season brings the hottest soca tracks of the year..."
     }
-  ];
+  ]);
+
+  // Load saved posts from localStorage on mount
+  useEffect(() => {
+    const savedPosts = localStorage.getItem('linkup-blog-posts');
+    if (savedPosts) {
+      setBlogPosts(JSON.parse(savedPosts));
+    }
+  }, []);
+
+  // Auto-generate content periodically (demo - in production this would be a scheduled job)
+  useEffect(() => {
+    const generateContent = () => {
+      const randomTemplate = musicNewsTemplates[Math.floor(Math.random() * musicNewsTemplates.length)];
+      const randomArticle = randomTemplate.templates[Math.floor(Math.random() * randomTemplate.templates.length)];
+      
+      const newPost = {
+        id: Date.now().toString(),
+        title: randomArticle.title,
+        excerpt: randomArticle.excerpt,
+        content: generateMusicNewsContent(randomArticle),
+        category: randomTemplate.category,
+        image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
+        date: new Date().toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        }),
+        readTime: "5 min read",
+        featured: false,
+        author: "Link Up Radio Team"
+      };
+
+      setBlogPosts(prevPosts => {
+        const updatedPosts = [newPost, ...prevPosts];
+        localStorage.setItem('linkup-blog-posts', JSON.stringify(updatedPosts));
+        return updatedPosts;
+      });
+    };
+
+    // Generate new content every hour (for demo purposes - in production use proper scheduling)
+    const interval = setInterval(generateContent, 3600000); // 1 hour
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  const handlePostsUpdate = (newPosts: any[]) => {
+    setBlogPosts(newPosts);
+  };
 
   const categories = [
     { name: "All Posts", count: blogPosts.length, icon: Music },
-    { name: "Music History", count: 2, icon: Clock },
-    { name: "Artist Spotlight", count: 1, icon: Users },
-    { name: "Behind the Scenes", count: 1, icon: Mic },
-    { name: "Culture", count: 1, icon: Music },
-    { name: "Seasonal", count: 1, icon: Calendar }
+    { name: "Music History", count: blogPosts.filter(p => p.category === "Music History").length, icon: Clock },
+    { name: "Artist Spotlight", count: blogPosts.filter(p => p.category === "Artist Spotlight").length, icon: Users },
+    { name: "Behind the Scenes", count: blogPosts.filter(p => p.category === "Behind the Scenes").length, icon: Mic },
+    { name: "Caribbean Culture", count: blogPosts.filter(p => p.category === "Caribbean Culture").length, icon: Music },
+    { name: "Industry Updates", count: blogPosts.filter(p => p.category === "Industry Updates").length, icon: Calendar }
   ];
 
   const getCategoryColor = (category: string) => {
@@ -90,13 +123,36 @@ const Blog = () => {
       
       {/* Hero Section */}
       <section className="py-20 bg-gradient-caribbean">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold text-white mb-6">Link Up Radio Blog</h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Stay connected with the latest in Caribbean and urban music culture, artist features, and industry insights
-          </p>
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-6">
+            <div className="text-center flex-1">
+              <h1 className="text-5xl font-bold text-white mb-6">Link Up Radio Blog</h1>
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
+                Stay connected with the latest in Caribbean and urban music culture, artist features, and industry insights
+              </p>
+            </div>
+            <Button
+              onClick={() => setShowManager(!showManager)}
+              variant="outline"
+              className="ml-4 bg-white/10 border-white/20 text-white hover:bg-white/20"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              {showManager ? 'Hide' : 'Manage'}
+            </Button>
+          </div>
         </div>
       </section>
+
+      {showManager && (
+        <section className="py-8 bg-card/50">
+          <div className="container mx-auto px-4">
+            <BlogManager 
+              onPostsUpdate={handlePostsUpdate}
+              initialPosts={blogPosts}
+            />
+          </div>
+        </section>
+      )}
 
       <section className="py-20">
         <div className="container mx-auto px-4">
