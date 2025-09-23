@@ -1,21 +1,101 @@
 export const musicNewsTemplates = [
   {
-    category: "Caribbean Culture",
+    category: "Jamaica News",
     templates: [
       {
-        title: "Caribbean Music Festival Season: What to Expect This Year",
-        excerpt: "The Caribbean festival circuit is heating up with exciting lineups featuring both legendary artists and rising stars.",
-        topics: ["festivals", "live music", "Caribbean events", "artist lineups"]
+        title: "Jamaica's Music Industry Shows Strong Growth in Export Revenue",
+        excerpt: "Latest economic data reveals significant increases in music export earnings, highlighting Jamaica's growing influence in global music markets.",
+        topics: ["economy", "music exports", "industry growth", "Jamaica"]
       },
       {
-        title: "The Rise of Caribbean Fusion: Blending Traditional and Modern Sounds",
-        excerpt: "How contemporary Caribbean artists are innovating while honoring traditional musical roots.",
-        topics: ["music evolution", "cultural preservation", "modern Caribbean"]
+        title: "New Recording Studios Open Across Kingston and Spanish Town",
+        excerpt: "Investment in music infrastructure continues as developers recognize Jamaica's strategic position in Caribbean music production.",
+        topics: ["infrastructure", "recording studios", "music production", "investment"]
       },
       {
-        title: "Island Rhythms Going Global: Caribbean Music's International Impact",
-        excerpt: "Exploring how Caribbean music continues to influence mainstream pop, hip-hop, and electronic music worldwide.",
-        topics: ["global influence", "crossover success", "cultural export"]
+        title: "Jamaica Music Week Announces 2025 Festival Lineup",
+        excerpt: "The annual celebration of Jamaican music culture prepares to showcase both legendary artists and emerging talent from across the island.",
+        topics: ["festivals", "music week", "local events", "artist showcase"]
+      }
+    ]
+  },
+  {
+    category: "Caribbean News",
+    templates: [
+      {
+        title: "Trinidad Carnival Season Brings Economic Boost to Regional Music",
+        excerpt: "The annual celebration drives significant revenue for Caribbean artists and supporting industries across the region.",
+        topics: ["carnival", "regional economy", "music tourism", "cultural events"]
+      },
+      {
+        title: "Barbados Launches New Music Education Initiative",
+        excerpt: "Government-backed program aims to preserve traditional Caribbean music while fostering new talent across the region.",
+        topics: ["music education", "cultural preservation", "government initiatives", "youth programs"]
+      },
+      {
+        title: "Caribbean Music Awards Expand to Include More Regional Categories",
+        excerpt: "Recognition program grows to better represent the diverse musical traditions found throughout the Caribbean islands.",
+        topics: ["awards", "regional recognition", "music diversity", "cultural celebration"]
+      }
+    ]
+  },
+  {
+    category: "International News",
+    templates: [
+      {
+        title: "Caribbean Artists Gain Ground in European Music Festivals",
+        excerpt: "Growing international recognition opens new opportunities for reggae and dancehall performers on the global stage.",
+        topics: ["international festivals", "global recognition", "touring opportunities", "cultural export"]
+      },
+      {
+        title: "Major Streaming Platforms Increase Caribbean Music Promotion",
+        excerpt: "Digital music services develop specialized playlists and promotional campaigns for reggae and dancehall genres.",
+        topics: ["streaming platforms", "digital promotion", "global reach", "music technology"]
+      },
+      {
+        title: "African-Caribbean Music Collaborations Continue to Flourish",
+        excerpt: "Cross-continental partnerships produce innovative sounds that blend traditional Caribbean rhythms with contemporary African beats.",
+        topics: ["international collaboration", "cultural exchange", "music fusion", "global partnerships"]
+      }
+    ]
+  },
+  {
+    category: "Entertainment News",
+    templates: [
+      {
+        title: "New Caribbean Music Documentary Series Premieres on Streaming Platform",
+        excerpt: "Five-part series explores the rich history and contemporary evolution of Caribbean music genres and their global impact.",
+        topics: ["documentaries", "music history", "streaming content", "cultural storytelling"]
+      },
+      {
+        title: "Celebrity DJ Announces Caribbean Music Podcast Series",
+        excerpt: "Popular media personality launches weekly show featuring interviews with Caribbean artists and industry professionals.",
+        topics: ["podcasts", "celebrity interviews", "music media", "artist promotion"]
+      },
+      {
+        title: "Caribbean Music Influences Featured in Major Hollywood Soundtrack",
+        excerpt: "Blockbuster film incorporates reggae and dancehall elements, bringing Caribbean sounds to massive international audiences.",
+        topics: ["film soundtracks", "Hollywood", "music placement", "cultural influence"]
+      }
+    ]
+  },
+  {
+    category: "Sports News",
+    templates: [
+      {
+        title: "Olympic Athlete Credits Caribbean Music for Training Motivation",
+        excerpt: "Elite sprinter shares how reggae and dancehall rhythms fuel training sessions and competition preparation.",
+        topics: ["sports motivation", "athlete lifestyle", "music and athletics", "Caribbean pride"]
+      },
+      {
+        title: "Caribbean Music Takes Center Stage at Major Sports Championships",
+        excerpt: "International sporting events increasingly feature Caribbean artists in opening ceremonies and entertainment programs.",
+        topics: ["sports entertainment", "ceremonial performances", "international events", "cultural showcase"]
+      },
+      {
+        title: "Local Football Team Adopts Caribbean Music as Victory Anthem",
+        excerpt: "Professional sports team partners with local artists to create official songs that celebrate victories and engage fans.",
+        topics: ["team anthems", "sports partnerships", "fan engagement", "local pride"]
       }
     ]
   },
@@ -36,66 +116,6 @@ export const musicNewsTemplates = [
         title: "Collaboration Nation: Caribbean Artists Crossing Borders",
         excerpt: "The most exciting international collaborations bringing Caribbean flavors to the world stage.",
         topics: ["collaborations", "cross-cultural music", "international features"]
-      }
-    ]
-  },
-  {
-    category: "Music Technology",
-    templates: [
-      {
-        title: "Studio Innovation: How Technology is Shaping Caribbean Music Production",
-        excerpt: "From traditional recording techniques to cutting-edge digital production, see how Caribbean music is embracing technology.",
-        topics: ["music production", "studio technology", "digital innovation"]
-      },
-      {
-        title: "Streaming Success: Caribbean Artists in the Digital Age",
-        excerpt: "How streaming platforms have opened new opportunities for Caribbean musicians to reach global audiences.",
-        topics: ["streaming platforms", "digital distribution", "online promotion"]
-      },
-      {
-        title: "Virtual Concerts and Digital Festivals: The Future of Caribbean Music Events",
-        excerpt: "The evolution of live music experiences in the digital era and what it means for Caribbean artists.",
-        topics: ["virtual events", "digital concerts", "online festivals"]
-      }
-    ]
-  },
-  {
-    category: "Industry Updates",
-    templates: [
-      {
-        title: "Record Label Spotlight: Independent Labels Driving Caribbean Music Forward",
-        excerpt: "How independent record labels are championing Caribbean artists and preserving musical authenticity.",
-        topics: ["record labels", "independent music", "artist development"]
-      },
-      {
-        title: "Music Awards Season: Celebrating Caribbean Excellence",
-        excerpt: "Highlighting Caribbean artists and their achievements in major music awards and recognition programs.",
-        topics: ["music awards", "artist recognition", "industry honors"]
-      },
-      {
-        title: "Radio Evolution: How Caribbean Music is Adapting to New Broadcasting Trends",
-        excerpt: "The changing landscape of radio broadcasting and its impact on Caribbean music promotion.",
-        topics: ["radio broadcasting", "music promotion", "media evolution"]
-      }
-    ]
-  },
-  {
-    category: "Community Events",
-    templates: [
-      {
-        title: "Local Music Scene: Celebrating Community Artists and Venues",
-        excerpt: "Shining a spotlight on grassroots Caribbean music scenes and the venues that support emerging talent.",
-        topics: ["local music", "community venues", "grassroots artists"]
-      },
-      {
-        title: "Music Education: Programs Nurturing the Next Generation of Caribbean Musicians",
-        excerpt: "Educational initiatives and programs helping young people connect with their musical heritage.",
-        topics: ["music education", "youth programs", "cultural preservation"]
-      },
-      {
-        title: "Community Celebrations: Music as the Heart of Caribbean Culture",
-        excerpt: "How music brings Caribbean communities together through festivals, block parties, and cultural events.",
-        topics: ["community events", "cultural celebrations", "social impact"]
       }
     ]
   }

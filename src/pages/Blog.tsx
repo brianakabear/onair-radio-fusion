@@ -130,22 +130,42 @@ const Blog = () => {
   const featuredPosts = currentPosts.filter(post => post.featured);
   const regularPosts = currentPosts.filter(post => !post.featured);
 
+  const newsCategories = [
+    "Jamaica News",
+    "Caribbean News", 
+    "International News",
+    "Entertainment News",
+    "Sports News"
+  ];
+
   const categories = [
     { name: "All Posts", count: blogPosts.length, icon: Music },
-    { name: "Music History", count: blogPosts.filter(p => p.category === "Music History").length, icon: Clock },
+    { name: "News", count: blogPosts.filter(p => newsCategories.includes(p.category)).length, icon: Calendar, isParent: true },
     { name: "Artist Spotlight", count: blogPosts.filter(p => p.category === "Artist Spotlight").length, icon: Users },
-    { name: "Behind the Scenes", count: blogPosts.filter(p => p.category === "Behind the Scenes").length, icon: Mic },
+    { name: "Music History", count: blogPosts.filter(p => p.category === "Music History").length, icon: Clock },
     { name: "Caribbean Culture", count: blogPosts.filter(p => p.category === "Caribbean Culture").length, icon: Music },
-    { name: "Industry Updates", count: blogPosts.filter(p => p.category === "Industry Updates").length, icon: Calendar }
+    { name: "Industry Updates", count: blogPosts.filter(p => p.category === "Industry Updates").length, icon: Mic }
+  ];
+
+  const newsSubcategories = [
+    { name: "Jamaica", category: "Jamaica News", count: blogPosts.filter(p => p.category === "Jamaica News").length },
+    { name: "Caribbean", category: "Caribbean News", count: blogPosts.filter(p => p.category === "Caribbean News").length },
+    { name: "International", category: "International News", count: blogPosts.filter(p => p.category === "International News").length },
+    { name: "Entertainment", category: "Entertainment News", count: blogPosts.filter(p => p.category === "Entertainment News").length },
+    { name: "Sports", category: "Sports News", count: blogPosts.filter(p => p.category === "Sports News").length }
   ];
 
   const getCategoryColor = (category: string) => {
     switch (category) {
+      case "Jamaica News": return "bg-accent text-accent-foreground";
+      case "Caribbean News": return "bg-primary text-primary-foreground";
+      case "International News": return "bg-secondary text-secondary-foreground";
+      case "Entertainment News": return "bg-muted text-muted-foreground";
+      case "Sports News": return "bg-destructive text-destructive-foreground";
       case "Music History": return "bg-accent text-accent-foreground";
       case "Artist Spotlight": return "bg-primary text-primary-foreground";
-      case "Culture": return "bg-secondary text-secondary-foreground";
-      case "Behind the Scenes": return "bg-muted text-muted-foreground";
-      case "Seasonal": return "bg-destructive text-destructive-foreground";
+      case "Caribbean Culture": return "bg-secondary text-secondary-foreground";
+      case "Industry Updates": return "bg-muted text-muted-foreground";
       default: return "bg-border text-foreground";
     }
   };
@@ -203,19 +223,39 @@ const Blog = () => {
                   {categories.map((category) => {
                     const IconComponent = category.icon;
                     return (
-                      <Button
-                        key={category.name}
-                        variant="ghost"
-                        className="w-full justify-between hover:bg-primary/10"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <IconComponent className="h-4 w-4" />
-                          <span>{category.name}</span>
-                        </div>
-                        <Badge variant="secondary" className="text-xs">
-                          {category.count}
-                        </Badge>
-                      </Button>
+                      <div key={category.name}>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-between hover:bg-primary/10"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <IconComponent className="h-4 w-4" />
+                            <span>{category.name}</span>
+                          </div>
+                          <Badge variant="secondary" className="text-xs">
+                            {category.count}
+                          </Badge>
+                        </Button>
+                        
+                        {/* Show news subcategories when it's the News category */}
+                        {category.name === "News" && (
+                          <div className="ml-6 mt-2 space-y-2">
+                            {newsSubcategories.map((subcategory) => (
+                              <Button
+                                key={subcategory.name}
+                                variant="ghost"
+                                size="sm"
+                                className="w-full justify-between hover:bg-primary/5 text-sm"
+                              >
+                                <span>{subcategory.name}</span>
+                                <Badge variant="outline" className="text-xs">
+                                  {subcategory.count}
+                                </Badge>
+                              </Button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
                 </CardContent>
