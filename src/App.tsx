@@ -9,11 +9,8 @@ import { runDailyValidation } from "@/utils/routeValidation";
 import MiniPlayer from "@/components/MiniPlayer";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import Schedule from "./pages/Schedule";
-import Team from "./pages/Team";
 import News from "./pages/News";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
+import NewsArticle from "./pages/NewsArticle";
 import Contact from "./pages/Contact";
 import ListenLive from "./pages/ListenLive";
 import Videos from "./pages/Videos";
@@ -47,11 +44,8 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
-              <Route path="/schedule" element={<Schedule />} />
-              <Route path="/team" element={<Team />} />
               <Route path="/news" element={<News />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/news/:id" element={<NewsArticle />} />
               <Route path="/videos" element={<Videos />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/listen-live" element={<ListenLive />} />

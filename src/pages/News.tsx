@@ -571,7 +571,7 @@ const News = () => {
                                 {story.date}
                               </div>
                                <Button variant="outline" size="sm" className="w-full text-xs" asChild>
-                                 <Link to={`/blog/${story.id}`}>
+                                 <Link to={`/news/${story.id}`}>
                                    Read Now
                                  </Link>
                                </Button>
@@ -857,7 +857,7 @@ const News = () => {
                               {new Date().toLocaleDateString()}
                             </div>
                             <Button variant="outline" size="sm" className="w-full text-xs" asChild>
-                              <Link to={`/blog/${story.id}`}>
+                              <Link to={`/news/${story.id}`} state={{ story }}>
                                 Read Now
                               </Link>
                             </Button>
