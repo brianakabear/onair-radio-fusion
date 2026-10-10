@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, ExternalLink } from "lucide-react";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
+import ShareButtons from "@/components/ShareButtons";
 import { allNewsStories, type NewsStory } from "@/data/newsStories";
 
 const SOURCE_URLS: Record<string, string> = {
@@ -84,6 +85,10 @@ const NewsArticle = () => {
                 {story.date}
               </span>
               <span>Source: {story.source}</span>
+            </div>
+
+            <div className="mb-8">
+              <ShareButtons title={story.title} slug={story.id} />
             </div>
 
             <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 bg-gradient-to-br from-primary/10 to-accent/10">
