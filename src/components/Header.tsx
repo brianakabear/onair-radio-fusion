@@ -3,7 +3,7 @@ import { Menu, X, Radio, Play, Instagram, Facebook, Youtube, Linkedin } from "lu
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useLocation } from "react-router-dom";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/majestic-fyah-logo.png";
 import ThemeSelector from "@/components/ThemeSelector";
 
 const Header = () => {

@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Radio, Music, Headphones, Play, AudioLines } from "lucide-react";
 import Header from "@/components/Header";
 import { useAudio } from "@/contexts/AudioContext";
-import linkUpLogo from "@/assets/linkup-logo.png";
+import linkUpLogo from "@/assets/majestic-fyah-logo.png";
 
 interface RadioStream {
   id: string;
@@ -141,6 +141,9 @@ const ListenLive = () => {
                     src={linkUpLogo} 
                     alt="Majestic Fyah Radio Logo" 
                     className="w-24 h-24 object-contain"
+                    loading="lazy"
+                    width={96}
+                    height={96}
                   />
                 </div>
                 <div className="text-center space-y-4">
