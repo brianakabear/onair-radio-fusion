@@ -19,7 +19,9 @@ const SOURCE_URLS: Record<string, string> = {
   "Reuters": "https://www.reuters.com",
   "The New York Times": "https://www.nytimes.com",
   "The Daily News": "https://www.nydailynews.com",
-  "Daily News": "https://www.nydailynews.com"
+  "Daily News": "https://www.nydailynews.com",
+  "DancehallMag": "https://www.dancehallmag.com",
+  "EIN Presswire": "https://www.einpresswire.com"
 };
 
 const NewsArticle = () => {
