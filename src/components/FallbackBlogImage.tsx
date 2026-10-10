@@ -104,7 +104,7 @@ export const FallbackBlogImage = ({ title, category, id, excerpt, className = ""
   const landscapePattern = getLandscapePattern(id, title);
 
   return (
-    <div className={`relative overflow-hidden aspect-[16/10] ${className}`}>
+    <div className={`relative overflow-hidden w-full h-full ${className}`}>
       <div className={`w-full h-full ${backgroundClass} flex items-center justify-center`}>
         {/* Landscape atmosphere overlay */}
         <div className="absolute inset-0 opacity-20">
