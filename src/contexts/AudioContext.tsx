@@ -45,8 +45,8 @@ export const useAudio = () => {
 const defaultStreams: RadioStream[] = [
   {
     id: '1',
-    name: 'Link Up Radio Main',
-    url: 'https://c2.radioboss.fm:8967/stream',
+    name: 'Majestic Fyah Radio Main',
+    url: 'https://cast1.my-control-panel.com/proxy/majesticfyah/stream',
     genre: 'Caribbean Mix',
     description: 'Main Caribbean music stream featuring reggae, dancehall, soca, and more',
     bitrate: '128 kbps'

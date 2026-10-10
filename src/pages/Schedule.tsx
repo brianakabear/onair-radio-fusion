@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, Play, User, Radio, Calendar, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAudio } from "@/contexts/AudioContext";
+import stationLogo from "@/assets/majestic-fyah-logo.png";
 
 interface Show {
   time: string;
@@ -46,7 +47,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -57,7 +58,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -68,7 +69,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -79,7 +80,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -90,7 +91,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -251,9 +252,12 @@ const Schedule = () => {
                       <div className="relative">
                         <div className="w-32 h-32 mx-auto bg-gradient-caribbean rounded-full flex items-center justify-center shadow-lg overflow-hidden">
                           <img 
-                            src="/src/assets/logo.png" 
-                            alt="Link Up Radio" 
+                            src={stationLogo} 
+                            alt="Majestic Fyah Radio" 
                             className="w-20 h-20 object-contain"
+                            loading="lazy"
+                            width={80}
+                            height={80}
                           />
                         </div>
                         {isPlaying && (
@@ -278,7 +282,7 @@ const Schedule = () => {
                         )}
                       </Button>
                       <p className="text-sm text-muted-foreground">
-                        {currentStream?.name || "Link Up Radio Main"}
+                        {currentStream?.name || "Majestic Fyah Radio Main"}
                       </p>
                     </div>
                   </div>

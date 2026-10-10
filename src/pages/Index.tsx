@@ -38,7 +38,7 @@ const Index = () => {
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto animate-slide-up">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-caribbean bg-clip-text text-transparent">
-              Tune in to Link Up Radio
+              Tune in to Majestic Fyah Radio
             </h1>
             <p className="text-xl md:text-2xl text-foreground mb-8 max-w-2xl mx-auto">
               Caribbean Music Unleashed: Embrace the Vibrant Tunes of Reggae, Dancehall, Soca & more
@@ -260,7 +260,7 @@ const Index = () => {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-4xl font-bold text-white mb-6">
-              Ready to Advertise with Link Up Radio?
+              Ready to Advertise with Majestic Fyah Radio?
             </h2>
             <p className="text-xl text-white/90 mb-8">
               Let Link Up Media help you grow your small business with powerful Radio and social media marketing.
@@ -285,7 +285,7 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-semibold mb-4 bg-gradient-caribbean bg-clip-text text-transparent">
-                Link Up Radio
+                Majestic Fyah Radio
               </h3>
               <p className="text-muted-foreground text-sm">
                 Your premier destination for Caribbean and urban music worldwide.
@@ -324,7 +324,7 @@ const Index = () => {
           
           <div className="border-t border-border mt-8 pt-8 text-center">
             <p className="text-sm text-muted-foreground">
-              © 2024 Link Up Radio. All rights reserved. Streaming Caribbean music worldwide.
+              © 2024 Majestic Fyah Radio. All rights reserved. Streaming Caribbean music worldwide.
             </p>
           </div>
         </div>

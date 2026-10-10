@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Radio, Music, Headphones, Play, AudioLines } from "lucide-react";
 import Header from "@/components/Header";
 import { useAudio } from "@/contexts/AudioContext";
-import linkUpLogo from "@/assets/linkup-logo.png";
+import linkUpLogo from "@/assets/majestic-fyah-logo.png";
 
 interface RadioStream {
   id: string;
@@ -21,8 +21,8 @@ const ListenLive = () => {
   const streams: RadioStream[] = [
     {
       id: '1',
-      name: 'Link Up Radio Main',
-      url: 'https://c2.radioboss.fm:8967/stream',
+      name: 'Majestic Fyah Radio Main',
+      url: 'https://cast1.my-control-panel.com/proxy/majesticfyah/stream',
       genre: 'Caribbean Mix',
       description: 'Main Caribbean music stream featuring reggae, dancehall, soca, and more',
       bitrate: '128 kbps'
@@ -139,8 +139,11 @@ const ListenLive = () => {
                 <div className="flex items-center justify-center mb-6">
                   <img 
                     src={linkUpLogo} 
-                    alt="Link Up Radio Logo" 
+                    alt="Majestic Fyah Radio Logo" 
                     className="w-24 h-24 object-contain"
+                    loading="lazy"
+                    width={96}
+                    height={96}
                   />
                 </div>
                 <div className="text-center space-y-4">

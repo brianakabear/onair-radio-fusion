@@ -10,7 +10,7 @@ const About = () => {
       {/* Hero Section */}
       <section className="py-20 bg-gradient-caribbean">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold text-white mb-6">About Link Up Radio</h1>
+          <h1 className="text-5xl font-bold text-white mb-6">About Majestic Fyah Radio</h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
             Connecting cultures through music - Your premier destination for Caribbean and urban music worldwide
           </p>
@@ -24,7 +24,7 @@ const About = () => {
             <h2 className="text-4xl font-bold mb-8 text-center">Our Story</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-muted-foreground mb-6">
-                Link Up Radio was born from a passion for Caribbean music and culture. We recognized the need for a platform 
+                Majestic Fyah Radio was born from a passion for Caribbean music and culture. We recognized the need for a platform 
                 that could bring together the vibrant sounds of the Caribbean with the rich traditions of Black American music, 
                 creating a bridge between cultures and communities worldwide.
               </p>

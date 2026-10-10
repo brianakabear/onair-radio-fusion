@@ -41,7 +41,7 @@ export const generateInitialBlogPosts = () => {
   ];
 
   const authors = [
-    "Link Up Radio Team",
+    "Majestic Fyah Radio Team",
     "Marcus Thompson", 
     "Keisha Williams",
     "David Rodriguez",
@@ -60,7 +60,7 @@ export const generateInitialBlogPosts = () => {
         ...article, 
         category: template.category,
         isRealNews: !!(article as any).source,
-        source: (article as any).source || 'Link Up Radio Team',
+        source: (article as any).source || 'Majestic Fyah Radio Team',
         sourceUrl: (article as any).sourceUrl || ''
       });
     });

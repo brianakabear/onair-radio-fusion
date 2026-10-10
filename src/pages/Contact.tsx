@@ -27,7 +27,7 @@ const Contact = () => {
     
     toast({
       title: "Message Sent!",
-      description: "Thank you for contacting Link Up Radio. We'll get back to you soon!",
+      description: "Thank you for contacting Majestic Fyah Radio. We'll get back to you soon!",
     });
     
     // Reset form
@@ -57,7 +57,7 @@ const Contact = () => {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold text-white mb-6">Contact Us</h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Ready to advertise with Link Up Radio? Get in touch for our media kit and advertising opportunities.
+            Ready to advertise with Majestic Fyah Radio? Get in touch for our media kit and advertising opportunities.
           </p>
         </div>
       </section>
@@ -72,7 +72,7 @@ const Contact = () => {
                   Get In Touch
                 </CardTitle>
                 <p className="text-muted-foreground">
-                  Contact us for media kit requests, advertising opportunities, or general inquiries about Link Up Radio.
+                  Contact us for media kit requests, advertising opportunities, or general inquiries about Majestic Fyah Radio.
                 </p>
               </CardHeader>
               <CardContent>
@@ -137,7 +137,7 @@ const Contact = () => {
                     />
                     <Label htmlFor="sms-opt-in" className="text-sm leading-relaxed">
                       By checking this box, I agree to receive SMS messages about Marketing and transactional messages from 
-                      Link Up Radio at the phone number provided above. The SMS frequency may vary. Data rates may apply. 
+                      Majestic Fyah Radio at the phone number provided above. The SMS frequency may vary. Data rates may apply. 
                       Text HELP to 212-962-4526 for assistance. Reply STOP to opt out of receiving SMS messages.
                     </Label>
                   </div>
@@ -200,7 +200,7 @@ const Contact = () => {
                     <div>
                       <p className="font-medium">Address</p>
                       <p className="text-muted-foreground">
-                        Link Up Radio Studios<br />
+                        Majestic Fyah Radio Studios<br />
                         Broadcasting Worldwide
                       </p>
                     </div>
@@ -214,7 +214,7 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground mb-4">
-                    Stay connected with Link Up Radio on social media for the latest updates, music, and events.
+                    Stay connected with Majestic Fyah Radio on social media for the latest updates, music, and events.
                   </p>
                   <div className="flex items-center space-x-3">
                     <Button variant="outline" size="sm" asChild>
@@ -303,7 +303,7 @@ const Contact = () => {
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-3">Media Kit Available</h3>
                   <p className="text-white/90 mb-4">
-                    Interested in advertising with Link Up Radio? Request our comprehensive media kit 
+                    Interested in advertising with Majestic Fyah Radio? Request our comprehensive media kit 
                     with audience demographics, advertising packages, and partnership opportunities.
                   </p>
                   <ul className="space-y-2 text-sm text-white/80">
@@ -325,7 +325,7 @@ const Contact = () => {
           <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div>
-              <h3 className="text-lg font-semibold mb-3">How can I advertise on Link Up Radio?</h3>
+              <h3 className="text-lg font-semibold mb-3">How can I advertise on Majestic Fyah Radio?</h3>
               <p className="text-muted-foreground">
                 Contact us using the form above to request our media kit. We offer various advertising 
                 packages including sponsored segments, commercial spots, and event partnerships.

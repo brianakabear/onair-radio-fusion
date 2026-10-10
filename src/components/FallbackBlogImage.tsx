@@ -1,4 +1,4 @@
-import linkupLogo from "@/assets/linkup-logo.png";
+// Fallback artwork is generated in CSS; no logo image is drawn on it.
 
 interface FallbackBlogImageProps {
   title: string;

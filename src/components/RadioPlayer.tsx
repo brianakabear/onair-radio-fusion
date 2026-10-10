@@ -14,7 +14,7 @@ const RadioPlayer = () => {
   });
   
   const audioRef = useRef<HTMLAudioElement>(null);
-  const streamUrl = "https://c2.radioboss.fm:8967/stream";
+  const streamUrl = "https://cast1.my-control-panel.com/proxy/majesticfyah/stream";
 
   useEffect(() => {
     if (audioRef.current) {
@@ -121,7 +121,7 @@ const RadioPlayer = () => {
         {/* Stream Info */}
         <div className="mt-4 text-center">
           <p className="text-xs text-muted-foreground">
-            Streaming live from Link Up Radio
+            Streaming live from Majestic Fyah Radio
           </p>
         </div>
       </CardContent>
