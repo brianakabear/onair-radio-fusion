@@ -7,3 +7,4 @@
 - [x] Keep the bottom player's current-show info working after the schedule page goes
 - [x] No dead links or 404s left anywhere on the site
 - [x] Remove the Video News section from the News page
+- [ ] Create light Caribbean theme and set as default (in progress)
