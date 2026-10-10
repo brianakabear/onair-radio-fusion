@@ -1,30 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Play, Music, Users, Calendar, MessageCircle, Clock, ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Play, Music, Users, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import RadioPlayer from "@/components/RadioPlayer";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { generateInitialBlogPosts } from "@/data/initialBlogPosts";
-import { FallbackBlogImage } from "@/components/FallbackBlogImage";
 import heroBg from "@/assets/hero-bg.jpg";
 import reggaeImage from "@/assets/reggae-section.jpg";
 import hiphopImage from "@/assets/hiphop-section.jpg";
 
 const Index = () => {
-  const [recentPosts, setRecentPosts] = useState<any[]>([]);
-
-  useEffect(() => {
-    const savedPosts = localStorage.getItem("linkup-blog-posts");
-    if (savedPosts) {
-      const parsedPosts = JSON.parse(savedPosts);
-      setRecentPosts(parsedPosts.slice(0, 9)); // Get 9 most recent posts
-    } else {
-      const initialPosts = generateInitialBlogPosts();
-      setRecentPosts(initialPosts.slice(0, 9));
-    }
-  }, []);
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -134,87 +118,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Blog Section */}
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Latest from Our Blog</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Stay updated with the latest Caribbean music news, artist spotlights, and industry insights
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {recentPosts.map((post) => (
-              <Card key={post.id} className="overflow-hidden hover:shadow-caribbean transition-all duration-300 animate-slide-up">
-                <div className="relative h-48">
-                  {post.image && post.image.trim() !== "" ? (
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        // Hide the broken image and show fallback instead
-                        e.currentTarget.style.display = "none";
-                        const fallbackDiv = e.currentTarget.nextElementSibling as HTMLElement;
-                        if (fallbackDiv) {
-                          fallbackDiv.style.display = "block";
-                        }
-                      }}
-                    />
-                  ) : null}
-                  
-                  {/* Fallback image - always present but hidden if real image loads */}
-                  <div 
-                    style={{ display: (post.image && post.image.trim() !== "") ? "none" : "block" }}
-                    className="absolute inset-0"
-                  >
-                    <FallbackBlogImage 
-                      title={post.title}
-                      category={post.category}
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <Badge 
-                    className="absolute top-3 left-3 bg-primary text-primary-foreground"
-                  >
-                    {post.category}
-                  </Badge>
-                  
-                  {/* Read Button Overlay */}
-                  <div className="absolute bottom-3 right-3">
-                    <Button variant="default" size="sm" asChild>
-                      <Link to={`/blog/${post.id}`} className="flex items-center space-x-1">
-                        <span>Read</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-3 hover:text-primary transition-colors line-clamp-2">
-                    <Link to={`/blog/${post.id}`}>
-                      {post.title}
-                    </Link>
-                  </h3>
-                  <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              <Link to="/blog" className="flex items-center space-x-2">
-                <span>View All Blog Posts</span>
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* Features Section */}
       <section className="py-20">
@@ -236,13 +139,6 @@ const Index = () => {
               <p className="text-muted-foreground">Professional DJs bringing you the best</p>
             </div>
             
-            <div className="text-center animate-slide-up">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="h-8 w-8 text-accent" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Schedule</h3>
-              <p className="text-muted-foreground">Check out our programming schedule</p>
-            </div>
             
             <div className="text-center animate-slide-up">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -298,7 +194,6 @@ const Index = () => {
                 <Link to="/" className="block text-sm text-muted-foreground hover:text-primary">Home</Link>
                 <Link to="/about" className="block text-sm text-muted-foreground hover:text-primary">About</Link>
                 <Link to="/schedule" className="block text-sm text-muted-foreground hover:text-primary">Schedule</Link>
-                <Link to="/team" className="block text-sm text-muted-foreground hover:text-primary">Team</Link>
               </div>
             </div>
             
@@ -316,7 +211,6 @@ const Index = () => {
               <h4 className="font-semibold mb-4">Contact</h4>
               <div className="space-y-2">
                 <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary">Contact Form</Link>
-                <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary">Blog</Link>
                 <p className="text-sm text-muted-foreground">Media Kit Available</p>
               </div>
             </div>
