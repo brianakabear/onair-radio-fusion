@@ -13,11 +13,8 @@ const Header = () => {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "On Air", href: "/listen-live" },
-    { name: "Schedule", href: "/schedule" },
     { name: "About", href: "/about" },
-    { name: "Team", href: "/team" },
     { name: "News", href: "/news" },
-    { name: "Blog", href: "/blog" },
     { name: "Videos", href: "/videos" },
     { name: "Contact", href: "/contact" }
   ];
