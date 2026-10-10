@@ -36,7 +36,7 @@ export const BlogManager = ({ onPostsUpdate, initialPosts }: BlogManagerProps) =
     content: '',
     category: 'Music News',
     image: '',
-    author: 'Link Up Radio Team',
+    author: 'Majestic Fyah Radio Team',
     featured: false
   });
 
@@ -112,7 +112,7 @@ export const BlogManager = ({ onPostsUpdate, initialPosts }: BlogManagerProps) =
       }),
       readTime: calculateReadTime(newPost.content!),
       featured: newPost.featured || false,
-      author: newPost.author || 'Link Up Radio Team'
+      author: newPost.author || 'Majestic Fyah Radio Team'
     };
 
     let updatedPosts;
@@ -138,7 +138,7 @@ export const BlogManager = ({ onPostsUpdate, initialPosts }: BlogManagerProps) =
       content: '',
       category: 'Music News',
       image: '',
-      author: 'Link Up Radio Team',
+      author: 'Majestic Fyah Radio Team',
       featured: false
     });
 
@@ -175,7 +175,7 @@ export const BlogManager = ({ onPostsUpdate, initialPosts }: BlogManagerProps) =
       content: '',
       category: 'Music News',
       image: '',
-      author: 'Link Up Radio Team',
+      author: 'Majestic Fyah Radio Team',
       featured: false
     });
   };

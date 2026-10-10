@@ -46,7 +46,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -57,7 +57,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -68,7 +68,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -79,7 +79,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -90,7 +90,7 @@ const Schedule = () => {
         { time: "11:00 AM - 3:00 PM", show: "The Jamz", host: "DJ Jamz", type: "mix", startTime: timeToMinutes("11:00 AM"), endTime: timeToMinutes("3:00 PM") },
         { time: "3:00 PM - 5:00 PM", show: "The Irie Link", host: "DJ Irie", type: "dancehall", startTime: timeToMinutes("3:00 PM"), endTime: timeToMinutes("5:00 PM") },
         { time: "5:00 PM - 6:00 PM", show: "Evening Transition", host: "Auto DJ", type: "mix", startTime: timeToMinutes("5:00 PM"), endTime: timeToMinutes("6:00 PM") },
-        { time: "6:00 PM - 6:00 AM", show: "Link Up Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
+        { time: "6:00 PM - 6:00 AM", show: "Majestic Fyah Radio Live", host: "DJ Live", type: "mix", startTime: timeToMinutes("6:00 PM"), endTime: timeToMinutes("6:00 AM") + 24 * 60 }
       ]
     },
     {
@@ -252,7 +252,7 @@ const Schedule = () => {
                         <div className="w-32 h-32 mx-auto bg-gradient-caribbean rounded-full flex items-center justify-center shadow-lg overflow-hidden">
                           <img 
                             src="/src/assets/logo.png" 
-                            alt="Link Up Radio" 
+                            alt="Majestic Fyah Radio" 
                             className="w-20 h-20 object-contain"
                           />
                         </div>
@@ -278,7 +278,7 @@ const Schedule = () => {
                         )}
                       </Button>
                       <p className="text-sm text-muted-foreground">
-                        {currentStream?.name || "Link Up Radio Main"}
+                        {currentStream?.name || "Majestic Fyah Radio Main"}
                       </p>
                     </div>
                   </div>

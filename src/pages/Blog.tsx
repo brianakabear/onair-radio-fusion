@@ -74,7 +74,7 @@ const Blog = () => {
         "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800"
       ];
       
-      const authors = ["Link Up Radio Team", "Marcus Thompson", "Keisha Williams", "David Rodriguez"];
+      const authors = ["Majestic Fyah Radio Team", "Marcus Thompson", "Keisha Williams", "David Rodriguez"];
       
       // Ensure title is unique and not similar
       let uniqueTitle = unusedArticle.title;
@@ -179,7 +179,7 @@ const Blog = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-6">
             <div className="text-center flex-1">
-              <h1 className="text-5xl font-bold text-white mb-6">Link Up Radio Blog</h1>
+              <h1 className="text-5xl font-bold text-white mb-6">Majestic Fyah Radio Blog</h1>
               <p className="text-xl text-white/90 max-w-3xl mx-auto">
                 Stay connected with the latest in Caribbean and urban music culture, artist features, and industry insights
               </p>
@@ -480,7 +480,7 @@ const Blog = () => {
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-bold mb-4">Stay in the Loop</h2>
             <p className="text-muted-foreground mb-8">
-              Subscribe to our newsletter for the latest music updates, exclusive content, and behind-the-scenes stories from Link Up Radio.
+              Subscribe to our newsletter for the latest music updates, exclusive content, and behind-the-scenes stories from Majestic Fyah Radio.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input

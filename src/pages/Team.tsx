@@ -11,7 +11,7 @@ const Team = () => {
     {
       name: "David 'Squeeze' Annakie",
       role: "Morning Show Host & Media Personality",
-      bio: "Veteran broadcaster and media personality bringing authentic Caribbean culture and music to Link Up Radio. Known for his engaging personality and deep connection to the community.",
+      bio: "Veteran broadcaster and media personality bringing authentic Caribbean culture and music to Majestic Fyah Radio. Known for his engaging personality and deep connection to the community.",
       specialties: ["Caribbean Culture", "Morning Radio", "Community Connection", "Media Production"],
       image: davidSqueezeImage,
       social: {
@@ -94,7 +94,7 @@ const Team = () => {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold text-white mb-6">Our DJ Team</h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Meet the passionate voices behind Link Up Radio - bringing you the best Caribbean and urban music 24/7
+            Meet the passionate voices behind Majestic Fyah Radio - bringing you the best Caribbean and urban music 24/7
           </p>
         </div>
       </section>

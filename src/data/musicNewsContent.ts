@@ -143,7 +143,7 @@ export const generateMusicNewsContent = (template: any) => {
     "The passion and creativity of Caribbean musicians ensure that this rich musical tradition will continue to thrive and evolve.",
     "Supporting Caribbean artists and their music is not just about entertainment – it's about preserving and celebrating a vital part of our cultural heritage.",
     "The global appreciation for Caribbean music reflects its universal appeal and the skill of the artists who create these unforgettable sounds.",
-    "Link Up Radio remains committed to showcasing the best of Caribbean music and supporting the artists who make it possible."
+    "Majestic Fyah Radio remains committed to showcasing the best of Caribbean music and supporting the artists who make it possible."
   ];
 
   const randomIntro = contentIntros[Math.floor(Math.random() * contentIntros.length)];

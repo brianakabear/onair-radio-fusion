@@ -29,10 +29,10 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
-          <img src={logo} alt="Link Up Radio" className="h-10 w-10" />
+          <img src={logo} alt="Majestic Fyah Radio" className="h-10 w-10" />
           <div className="hidden sm:block">
             <h1 className="text-xl font-bold bg-gradient-caribbean bg-clip-text text-transparent">
-              LINK UP
+              MAJESTIC FYAH
             </h1>
             <p className="text-xs text-muted-foreground -mt-1">RADIO</p>
           </div>
@@ -130,10 +130,10 @@ const Header = () => {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex flex-col h-full">
                 <div className="flex items-center space-x-3 pb-6">
-                  <img src={logo} alt="Link Up Radio" className="h-8 w-8" />
+                  <img src={logo} alt="Majestic Fyah Radio" className="h-8 w-8" />
                   <div>
                     <h1 className="text-lg font-bold bg-gradient-caribbean bg-clip-text text-transparent">
-                      LINK UP RADIO
+                      MAJESTIC FYAH RADIO
                     </h1>
                   </div>
                 </div>
