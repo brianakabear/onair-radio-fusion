@@ -8,3 +8,4 @@
 - [x] No dead links or 404s left anywhere on the site
 - [x] Remove the Video News section from the News page
 - [x] Create light Caribbean theme and set as default
+- [x] Keep the Follow Us buttons but remove their links (Contact page, header, mobile menu)
