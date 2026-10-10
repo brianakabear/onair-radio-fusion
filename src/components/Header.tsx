@@ -59,45 +59,17 @@ const Header = () => {
           
           {/* Social Links */}
           <div className="hidden sm:flex items-center space-x-2">
-            <Button variant="ghost" size="sm" asChild>
-              <a
-                href="https://instagram.com/linkupradio"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
+            <Button variant="ghost" size="sm" aria-label="Instagram">
+              <Instagram className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <a
-                href="https://facebook.com/linkupradio"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-4 w-4" />
-              </a>
+            <Button variant="ghost" size="sm" aria-label="Facebook">
+              <Facebook className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <a
-                href="https://www.linkedin.com/company/linkup-media-group-of-companies/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
+            <Button variant="ghost" size="sm" aria-label="LinkedIn">
+              <Linkedin className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <a
-                href="https://www.youtube.com/@linkupradio7152"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube"
-              >
-                <Youtube className="h-4 w-4" />
-              </a>
+            <Button variant="ghost" size="sm" aria-label="YouTube">
+              <Youtube className="h-4 w-4" />
             </Button>
           </div>
 
@@ -156,25 +128,17 @@ const Header = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">Follow us</span>
                     <div className="flex items-center space-x-2">
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href="https://instagram.com/linkupradio" target="_blank" rel="noopener noreferrer">
-                          <Instagram className="h-4 w-4" />
-                        </a>
+                      <Button variant="ghost" size="sm" aria-label="Instagram">
+                        <Instagram className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href="https://facebook.com/linkupradio" target="_blank" rel="noopener noreferrer">
-                          <Facebook className="h-4 w-4" />
-                        </a>
+                      <Button variant="ghost" size="sm" aria-label="Facebook">
+                        <Facebook className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href="https://www.linkedin.com/company/linkup-media-group-of-companies/" target="_blank" rel="noopener noreferrer">
-                          <Linkedin className="h-4 w-4" />
-                        </a>
+                      <Button variant="ghost" size="sm" aria-label="LinkedIn">
+                        <Linkedin className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href="https://www.youtube.com/@linkupradio7152" target="_blank" rel="noopener noreferrer">
-                          <Youtube className="h-4 w-4" />
-                        </a>
+                      <Button variant="ghost" size="sm" aria-label="YouTube">
+                        <Youtube className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>

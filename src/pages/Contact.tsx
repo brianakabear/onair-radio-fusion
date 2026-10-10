@@ -217,55 +217,43 @@ const Contact = () => {
                     Stay connected with Majestic Fyah Radio on social media for the latest updates, music, and events.
                   </p>
                   <div className="flex items-center space-x-3">
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="https://instagram.com/linkupradio"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Instagram"
-                        className="flex items-center space-x-2"
-                      >
-                        <Instagram className="h-4 w-4" />
-                        <span>Instagram</span>
-                      </a>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center space-x-2"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="h-4 w-4" />
+                      <span>Instagram</span>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="https://facebook.com/linkupradio"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Facebook"
-                        className="flex items-center space-x-2"
-                      >
-                        <Facebook className="h-4 w-4" />
-                        <span>Facebook</span>
-                      </a>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center space-x-2"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="h-4 w-4" />
+                      <span>Facebook</span>
                     </Button>
                   </div>
                   <div className="flex items-center space-x-3 mt-3">
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="https://www.linkedin.com/company/linkup-media-group-of-companies/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="LinkedIn"
-                        className="flex items-center space-x-2"
-                      >
-                        <Linkedin className="h-4 w-4" />
-                        <span>LinkedIn</span>
-                      </a>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center space-x-2"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                      <span>LinkedIn</span>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href="https://www.youtube.com/@linkupradio7152"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="YouTube"
-                        className="flex items-center space-x-2"
-                      >
-                        <Youtube className="h-4 w-4" />
-                        <span>YouTube</span>
-                      </a>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center space-x-2"
+                      aria-label="YouTube"
+                    >
+                      <Youtube className="h-4 w-4" />
+                      <span>YouTube</span>
                     </Button>
                   </div>
                 </CardContent>
