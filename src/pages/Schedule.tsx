@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, Play, User, Radio, Calendar, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAudio } from "@/contexts/AudioContext";
+import stationLogo from "@/assets/majestic-fyah-logo.png";
 
 interface Show {
   time: string;
@@ -251,9 +252,12 @@ const Schedule = () => {
                       <div className="relative">
                         <div className="w-32 h-32 mx-auto bg-gradient-caribbean rounded-full flex items-center justify-center shadow-lg overflow-hidden">
                           <img 
-                            src="/src/assets/logo.png" 
+                            src={stationLogo} 
                             alt="Majestic Fyah Radio" 
                             className="w-20 h-20 object-contain"
+                            loading="lazy"
+                            width={80}
+                            height={80}
                           />
                         </div>
                         {isPlaying && (
