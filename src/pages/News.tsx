@@ -6,11 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, Clock, ArrowRight, MapPin, Search, Settings, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, MapPin, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
-import { allNewsStories, type NewsStory } from "@/data/newsStories";
+import { allNewsStories } from "@/data/newsStories";
 
 const News = () => {
   const [currentPage, setCurrentPage] = useState(1);
