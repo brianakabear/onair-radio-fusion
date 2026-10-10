@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export type ThemeOption = 'caribbean' | 'ocean' | 'sunset' | 'nature' | 'electric' | 'pastel' | 'cream' | 'mint' | 'lavender' | 'coral';
+export type ThemeOption = 'caribbean-light' | 'caribbean' | 'ocean' | 'sunset' | 'nature' | 'electric' | 'pastel' | 'cream' | 'mint' | 'lavender' | 'coral';
 
 interface ThemeContextType {
   theme: ThemeOption;
@@ -18,6 +18,10 @@ export const useTheme = () => {
 };
 
 export const themes = {
+  'caribbean-light': {
+    name: 'Caribbean Light',
+    colors: ['hsl(0 70% 45%)', 'hsl(45 90% 45%)', 'hsl(140 60% 40%)'], // Red, Yellow, Green on white
+  },
   caribbean: {
     name: 'Caribbean',
     colors: ['hsl(0 65% 55%)', 'hsl(45 90% 50%)', 'hsl(140 60% 40%)'], // Red, Yellow, Green
@@ -63,7 +67,7 @@ export const themes = {
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<ThemeOption>(() => {
     const saved = localStorage.getItem('linkup-theme');
-    return (saved as ThemeOption) || 'caribbean';
+    return (saved as ThemeOption) || 'caribbean-light';
   });
 
   useEffect(() => {
@@ -75,6 +79,18 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     // Update primary, secondary, and accent colors based on theme
     switch (theme) {
+      case 'caribbean-light':
+        root.style.setProperty('--primary', '0 70% 45%');
+        root.style.setProperty('--secondary', '45 90% 45%');
+        root.style.setProperty('--accent', '140 60% 40%');
+        root.style.setProperty('--background', '0 0% 100%');
+        root.style.setProperty('--foreground', '0 0% 10%');
+        root.style.setProperty('--card', '0 0% 98%');
+        root.style.setProperty('--card-foreground', '0 0% 15%');
+        root.style.setProperty('--muted', '0 0% 96%');
+        root.style.setProperty('--muted-foreground', '0 0% 45%');
+        root.style.setProperty('--gradient-caribbean', 'linear-gradient(135deg, hsl(0 70% 45%), hsl(45 90% 45%), hsl(140 60% 40%))');
+        break;
       case 'caribbean':
         root.style.setProperty('--primary', '0 65% 55%');
         root.style.setProperty('--secondary', '45 90% 50%');
