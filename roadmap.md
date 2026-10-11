@@ -12,3 +12,5 @@
 - [x] Store news in the database and add 6 real stories daily (DancehallMag + Jamaica Observer)
 - [x] Chat room (sign-in required) with avatars and emojis
 - [x] Admin panel: super admin bandoceo@gmail.com, add members, roles; editors edit news and moderate chat
+- [x] AI spam/abuse check for chat, moderation activity log, user search + role filter
+- [x] Requests page; requests and contact messages in Admin
