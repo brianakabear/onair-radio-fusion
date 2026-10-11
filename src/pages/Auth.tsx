@@ -24,6 +24,7 @@ const Auth = () => {
   const [busy, setBusy] = useState(false);
   const [show, setShow] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sentKind, setSentKind] = useState<"confirm" | "reset" | "link">("confirm");
 
   useEffect(() => { if (user) navigate(next, { replace: true }); }, [user, next, navigate]);
 
@@ -49,6 +50,27 @@ const Auth = () => {
     if (r.error) toast.error(String(r.error.message ?? r.error));
   };
 
+  const magicLink = async () => {
+    if (!email) return toast.error("Enter your email first");
+    setBusy(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.origin + next },
+    });
+    if (error) toast.error(error.message); else { setSent(true); setSentKind("link"); }
+    setBusy(false);
+  };
+
+  const forgot = async () => {
+    if (!email) return toast.error("Enter your email first");
+    setBusy(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + "/reset-password",
+    });
+    if (error) toast.error(error.message); else { setSent(true); setSentKind("reset"); }
+    setBusy(false);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -58,11 +80,18 @@ const Auth = () => {
         {sent ? (
           <div className="rounded-2xl border border-border bg-card p-6">
             <p className="font-semibold mb-1">Check your email</p>
-            <p className="text-sm text-muted-foreground">We sent a confirmation link to {email}. Click it to finish signing up.</p>
+            <p className="text-sm text-muted-foreground">
+              {sentKind === "reset"
+                ? `We sent a password reset link to ${email}. Click it to choose a new password.`
+                : sentKind === "link"
+                  ? `We sent a sign-in link to ${email}. One click and you're in — no password needed.`
+                  : `We sent a confirmation link to ${email}. Click it to finish signing up.`}
+            </p>
           </div>
         ) : (
           <div className="rounded-2xl border border-border bg-card p-6 space-y-5">
             <Button variant="outline" className="w-full" onClick={google}>Continue with Google</Button>
+            <Button variant="outline" className="w-full" onClick={magicLink} disabled={busy}>Email me a one-click sign-in link</Button>
             <div className="text-center text-xs text-muted-foreground">or</div>
             <form onSubmit={submit} className="space-y-4">
               {mode === "up" && (
@@ -80,6 +109,11 @@ const Auth = () => {
                   </button>
                 </div></div>
               <Button type="submit" className="w-full" disabled={busy}>{mode === "in" ? "Sign in" : "Create account"}</Button>
+              {mode === "in" && (
+                <button type="button" className="text-sm text-primary w-full" onClick={forgot} disabled={busy}>
+                  Forgot your password?
+                </button>
+              )}
             </form>
             <button className="text-sm text-primary w-full" onClick={() => setMode(mode === "in" ? "up" : "in")}>
               {mode === "in" ? "New here? Create an account" : "Already have an account? Sign in"}

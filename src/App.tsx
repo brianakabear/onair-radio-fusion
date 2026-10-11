@@ -16,6 +16,7 @@ import ListenLive from "./pages/ListenLive";
 import Videos from "./pages/Videos";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import Chat from "./pages/Chat";
 import Admin from "./pages/Admin";
 import Requests from "./pages/Requests";
@@ -56,6 +57,7 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/listen-live" element={<ListenLive />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/requests" element={<Requests />} />
