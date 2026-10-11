@@ -80,7 +80,13 @@ const Auth = () => {
         {sent ? (
           <div className="rounded-2xl border border-border bg-card p-6">
             <p className="font-semibold mb-1">Check your email</p>
-            <p className="text-sm text-muted-foreground">We sent a confirmation link to {email}. Click it to finish signing up.</p>
+            <p className="text-sm text-muted-foreground">
+              {sentKind === "reset"
+                ? `We sent a password reset link to ${email}. Click it to choose a new password.`
+                : sentKind === "link"
+                  ? `We sent a sign-in link to ${email}. One click and you're in — no password needed.`
+                  : `We sent a confirmation link to ${email}. Click it to finish signing up.`}
+            </p>
           </div>
         ) : (
           <div className="rounded-2xl border border-border bg-card p-6 space-y-5">
