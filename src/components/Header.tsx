@@ -5,10 +5,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/majestic-fyah-logo.png";
 import ThemeSelector from "@/components/ThemeSelector";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, isStaff, signOut } = useAuth();
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -16,7 +18,10 @@ const Header = () => {
     { name: "About", href: "/about" },
     { name: "News", href: "/news" },
     { name: "Videos", href: "/videos" },
-    { name: "Contact", href: "/contact" }
+    { name: "Contact", href: "/contact" },
+    { name: "Chat", href: "/chat" },
+    ...(isStaff ? [{ name: "Admin", href: "/admin" }] : []),
+    ...(user ? [] : [{ name: "Sign in", href: "/auth" }]),
   ];
 
   const isActive = (path: string) => location.pathname === path;

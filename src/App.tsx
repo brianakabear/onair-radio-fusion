@@ -15,6 +15,10 @@ import Contact from "./pages/Contact";
 import ListenLive from "./pages/ListenLive";
 import Videos from "./pages/Videos";
 import NotFound from "./pages/NotFound";
+import Auth from "./pages/Auth";
+import Chat from "./pages/Chat";
+import Admin from "./pages/Admin";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
@@ -37,6 +41,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <ThemeProvider>
+          <AuthProvider>
           <AudioProvider>
             <Toaster />
             <Sonner />
@@ -49,12 +54,16 @@ const App = () => {
               <Route path="/videos" element={<Videos />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/listen-live" element={<ListenLive />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/admin" element={<Admin />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
             <MiniPlayer />
           </BrowserRouter>
           </AudioProvider>
+        </AuthProvider>
         </ThemeProvider>
       </TooltipProvider>
     </QueryClientProvider>
