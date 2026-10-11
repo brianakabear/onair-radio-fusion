@@ -24,6 +24,7 @@ const Auth = () => {
   const [busy, setBusy] = useState(false);
   const [show, setShow] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sentKind, setSentKind] = useState<"confirm" | "reset" | "link">("confirm");
 
   useEffect(() => { if (user) navigate(next, { replace: true }); }, [user, next, navigate]);
 
@@ -47,6 +48,27 @@ const Auth = () => {
     sessionStorage.setItem("auth-next", next);
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/auth?next=" + encodeURIComponent(next) });
     if (r.error) toast.error(String(r.error.message ?? r.error));
+  };
+
+  const magicLink = async () => {
+    if (!email) return toast.error("Enter your email first");
+    setBusy(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.origin + next },
+    });
+    if (error) toast.error(error.message); else { setSent(true); setSentKind("link"); }
+    setBusy(false);
+  };
+
+  const forgot = async () => {
+    if (!email) return toast.error("Enter your email first");
+    setBusy(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + "/reset-password",
+    });
+    if (error) toast.error(error.message); else { setSent(true); setSentKind("reset"); }
+    setBusy(false);
   };
 
   return (
