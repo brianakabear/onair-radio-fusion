@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { Mail, Phone, MapPin, Clock, Send, Instagram, Facebook, Youtube, Linkedin } from "lucide-react";
 
 const Contact = () => {
@@ -19,12 +20,19 @@ const Contact = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Here you would typically send the data to your backend
-    console.log("Form submitted:", formData);
-    
+    const { error } = await supabase.from("contact_messages").insert({
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim() || null,
+      message: formData.message.trim(),
+      sms_opt_in: formData.smsOptIn,
+    });
+    if (error) {
+      toast({ title: "Couldn't send your message", description: "Please try again in a moment.", variant: "destructive" });
+      return;
+    }
     toast({
       title: "Message Sent!",
       description: "Thank you for contacting Majestic Fyah Radio. We'll get back to you soon!",

@@ -19,6 +19,7 @@ const Header = () => {
     { name: "News", href: "/news" },
     { name: "Videos", href: "/videos" },
     { name: "Contact", href: "/contact" },
+    { name: "Requests", href: "/requests" },
     { name: "Chat", href: "/chat" },
     ...(isStaff ? [{ name: "Admin", href: "/admin" }] : []),
     ...(user ? [] : [{ name: "Sign in", href: "/auth" }]),
