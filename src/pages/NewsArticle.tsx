@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, ExternalLink } from "lucide-react";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
 import ShareButtons from "@/components/ShareButtons";
-import { allNewsStories, type NewsStory } from "@/data/newsStories";
+import { type StoredNewsStory as NewsStory, useNewsStories } from "@/hooks/useNewsStories";
 
 const SOURCE_URLS: Record<string, string> = {
   "Jamaica Gleaner": "https://jamaica-gleaner.com",
@@ -30,13 +30,14 @@ const NewsArticle = () => {
   const location = useLocation();
   const [story, setStory] = useState<NewsStory | null>(null);
   const [checked, setChecked] = useState(false);
+  const { data: allNewsStories = [] } = useNewsStories();
 
   useEffect(() => {
     const passedStory = (location.state as { story?: NewsStory } | null)?.story ?? null;
     const foundStory = passedStory ?? allNewsStories.find(s => s.id === id) ?? null;
     setStory(foundStory);
     setChecked(true);
-  }, [id, location.state]);
+  }, [id, location.state, allNewsStories]);
 
   const relatedStories = story
     ? allNewsStories
@@ -44,7 +45,7 @@ const NewsArticle = () => {
         .slice(0, 4)
     : [];
 
-  const sourceUrl = story ? SOURCE_URLS[story.source] : undefined;
+  const sourceUrl = story ? (story.sourceUrl ?? SOURCE_URLS[story.source]) : undefined;
 
   return (
     <div className="min-h-screen bg-background">
