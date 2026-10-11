@@ -10,9 +10,10 @@ import { Calendar, MapPin, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FallbackBlogImage } from "@/components/FallbackBlogImage";
-import { allNewsStories } from "@/data/newsStories";
+import { useNewsStories } from "@/hooks/useNewsStories";
 
 const News = () => {
+  const { data: allNewsStories = [] } = useNewsStories();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [zipCode, setZipCode] = useState("");
