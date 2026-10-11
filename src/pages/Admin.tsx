@@ -170,6 +170,101 @@ const NewsEditor = () => {
   );
 };
 
+type ChatMsg = { id: string; user_id: string; content: string; created_at: string };
+const Moderation = () => {
+  const [msgs, setMsgs] = useState<ChatMsg[]>([]);
+  const [people, setPeople] = useState<Record<string, Profile>>({});
+  const [superIds, setSuperIds] = useState<string[]>([]);
+  const [filter, setFilter] = useState("");
+
+  const load = async () => {
+    const [{ data: m }, { data: p }, { data: r }] = await Promise.all([
+      supabase.from("chat_messages").select("*").order("created_at", { ascending: false }).limit(300),
+      supabase.from("profiles").select("*"),
+      supabase.from("user_roles").select("user_id").eq("role", "super_admin"),
+    ]);
+    setMsgs((m ?? []) as ChatMsg[]);
+    setPeople(Object.fromEntries((p ?? []).map((x) => [x.id, x as Profile])));
+    setSuperIds((r ?? []).map((x) => x.user_id));
+  };
+  useEffect(() => {
+    load();
+    const ch = supabase.channel("mod-chat")
+      .on("postgres_changes", { event: "*", schema: "public", table: "chat_messages" }, () => load())
+      .subscribe();
+    return () => { supabase.removeChannel(ch); };
+  }, []);
+
+  const del = async (id: string) => {
+    const { error } = await supabase.from("chat_messages").delete().eq("id", id);
+    if (error) toast.error(error.message); else setMsgs((x) => x.filter((m) => m.id !== id));
+  };
+  const clearUser = async (uid: string) => {
+    if (!confirm("Delete all chat messages from this person?")) return;
+    const { error } = await supabase.from("chat_messages").delete().eq("user_id", uid);
+    if (error) toast.error(error.message); else { toast.success("Messages deleted"); load(); }
+  };
+  const ban = async (p: Profile) => {
+    const { error } = await supabase.from("profiles").update({ is_banned: !p.is_banned }).eq("id", p.id);
+    if (error) return toast.error(error.message);
+    toast.success(p.is_banned ? `${p.display_name} can chat again` : `${p.display_name} is blocked from chatting`);
+    load();
+  };
+
+  const chatters = Object.values(people).filter((p) => msgs.some((m) => m.user_id === p.id) || p.is_banned);
+  const shown = msgs.filter((m) => !filter || m.content.toLowerCase().includes(filter.toLowerCase()) || people[m.user_id]?.display_name.toLowerCase().includes(filter.toLowerCase()));
+
+  return (
+    <div className="grid lg:grid-cols-[1fr_320px] gap-6">
+      <div className="rounded-2xl border border-border bg-card">
+        <div className="p-4 border-b border-border flex items-center justify-between gap-3">
+          <p className="font-semibold">Recent messages</p>
+          <Input className="max-w-xs" placeholder="Search messages or names" value={filter} onChange={(e) => setFilter(e.target.value)} />
+        </div>
+        <div className="divide-y divide-border max-h-[65vh] overflow-y-auto">
+          {shown.map((m) => {
+            const p = people[m.user_id];
+            return (
+              <div key={m.id} className="p-4 flex gap-3 items-start">
+                <UserAvatar avatar={p?.avatar_url} name={p?.display_name ?? "?"} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-muted-foreground"><span className="font-semibold text-foreground">{p?.display_name ?? "Listener"}</span> · {new Date(m.created_at).toLocaleString()}</p>
+                  <p className="text-sm break-words">{m.content}</p>
+                </div>
+                <Button size="sm" variant="ghost" onClick={() => del(m.id)}>Delete</Button>
+              </div>
+            );
+          })}
+          {shown.length === 0 && <p className="p-6 text-muted-foreground">No messages.</p>}
+        </div>
+      </div>
+      <div className="rounded-2xl border border-border bg-card">
+        <p className="p-4 border-b border-border font-semibold">Chat users</p>
+        <div className="divide-y divide-border">
+          {chatters.map((p) => (
+            <div key={p.id} className="p-4 space-y-2">
+              <div className="flex items-center gap-3">
+                <UserAvatar avatar={p.avatar_url} name={p.display_name} />
+                <div className="min-w-0">
+                  <p className="font-semibold truncate">{p.display_name}</p>
+                  <p className="text-xs text-muted-foreground">{msgs.filter((m) => m.user_id === p.id).length} messages{p.is_banned ? " · blocked" : ""}</p>
+                </div>
+              </div>
+              {!superIds.includes(p.id) && (
+                <div className="flex gap-2">
+                  <Button size="sm" variant={p.is_banned ? "default" : "outline"} onClick={() => ban(p)}>{p.is_banned ? "Unblock" : "Block"}</Button>
+                  <Button size="sm" variant="ghost" onClick={() => clearUser(p.id)}>Delete all messages</Button>
+                </div>
+              )}
+            </div>
+          ))}
+          {chatters.length === 0 && <p className="p-6 text-muted-foreground">No one has chatted yet.</p>}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Admin = () => {
   const { user, loading, isStaff, isAdmin } = useAuth();
   if (loading) return null;
@@ -186,9 +281,11 @@ const Admin = () => {
             <TabsList className="mb-6">
               <TabsTrigger value="members">Members</TabsTrigger>
               <TabsTrigger value="news">News</TabsTrigger>
+              <TabsTrigger value="moderation">Chat moderation</TabsTrigger>
             </TabsList>
             <TabsContent value="members"><Members /></TabsContent>
             <TabsContent value="news"><NewsEditor /></TabsContent>
+            <TabsContent value="moderation"><Moderation /></TabsContent>
           </Tabs>
         )}
         {isStaff && !isAdmin && <p className="text-xs text-muted-foreground mt-6">As an editor you can edit news and block chat users. Only admins can add members or change roles.</p>}
