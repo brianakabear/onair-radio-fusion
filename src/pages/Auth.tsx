@@ -91,6 +91,7 @@ const Auth = () => {
         ) : (
           <div className="rounded-2xl border border-border bg-card p-6 space-y-5">
             <Button variant="outline" className="w-full" onClick={google}>Continue with Google</Button>
+            <Button variant="outline" className="w-full" onClick={magicLink} disabled={busy}>Email me a one-click sign-in link</Button>
             <div className="text-center text-xs text-muted-foreground">or</div>
             <form onSubmit={submit} className="space-y-4">
               {mode === "up" && (
@@ -108,6 +109,11 @@ const Auth = () => {
                   </button>
                 </div></div>
               <Button type="submit" className="w-full" disabled={busy}>{mode === "in" ? "Sign in" : "Create account"}</Button>
+              {mode === "in" && (
+                <button type="button" className="text-sm text-primary w-full" onClick={forgot} disabled={busy}>
+                  Forgot your password?
+                </button>
+              )}
             </form>
             <button className="text-sm text-primary w-full" onClick={() => setMode(mode === "in" ? "up" : "in")}>
               {mode === "in" ? "New here? Create an account" : "Already have an account? Sign in"}
