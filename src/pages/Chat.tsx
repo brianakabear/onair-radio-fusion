@@ -15,7 +15,7 @@ const EMOJIS = ["😀","😂","😍","😎","🥳","🙌","👏","🔥","💯","
 type Msg = { id: string; user_id: string; content: string; created_at: string };
 
 const Chat = () => {
-  const { user, profile, isStaff, loading, refresh } = useAuth();
+  const { user, profile, isStaff, loading, refresh, signOut } = useAuth();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [people, setPeople] = useState<Record<string, Profile>>({});
   const [text, setText] = useState("");
@@ -113,6 +113,7 @@ const Chat = () => {
                   })}
                 </div>
               </div>
+              <Button variant="outline" size="sm" className="w-full" onClick={signOut}>Sign out</Button>
             </PopoverContent>
           </Popover>
         </div>

@@ -10,7 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { user, isStaff, signOut } = useAuth();
+  const { user, isStaff } = useAuth();
 
   const navigation = [
     { name: "Home", href: "/" },
