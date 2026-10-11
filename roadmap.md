@@ -10,3 +10,5 @@
 - [x] Create light Caribbean theme and set as default
 - [x] Keep the Follow Us buttons but remove their links (Contact page, header, mobile menu)
 - [x] Store news in the database and add 6 real stories daily (DancehallMag + Jamaica Observer)
+- [x] Chat room (sign-in required) with avatars and emojis
+- [x] Admin panel: super admin bandoceo@gmail.com, add members, roles; editors edit news and moderate chat
