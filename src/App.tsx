@@ -18,6 +18,7 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Chat from "./pages/Chat";
 import Admin from "./pages/Admin";
+import Requests from "./pages/Requests";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { useEffect } from "react";
 
@@ -57,6 +58,7 @@ const App = () => {
               <Route path="/auth" element={<Auth />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/requests" element={<Requests />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

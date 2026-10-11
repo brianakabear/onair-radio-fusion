@@ -25,6 +25,8 @@ const Members = () => {
   const [email, setEmail] = useState("");
   const [newRole, setNewRole] = useState<string>("member");
   const [busy, setBusy] = useState(false);
+  const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
 
   const load = async () => {
     const [{ data: p }, { data: r }] = await Promise.all([
@@ -81,8 +83,30 @@ const Members = () => {
           <Button type="submit" disabled={busy}>Send invite</Button>
         </form>
       )}
+      <div className="flex flex-wrap gap-3">
+        <Input className="flex-1 min-w-[200px]" placeholder="Search by name or email" value={search} onChange={(e) => setSearch(e.target.value)} />
+        <Select value={roleFilter} onValueChange={setRoleFilter}>
+          <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All roles</SelectItem>
+            <SelectItem value="admins">Admins (incl. super admin)</SelectItem>
+            <SelectItem value="editor">Editors</SelectItem>
+            <SelectItem value="member">Members (no role)</SelectItem>
+            <SelectItem value="blocked">Blocked from chat</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="rounded-2xl border border-border bg-card divide-y divide-border">
-        {people.map((p) => {
+        {people.filter((p) => {
+          const r = roleMap[p.id] ?? [];
+          const q = search.trim().toLowerCase();
+          if (q && !p.display_name.toLowerCase().includes(q) && !(p.email ?? "").toLowerCase().includes(q)) return false;
+          if (roleFilter === "admins") return r.includes("admin") || r.includes("super_admin");
+          if (roleFilter === "editor") return r.includes("editor");
+          if (roleFilter === "member") return r.length === 0;
+          if (roleFilter === "blocked") return p.is_banned;
+          return true;
+        }).map((p) => {
           const r = roleMap[p.id] ?? [];
           const isSuperRow = r.includes("super_admin");
           return (
@@ -170,12 +194,32 @@ const NewsEditor = () => {
   );
 };
 
+type Flag = { id: string; label: string; severity: "low" | "medium" | "high"; reason: string };
 type ChatMsg = { id: string; user_id: string; content: string; created_at: string };
 const Moderation = () => {
   const [msgs, setMsgs] = useState<ChatMsg[]>([]);
   const [people, setPeople] = useState<Record<string, Profile>>({});
   const [superIds, setSuperIds] = useState<string[]>([]);
   const [filter, setFilter] = useState("");
+  const [scanning, setScanning] = useState(false);
+  const [flags, setFlags] = useState<Record<string, Flag>>({});
+  const [onlyFlagged, setOnlyFlagged] = useState(false);
+
+  const scan = async () => {
+    setScanning(true);
+    const { data, error } = await supabase.functions.invoke("moderate-chat", { body: { limit: 100 } });
+    setScanning(false);
+    if (error || data?.error) {
+      let msg = data?.error;
+      try { msg ??= (await (error as { context?: Response })?.context?.json())?.error; } catch { /* ignore */ }
+      return toast.error(msg ?? "The AI check failed.");
+    }
+    const map: Record<string, Flag> = {};
+    (data.flagged as Flag[]).forEach((f) => { map[f.id] = f; });
+    setFlags(map);
+    setOnlyFlagged(data.flagged.length > 0);
+    toast.success(data.flagged.length ? `${data.flagged.length} of ${data.checked} messages need review` : `Checked ${data.checked} messages — nothing to review`);
+  };
 
   const load = async () => {
     const [{ data: m }, { data: p }, { data: r }] = await Promise.all([
@@ -201,7 +245,7 @@ const Moderation = () => {
   };
   const clearUser = async (uid: string) => {
     if (!confirm("Delete all chat messages from this person?")) return;
-    const { error } = await supabase.from("chat_messages").delete().eq("user_id", uid);
+    const { error } = await supabase.rpc("clear_user_chat", { _user_id: uid });
     if (error) toast.error(error.message); else { toast.success("Messages deleted"); load(); }
   };
   const ban = async (p: Profile) => {
@@ -212,14 +256,20 @@ const Moderation = () => {
   };
 
   const chatters = Object.values(people).filter((p) => msgs.some((m) => m.user_id === p.id) || p.is_banned);
-  const shown = msgs.filter((m) => !filter || m.content.toLowerCase().includes(filter.toLowerCase()) || people[m.user_id]?.display_name.toLowerCase().includes(filter.toLowerCase()));
+  const shown = msgs.filter((m) => !onlyFlagged || flags[m.id]).filter((m) => !filter || m.content.toLowerCase().includes(filter.toLowerCase()) || people[m.user_id]?.display_name.toLowerCase().includes(filter.toLowerCase()));
 
   return (
     <div className="grid lg:grid-cols-[1fr_320px] gap-6">
       <div className="rounded-2xl border border-border bg-card">
         <div className="p-4 border-b border-border flex items-center justify-between gap-3">
           <p className="font-semibold">Recent messages</p>
-          <Input className="max-w-xs" placeholder="Search messages or names" value={filter} onChange={(e) => setFilter(e.target.value)} />
+          <div className="flex flex-wrap gap-2 items-center">
+            <Input className="w-56" placeholder="Search messages or names" value={filter} onChange={(e) => setFilter(e.target.value)} />
+            {Object.keys(flags).length > 0 && (
+              <Button size="sm" variant="outline" onClick={() => setOnlyFlagged(!onlyFlagged)}>{onlyFlagged ? "Show all" : `Show flagged (${Object.keys(flags).length})`}</Button>
+            )}
+            <Button size="sm" onClick={scan} disabled={scanning}>{scanning ? "Checking…" : "AI check last 100"}</Button>
+          </div>
         </div>
         <div className="divide-y divide-border max-h-[65vh] overflow-y-auto">
           {shown.map((m) => {
@@ -230,7 +280,14 @@ const Moderation = () => {
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-muted-foreground"><span className="font-semibold text-foreground">{p?.display_name ?? "Listener"}</span> · {new Date(m.created_at).toLocaleString()}</p>
                   <p className="text-sm break-words">{m.content}</p>
+                  {flags[m.id] && (
+                    <p className="mt-1 text-xs">
+                      <Badge variant={flags[m.id].severity === "high" ? "destructive" : "secondary"} className="mr-2 capitalize">{flags[m.id].label} · {flags[m.id].severity}</Badge>
+                      <span className="text-muted-foreground">{flags[m.id].reason}</span>
+                    </p>
+                  )}
                 </div>
+                {flags[m.id] && <Button size="sm" variant="ghost" onClick={() => setFlags((f) => { const n = { ...f }; delete n[m.id]; return n; })}>Looks fine</Button>}
                 <Button size="sm" variant="ghost" onClick={() => del(m.id)}>Delete</Button>
               </div>
             );
@@ -265,6 +322,91 @@ const Moderation = () => {
   );
 };
 
+const ACTION_LABELS: Record<string, string> = {
+  deleted_message: "deleted a message from",
+  blocked_user: "blocked",
+  unblocked_user: "unblocked",
+  cleared_history: "removed the chat history of",
+};
+const ActivityLog = () => {
+  const [rows, setRows] = useState<{ id: string; actor_id: string | null; action: string; target_user_id: string | null; details: string | null; created_at: string }[]>([]);
+  const [people, setPeople] = useState<Record<string, string>>({});
+  useEffect(() => {
+    Promise.all([
+      supabase.from("moderation_log").select("*").order("created_at", { ascending: false }).limit(300),
+      supabase.from("profiles").select("id,display_name"),
+    ]).then(([{ data: l }, { data: p }]) => {
+      setRows(l ?? []);
+      setPeople(Object.fromEntries((p ?? []).map((x) => [x.id, x.display_name])));
+    });
+  }, []);
+  const n = (id: string | null) => (id ? people[id] ?? "a deleted user" : "the system");
+  return (
+    <div className="rounded-2xl border border-border bg-card divide-y divide-border">
+      {rows.map((r) => (
+        <div key={r.id} className="p-4">
+          <p className="text-sm"><span className="font-semibold">{n(r.actor_id)}</span> {ACTION_LABELS[r.action] ?? r.action} <span className="font-semibold">{n(r.target_user_id)}</span></p>
+          <p className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}{r.details ? ` · “${r.details}”` : ""}</p>
+        </div>
+      ))}
+      {rows.length === 0 && <p className="p-6 text-muted-foreground">No moderation activity yet.</p>}
+    </div>
+  );
+};
+
+type InboxRow = { id: string; name: string; email: string | null; status: string; created_at: string; [k: string]: unknown };
+const Inbox = ({ table }: { table: "song_requests" | "contact_messages" }) => {
+  const [rows, setRows] = useState<InboxRow[]>([]);
+  const [show, setShow] = useState<"new" | "all">("new");
+  const load = async () => {
+    const { data } = await supabase.from(table).select("*").order("created_at", { ascending: false }).limit(500);
+    setRows((data ?? []) as InboxRow[]);
+  };
+  useEffect(() => { load(); }, [table]);
+  const mark = async (id: string, status: string) => {
+    const { error } = await supabase.from(table).update({ status }).eq("id", id);
+    if (error) toast.error(error.message); else load();
+  };
+  const del = async (id: string) => {
+    if (!confirm("Delete this?")) return;
+    const { error } = await supabase.from(table).delete().eq("id", id);
+    if (error) toast.error(error.message); else load();
+  };
+  const shown = rows.filter((r) => show === "all" || r.status === "new");
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-2">
+        <Button size="sm" variant={show === "new" ? "default" : "outline"} onClick={() => setShow("new")}>New ({rows.filter((r) => r.status === "new").length})</Button>
+        <Button size="sm" variant={show === "all" ? "default" : "outline"} onClick={() => setShow("all")}>All ({rows.length})</Button>
+      </div>
+      <div className="rounded-2xl border border-border bg-card divide-y divide-border">
+        {shown.map((r) => (
+          <div key={r.id} className="p-4 flex flex-wrap gap-4 items-start">
+            <div className="flex-1 min-w-[220px] space-y-1">
+              {table === "song_requests" ? (
+                <p className="font-semibold">🎵 {String(r.song)}{r.artist ? ` — ${String(r.artist)}` : ""}</p>
+              ) : null}
+              <p className={table === "song_requests" ? "text-sm" : "font-semibold"}>
+                {r.name}{r.email ? <span className="text-muted-foreground font-normal"> · <a className="underline" href={`mailto:${r.email}`}>{r.email}</a></span> : null}
+                {r.phone ? <span className="text-muted-foreground font-normal"> · {String(r.phone)}</span> : null}
+              </p>
+              {r.message ? <p className="text-sm whitespace-pre-wrap">{String(r.message)}</p> : null}
+              <p className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}{r.sms_opt_in ? " · SMS opt-in" : ""}</p>
+            </div>
+            <div className="flex gap-2">
+              {r.status === "new"
+                ? <Button size="sm" variant="outline" onClick={() => mark(r.id, "done")}>Mark done</Button>
+                : <Button size="sm" variant="ghost" onClick={() => mark(r.id, "new")}>Mark new</Button>}
+              <Button size="sm" variant="ghost" onClick={() => del(r.id)}>Delete</Button>
+            </div>
+          </div>
+        ))}
+        {shown.length === 0 && <p className="p-6 text-muted-foreground">Nothing here.</p>}
+      </div>
+    </div>
+  );
+};
+
 const Admin = () => {
   const { user, loading, isStaff, isAdmin } = useAuth();
   if (loading) return null;
@@ -278,14 +420,20 @@ const Admin = () => {
           <p className="text-muted-foreground">You don't have access to this page.</p>
         ) : (
           <Tabs defaultValue="members">
-            <TabsList className="mb-6">
-              <TabsTrigger value="members">Members</TabsTrigger>
+            <TabsList className="mb-6 flex-wrap h-auto">
+              <TabsTrigger value="members">Users & permissions</TabsTrigger>
               <TabsTrigger value="news">News</TabsTrigger>
               <TabsTrigger value="moderation">Chat moderation</TabsTrigger>
+              <TabsTrigger value="log">Activity log</TabsTrigger>
+              <TabsTrigger value="requests">Requests</TabsTrigger>
+              <TabsTrigger value="contact">Contact messages</TabsTrigger>
             </TabsList>
             <TabsContent value="members"><Members /></TabsContent>
             <TabsContent value="news"><NewsEditor /></TabsContent>
             <TabsContent value="moderation"><Moderation /></TabsContent>
+            <TabsContent value="log"><ActivityLog /></TabsContent>
+            <TabsContent value="requests"><Inbox table="song_requests" /></TabsContent>
+            <TabsContent value="contact"><Inbox table="contact_messages" /></TabsContent>
           </Tabs>
         )}
         {isStaff && !isAdmin && <p className="text-xs text-muted-foreground mt-6">As an editor you can edit news and block chat users. Only admins can add members or change roles.</p>}

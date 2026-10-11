@@ -43,6 +43,66 @@ export type Database = {
           },
         ]
       }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          sms_opt_in: boolean
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          sms_opt_in?: boolean
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          sms_opt_in?: boolean
+          status?: string
+        }
+        Relationships: []
+      }
+      moderation_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          details: string | null
+          id: string
+          target_user_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          target_user_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          target_user_id?: string | null
+        }
+        Relationships: []
+      }
       news_stories: {
         Row: {
           category: string
@@ -106,6 +166,39 @@ export type Database = {
         }
         Relationships: []
       }
+      song_requests: {
+        Row: {
+          artist: string | null
+          created_at: string
+          email: string | null
+          id: string
+          message: string | null
+          name: string
+          song: string
+          status: string
+        }
+        Insert: {
+          artist?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name: string
+          song: string
+          status?: string
+        }
+        Update: {
+          artist?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string
+          song?: string
+          status?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -129,6 +222,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      clear_user_chat: { Args: { _user_id: string }; Returns: number }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
