@@ -126,6 +126,12 @@ const Chat = () => {
                   })}
                 </div>
               </div>
+              <div className="space-y-2 border-t border-border pt-3">
+                <p className="text-sm font-semibold">Change password</p>
+                <Input type="password" placeholder="Current password" value={curPw} onChange={(e) => setCurPw(e.target.value)} />
+                <Input type="password" placeholder="New password (6+ characters)" value={newPw} onChange={(e) => setNewPw(e.target.value)} />
+                <Button size="sm" variant="secondary" className="w-full" onClick={changePassword} disabled={pwBusy}>Update password</Button>
+              </div>
               <Button variant="outline" size="sm" className="w-full" onClick={signOut}>Sign out</Button>
             </PopoverContent>
           </Popover>
