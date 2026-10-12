@@ -20,6 +20,9 @@ const Chat = () => {
   const [people, setPeople] = useState<Record<string, Profile>>({});
   const [text, setText] = useState("");
   const [nameDraft, setNameDraft] = useState("");
+  const [curPw, setCurPw] = useState("");
+  const [newPw, setNewPw] = useState("");
+  const [pwBusy, setPwBusy] = useState(false);
   const bottom = useRef<HTMLDivElement>(null);
 
   const loadPeople = async () => {
@@ -78,6 +81,16 @@ const Chat = () => {
     await refresh(); loadPeople();
   };
 
+  const changePassword = async () => {
+    if (!curPw || newPw.length < 6) return toast.error("Enter your current password and a new one (6+ characters)");
+    setPwBusy(true);
+    const { error } = await supabase.auth.updateUser({ password: newPw, current_password: curPw });
+    setPwBusy(false);
+    if (error) return toast.error(error.message);
+    setCurPw(""); setNewPw("");
+    toast.success("Password changed");
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -112,6 +125,12 @@ const Chat = () => {
                     );
                   })}
                 </div>
+              </div>
+              <div className="space-y-2 border-t border-border pt-3">
+                <p className="text-sm font-semibold">Change password</p>
+                <Input type="password" placeholder="Current password" value={curPw} onChange={(e) => setCurPw(e.target.value)} />
+                <Input type="password" placeholder="New password (6+ characters)" value={newPw} onChange={(e) => setNewPw(e.target.value)} />
+                <Button size="sm" variant="secondary" className="w-full" onClick={changePassword} disabled={pwBusy}>Update password</Button>
               </div>
               <Button variant="outline" size="sm" className="w-full" onClick={signOut}>Sign out</Button>
             </PopoverContent>
