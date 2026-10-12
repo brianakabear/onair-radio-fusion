@@ -47,6 +47,25 @@ const Members = () => {
     if (error) toast.error(error.message); else load();
   };
 
+  const [editing, setEditing] = useState<{ id: string; name: string; email: string } | null>(null);
+  const manage = async (body: Record<string, unknown>) => {
+    const { data, error } = await supabase.functions.invoke("admin-manage-user", { body });
+    if (error || data?.error) { toast.error(data?.error ?? "Something went wrong."); return false; }
+    return true;
+  };
+  const saveEdit = async () => {
+    if (!editing) return;
+    if (await manage({ action: "update", userId: editing.id, display_name: editing.name, email: editing.email })) {
+      toast.success("User updated"); setEditing(null); load();
+    }
+  };
+  const removeUser = async (p: Profile) => {
+    if (!confirm(`Permanently delete ${p.display_name} (${p.email})? Their chat messages will be removed too.`)) return;
+    if (await manage({ action: "delete", userId: p.id, label: `${p.display_name} <${p.email}>` })) {
+      toast.success("User deleted"); load();
+    }
+  };
+
   const toggleBan = async (p: Profile) => {
     const { error } = await supabase.from("profiles").update({ is_banned: !p.is_banned }).eq("id", p.id);
     if (error) toast.error(error.message); else load();
@@ -112,10 +131,22 @@ const Members = () => {
           return (
             <div key={p.id} className="p-4 flex flex-wrap items-center gap-4">
               <UserAvatar avatar={p.avatar_url} name={p.display_name} />
-              <div className="flex-1 min-w-[180px]">
-                <p className="font-semibold">{p.display_name} {p.id === user?.id && <span className="text-xs text-muted-foreground">(you)</span>}</p>
-                <p className="text-xs text-muted-foreground">{p.email}</p>
-              </div>
+              {editing?.id === p.id ? (
+                <div className="flex-1 min-w-[220px] flex flex-wrap gap-2">
+                  <Input className="w-40" value={editing.name} maxLength={40} onChange={(e) => setEditing({ ...editing, name: e.target.value })} />
+                  <Input className="w-56" type="email" value={editing.email} onChange={(e) => setEditing({ ...editing, email: e.target.value })} />
+                  <Button size="sm" onClick={saveEdit}>Save</Button>
+                  <Button size="sm" variant="ghost" onClick={() => setEditing(null)}>Cancel</Button>
+                </div>
+              ) : (
+                <div className="flex-1 min-w-[180px]">
+                  <p className="font-semibold">{p.display_name} {p.id === user?.id && <span className="text-xs text-muted-foreground">(you)</span>}</p>
+                  <p className="text-xs text-muted-foreground">{p.email}</p>
+                </div>
+              )}
+              {isSuper && editing?.id !== p.id && (
+                <Button size="sm" variant="ghost" onClick={() => setEditing({ id: p.id, name: p.display_name, email: p.email ?? "" })}>Edit</Button>
+              )}
               {isSuperRow ? <Badge>Super admin</Badge> : (
                 <div className="flex items-center gap-4 text-sm">
                   <label className="flex items-center gap-2">
@@ -127,6 +158,7 @@ const Members = () => {
                   <Button size="sm" variant={p.is_banned ? "default" : "outline"} onClick={() => toggleBan(p)}>
                     {p.is_banned ? "Unblock chat" : "Block chat"}
                   </Button>
+                  {isSuper && <Button size="sm" variant="destructive" onClick={() => removeUser(p)}>Delete</Button>}
                 </div>
               )}
             </div>
