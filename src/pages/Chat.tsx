@@ -20,6 +20,9 @@ const Chat = () => {
   const [people, setPeople] = useState<Record<string, Profile>>({});
   const [text, setText] = useState("");
   const [nameDraft, setNameDraft] = useState("");
+  const [curPw, setCurPw] = useState("");
+  const [newPw, setNewPw] = useState("");
+  const [pwBusy, setPwBusy] = useState(false);
   const bottom = useRef<HTMLDivElement>(null);
 
   const loadPeople = async () => {
@@ -76,6 +79,16 @@ const Chat = () => {
     const { error } = await supabase.from("profiles").update(patch).eq("id", user.id);
     if (error) return toast.error(error.message);
     await refresh(); loadPeople();
+  };
+
+  const changePassword = async () => {
+    if (!curPw || newPw.length < 6) return toast.error("Enter your current password and a new one (6+ characters)");
+    setPwBusy(true);
+    const { error } = await supabase.auth.updateUser({ password: newPw, current_password: curPw });
+    setPwBusy(false);
+    if (error) return toast.error(error.message);
+    setCurPw(""); setNewPw("");
+    toast.success("Password changed");
   };
 
   return (
