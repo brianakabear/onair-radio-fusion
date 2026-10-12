@@ -22,7 +22,7 @@ const Header = () => {
     { name: "Requests", href: "/requests" },
     { name: "Chat", href: "/chat" },
     ...(isStaff ? [{ name: "Admin", href: "/admin" }] : []),
-    ...(user ? [] : [{ name: "Sign in", href: "/auth" }]),
+    ...(user ? [{ name: "Profile", href: "/profile" }] : [{ name: "Sign in", href: "/auth" }]),
   ];
 
   const isActive = (path: string) => location.pathname === path;
